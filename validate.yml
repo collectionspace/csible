@@ -7,7 +7,7 @@
 
 - name: validate request method
   fail:
-    msg: "Invalid method."
+    msg: "Method must be DELETE, GET, POST or PUT."
   when: method not in [ "DELETE", "GET", "POST", "PUT" ]
 
 - name: validate user and password
