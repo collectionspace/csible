@@ -6,7 +6,7 @@ Use Ansible to interact with the CollectionSpace backend REST API. Using Ansible
 Configuration file
 ------------------
 
-```
+```bash
 cp api.json.example api.json
 ```
 
@@ -46,7 +46,7 @@ In the examples `ap` is an alias for `ansible-playbook`.
 
 **GET**
 
-```
+```bash
 ap -i 'localhost,' services.yml --extra-vars="@api.json" # DEFAULT collectionobjects
 
 # media records that have not been deleted
@@ -61,7 +61,7 @@ As demonstrated above `--extra-vars` can be used multiple times to specify file 
 
 **POST**
 
-```
+```bash
 # import resource from file
 ap -i 'localhost,' services.yml \
   --extra-vars="@api.json" \
@@ -100,7 +100,7 @@ Configuration files can be used to wrap a "task", simplifying the command line a
 {
   "base": "https://cspace.lyrasistechnology.org",
   "path": "collectionobjects",
-  "method": POST,
+  "method": "POST",
   "user": "admin@cspace.lyrasistechnology.org",
   "password": "Administrator",
   "directory": "records/collectionobjects/",
@@ -119,7 +119,7 @@ Tidy XML output
 
 CollectionSpace GET requests return XML. To improve readability:
 
-```
+```bash
 sudo apt-get install libxml2-utils
 xmllint --format response.xml
 ```
