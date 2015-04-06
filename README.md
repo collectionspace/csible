@@ -1,7 +1,9 @@
 CSIBLE
 ======
 
-Use Ansible to interact with the CollectionSpace backend REST API. Using Ansible in this way is crude for detailed, branching operations, but effective for straightforward batch jobs (such as delete and import).
+Use Ansible to interact with the CollectionSpace backend REST API. Using Ansible in this way is crude for detailed, branching operations, but can be effective for straightforward batch jobs (such as delete and import).
+
+For more advanced use cases see [csapi](https://github.com/mark-cooper/csapi) and [cscli](https://github.com/mark-cooper/cscli).
 
 Configuration file
 ------------------
