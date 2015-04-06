@@ -26,7 +26,7 @@
         url: "{{ base }}/{{ services }}/{{ path }}?{{ params }}"
       when: method == "GET" and not url
 
-    - name: set url for DELETE / POST requests
+    - name: set url for DELETE / POST / PUT requests
       set_fact:
         url: "{{ base }}/{{ services }}/{{ path }}"
       when: method != "GET" and not url
@@ -47,3 +47,6 @@
     # import resources from folder of xml files
     - include: post_from_directory.yml
       when: method == "POST" and directory
+
+    - include: put.yml
+      when: method == "PUT" and file

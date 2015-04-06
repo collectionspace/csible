@@ -79,6 +79,20 @@ ap -i 'localhost,' services.yml \
 
 **Note:** files in a directory must be of the same type (and suitable for `path`).
 
+**PUT**
+
+```bash
+# update request with path and file of updated metadata
+ap -i 'localhost,' services.yml \
+  --extra-vars="@api.json" \
+  --extra-vars="method=PUT path=collectionobjects/8079c5c8-258e-4e47-921b file=examples/antioch-updated.xml"
+
+# update request with url and file of updated metadata
+ap -i 'localhost,' services.yml \
+  --extra-vars="@api.json" \
+  --extra-vars="method=PUT url=https://cspace.lyrasistechnology.org/cspace-services/collectionobjects/8079c5c8-258e-4e47-921b file=examples/antioch-updated.xml"
+```
+
 **DELETE**
 
 ```bash

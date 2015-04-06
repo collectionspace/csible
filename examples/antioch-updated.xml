@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document name="collectionobjects">
+  <ns2:collectionobjects_common
+    xmlns:ns2="http://collectionspace.org/services/collectionobject"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <objectNumber>DTS-2015.03.28</objectNumber>
+      <numberOfObjects>5</numberOfObjects>
+      <responsibleDepartments>
+          <responsibleDepartment>antiquities</responsibleDepartment>
+      </responsibleDepartments>
+      <titleGroupList>
+          <titleGroup>
+              <title>The Holy Hand Grenade of Antioch -- in fragments.</title>
+              <titleLanguage>urn:cspace:cspace.lyrasistechnology.org:vocabularies:name(languages):item:name(eng)'English'</titleLanguage>
+          </titleGroup>
+      </titleGroupList>
+    </ns2:collectionobjects_common>
+</document>
