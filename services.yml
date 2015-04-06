@@ -10,7 +10,7 @@
     base: false
     services: "cspace-services"
     path: "collectionobjects"
-    params: ""
+    params: "wf_deleted=false"
     method: GET
     user: admin@cspace.lyrasistechnology.org
     password: Administrator
@@ -21,10 +21,15 @@
   tasks:
     - include: validate.yml
 
-    - name: set url
+    - name: set url for GET requests
       set_fact:
         url: "{{ base }}/{{ services }}/{{ path }}?{{ params }}"
-      when: not url
+      when: method == "GET" and not url
+
+    - name: set url for DELETE / POST requests
+      set_fact:
+        url: "{{ base }}/{{ services }}/{{ path }}"
+      when: method != "GET" and not url
 
     - include: delete.yml
       when: method == "DELETE" and not file
