@@ -1,0 +1,23 @@
+---
+
+- name: set body content from file
+  set_fact:
+    payload: "{{ lookup('file', file) }}"
+
+- name: POST request
+  uri:
+    url: "{{ url }}"
+    method: POST
+    user: "{{ user }}"
+    password: "{{ password }}"
+    body: "{{ payload }}"
+    force_basic_auth: yes
+    return_content: yes
+    HEADER_Content-Type: "application/xml"
+    status_code: 201
+  register: response
+
+- name: save response
+  copy:
+    content: "{{ response.location }}"
+    dest: "{{ playbook_dir }}/{{ savefile | default('response.txt') }}"

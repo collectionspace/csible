@@ -1,0 +1,44 @@
+---
+
+- name: cspace services ansible api client
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    url: false
+    base: false
+    services: "cspace-services"
+    path: "collectionobjects"
+    params: ""
+    method: GET
+    user: admin@cspace.lyrasistechnology.org
+    password: Administrator
+    file: false
+    directory: false
+    # savefile: false
+
+  tasks:
+    - include: validate.yml
+
+    - name: set url
+      set_fact:
+        url: "{{ base }}/{{ services }}/{{ path }}?{{ params }}"
+      when: not url
+
+    - include: delete.yml
+      when: method == "DELETE" and not file
+
+    # delete resources using a file of resource urls
+    - include: delete_from_file.yml
+      when: method == "DELETE" and file
+
+    - include: get.yml
+      when: method == "GET"
+
+    - include: post.yml
+      when: method == "POST" and file
+
+    # import resources from folder of xml files
+    - include: post_from_directory.yml
+      when: method == "POST" and directory

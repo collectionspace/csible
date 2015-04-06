@@ -1,0 +1,11 @@
+---
+
+- name: DELETE request
+  uri:
+    url: "{{ url }}"
+    method: DELETE
+    user: "{{ user }}"
+    password: "{{ password }}"
+    force_basic_auth: yes
+    return_content: yes
+  register: response
