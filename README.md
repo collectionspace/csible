@@ -51,15 +51,17 @@ In the examples `ap` is an alias for `ansible-playbook`.
 ```bash
 ap -i 'localhost,' services.yml --extra-vars="@api.json" # DEFAULT collectionobjects
 
-# media records that have not been deleted
+# media records including those that are workflow deleted
 ap -i 'localhost,' services.yml \
   --extra-vars="@api.json" \
-  --extra-vars="path=media params=wf_deleted=false"
+  --extra-vars="path=media params=wf_deleted=true"
 
 # need a search example with grep to pull uri
 ```
 
 As demonstrated above `--extra-vars` can be used multiple times to specify file and command line arguments separately.
+
+**Note:** `wf_deleted=false` (exclude deleted records) is a default parameter for GET requests.
 
 **POST**
 
