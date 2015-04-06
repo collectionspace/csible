@@ -69,10 +69,15 @@ ap -i 'localhost,' services.yml \
   --extra-vars="@api.json" \
   --extra-vars="method=POST file=examples/antioch.xml"
 
-# need batch post example
+# import resources from a directory
+ap -i 'localhost,' services.yml \
+  --extra-vars="@api.json" \
+  --extra-vars="method=POST directory=examples"
 ```
 
-_Note: for batch imports it may be preferable to loop over input files in a bash script (for example), passing each one as in the single file approach to have more control over the request rate._
+**Note:** for batch imports it may be preferable to loop over input files in a bash script (for example), passing each one as in the single file approach to have more control over the request rate.
+
+**Note:** files in a directory must be of the same type (and suitable for `path`).
 
 **DELETE**
 
