@@ -17,6 +17,7 @@
     file: false
     directory: false
     # savefile: false
+    verbose: false
 
   tasks:
     - include: validate.yml

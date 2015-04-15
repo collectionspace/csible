@@ -4,6 +4,10 @@
   set_fact:
     payload: "{{ lookup('file', file) }}"
 
+- name: dump payload to terminal
+  debug: var=payload
+  when: verbose
+
 - name: POST request
   uri:
     url: "{{ url }}"
