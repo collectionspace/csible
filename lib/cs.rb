@@ -1,38 +1,3 @@
-# helpers
-
-def authority_itemtypes(type)
-  types = {
-    "locations" => "LocationItem",
-  }
-  types[type]
-end
-
-# ansible playbook command wrapper
-def command(base, method, opts = {})
-  command = base + " --extra-vars='method=#{method}"
-  opts.each do |arg, value|
-    command = "#{command} #{arg.to_s}=#{value}" if value
-  end
-  command = "#{command}'"
-  command
-end
-
-def get_identifiers(path, id, throttle = 1)
-  identifiers = {}
-  Rake::Task["cs:get:path"].invoke(path, "kw=#{id}")
-  response    = Nokogiri::XML.parse(File.open("response.xml"))
-  total_items = response.css("totalItems").text.to_i
-  if total_items == 1
-    identifiers["csid"] = response.css("csid").text
-    identifiers["uri"]  = response.css("uri").text
-    sh "sleep #{throttle}"
-    Rake::Task["cs:get:path"].reenable
-  else
-    identifiers = nil
-  end
-  identifiers
-end
-
 namespace :cs do
   desc "Run csible commands"
 
