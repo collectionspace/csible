@@ -73,14 +73,22 @@ namespace :cs do
 
     task :url, [:url] do |t, args|
       url = args[:url]
+      url = url.gsub(/http:/, 'https:') # always https
       sh command(base_command, 'DELETE', { url: url })
     end
 
     # rake cs:delete:file[deletes.txt]
-    task :file, [:file] do |t, args|
-      file = args[:file]
+    # rake cs:delete:file[deletes.txt,path,1]
+    task :file, [:file, :type, :throttle] do |t, args|
+      file      = args[:file]
+      type      = args[:type] || "url"
+      throttle  = args[:throttle] || 1
       raise "HELL" unless File.file? file
-      sh command(base_command, 'DELETE', { file: file })
+      File.readlines(file).each do |line|
+        Rake::Task["cs:delete:#{type}"].invoke(line)
+        sh "sleep #{throttle}"
+        Rake::Task["cs:delete:#{type}"].reenable
+      end
     end
 
   end
