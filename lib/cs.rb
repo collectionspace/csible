@@ -1,10 +1,11 @@
 # helpers
 
 # ansible playbook command wrapper
-# type is one of = path, file, directory, url
-def command(base, method, type, arg, params = nil)
-  command = base + " --extra-vars='method=#{method} #{type}=#{arg}"
-  command = "#{command} params=#{params}" if params
+def command(base, method, opts = {})
+  command = base + " --extra-vars='method=#{method}"
+  opts.each do |arg, value|
+    command = "#{command} #{arg.to_s}=#{value}" if value
+  end
   command = "#{command}'"
   command
 end
@@ -25,16 +26,13 @@ namespace :cs do
     task :path, [:path, :params] do |t, args|
       path   = args[:path]
       params = args[:params] || nil
-
-      sh command(base_command, 'GET', 'path', path, params)
+      sh command(base_command, 'GET', { path: path, params: params })
     end
 
     # rake cs:get:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities]
-    task :url, [:url, :params] do |t, args|
+    task :url, [:url] do |t, args|
       url    = args[:url]
-      params = args[:params] || nil
-
-      sh command(base_command, 'GET', 'url', url, params)
+      sh command(base_command, 'GET', { url: url })
     end
 
   end
@@ -58,10 +56,10 @@ namespace :cs do
 
     # rake cs:post:file[/locationauthorities/XYZ/items,examples/locations/1.xml]
     task :file, [:path, :file] do |t, args|
+      path = args[:path]
       file = args[:file]
       raise "Invalid file" unless File.file? file
-      puts file
-      # sh "ansible-playbook -i ..."
+      sh command(base_command, 'POST', { path: path, file: file })
     end
 
   end
@@ -70,19 +68,19 @@ namespace :cs do
 
     task :path, [:path] do |t, args|
       path = args[:path]
-      sh command(base_command, 'DELETE', 'path', path)
+      sh command(base_command, 'DELETE', { path: path })
     end
 
     task :url, [:url] do |t, args|
       url = args[:url]
-      sh command(base_command, 'DELETE', 'url', url)
+      sh command(base_command, 'DELETE', { url: url })
     end
 
     # rake cs:delete:file[deletes.txt]
     task :file, [:file] do |t, args|
       file = args[:file]
       raise "HELL" unless File.file? file
-      sh command(base_command, 'DELETE', 'file', file)
+      sh command(base_command, 'DELETE', { file: file })
     end
 
   end
