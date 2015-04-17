@@ -41,6 +41,28 @@ savefile: output file to capture response i.e. response.xml
 HEADER_Content-Type: "application/xml"
 ```
 
+Quickstart
+----------
+
+Requires `rake` (Ruby).
+
+```
+gem install rake
+gem install json
+
+rake cs:config # dump api.json to terminal
+
+# GET
+rake cs:get[/media]
+rake cs:get[/locationauthorities/38cc1b61-a597-4b12-b820/items,kw=EwoodPark702918]
+
+# POST
+rake cs:post:directory[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,1]
+
+# DELETE
+rake cs:delete:file[deletes.txt]
+```
+
 Examples
 --------
 
