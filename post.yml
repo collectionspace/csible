@@ -22,6 +22,7 @@
   register: response
 
 - name: save response
-  copy:
-    content: "{{ response.location }}"
+  lineinfile:
+    line: "{{ response.location }}"
     dest: "{{ playbook_dir }}/{{ savefile | default('response.txt') }}"
+    create: yes
