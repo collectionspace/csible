@@ -46,7 +46,7 @@ Quickstart
 
 Requires `rake` (Ruby), or continue on to "Examples" to see ansible used directly.
 
-```
+```bash
 gem install rake
 gem install json
 
@@ -67,6 +67,15 @@ rake cs:delete:url[https://cspace.lyrasistechnology.org/cspace-services/location
 rake cs:delete:file[deletes.txt] # assumes file or urls
 rake cs:delete:file[deletes.txt,path] # file of paths
 ```
+
+Depending on the actions it may be necessary to clear the `imports` and / or `tmp` folders:
+
+```bash
+rake cs:clear:imports
+rake cs:clear:tmp
+```
+
+These tasks ensure that only XML files are removed.
 
 Examples
 --------
