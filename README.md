@@ -44,7 +44,7 @@ HEADER_Content-Type: "application/xml"
 Quickstart
 ----------
 
-Requires `rake` (Ruby).
+Requires `rake` (Ruby), or continue on to "Examples" to see ansible used directly.
 
 ```
 gem install rake
@@ -55,11 +55,15 @@ rake cs:config # dump api.json to terminal
 # GET
 rake cs:get[/media]
 rake cs:get[/locationauthorities/38cc1b61-a597-4b12-b820/items,kw=EwoodPark702918]
+rake cs:get:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities]
 
 # POST
 rake cs:post:directory[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,1]
+rake cs:post:file[/locationauthorities/XYZ/items,examples/locations/1.xml]
 
 # DELETE
+rake cs:delete:path[/locationauthorities/38cc1b61-a597-4b12-b820/items/a22a97ec-57fc-4b86-a366]
+rake cs:delete:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities/38cc1b61-a597-4b12-b820/items/a22a97ec-57fc-4b86-a366]
 rake cs:delete:file[deletes.txt]
 ```
 
@@ -139,7 +143,7 @@ ap -i 'localhost,' services.yml \
 Task configuration files
 ------------------------
 
-Configuration files can be used to wrap a "task", simplifying the command line arguments.
+Configuration files can be used to wrap a "task", simplifying the command line arguments (or use `rake`).
 
 ```json
 {
