@@ -39,6 +39,21 @@ def get_identifiers(path, id, throttle = 1)
   identifiers
 end
 
+def get_list_properties(path, properties = [], params = nil)
+  list = []
+  Rake::Task["cs:get:path"].invoke(path, params)
+  response = Nokogiri::XML.parse(File.open("response.xml"))
+  response.css("list-item").each do |list_item|
+    i = {}
+    properties.each do |property|
+      i[property] = list_item.css(property).text
+    end
+    list << i
+  end
+  Rake::Task["cs:get:path"].reenable
+  list
+end
+
 ##### TEMPLATE HELPERS
 
 def clear_file(file)
@@ -69,5 +84,12 @@ def process_csv(input_file, output_dir, template_file, required_fields = [], fil
 
     output_filename = filename_fields.inject("") { |fn, field| fn += data[field.to_sym] }
     File.open("#{output_dir}/#{output_filename}.xml", 'w') {|f| f.write(result) }
+  end
+end
+
+def write_csv(data)
+  CSV.open('response.csv', 'w') do |csv|
+    csv << data.first.keys
+    data.each { |row| csv << row.values }
   end
 end

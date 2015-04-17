@@ -57,6 +57,9 @@ rake cs:get:path[/media]
 rake cs:get:path[/locationauthorities/38cc1b61-a597-4b12-b820/items,kw=EwoodPark702918]
 rake cs:get:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities]
 
+# GET items from a list with properties delimitied by "~" written to CSV
+rake cs:get:under[/media,uri~csid,"wf_deleted=false&pgSz=100"]
+
 # POST
 rake cs:post:directory[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,1]
 rake cs:post:file[/locationauthorities/XYZ/items,examples/locations/1.xml]
