@@ -2,6 +2,7 @@ require 'erb'
 require 'csv'
 require 'erb'
 require 'json'
+require 'nokogiri'
 require 'pp'
 
 require_relative "lib/cs"
