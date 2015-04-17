@@ -53,8 +53,8 @@ gem install json
 rake cs:config # dump api.json to terminal
 
 # GET
-rake cs:get[/media]
-rake cs:get[/locationauthorities/38cc1b61-a597-4b12-b820/items,kw=EwoodPark702918]
+rake cs:get:path[/media]
+rake cs:get:path[/locationauthorities/38cc1b61-a597-4b12-b820/items,kw=EwoodPark702918]
 rake cs:get:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities]
 
 # POST
