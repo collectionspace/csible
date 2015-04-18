@@ -5,7 +5,7 @@ Creating authority (item) records and setting relationships:
 
 ```bash
 # get csids for location authorities
-rake cs:get:under[/locationauthorities,uri~shortIdentifier]
+rake cs:get:list[/locationauthorities,uri~shortIdentifier]
 
 # create import xml
 rake template:locations:items:process[templates/locations/onsite.csv]

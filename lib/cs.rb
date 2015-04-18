@@ -73,8 +73,8 @@ namespace :cs do
       sh command(base_command, 'GET', { url: url })
     end
 
-    # rake cs:get:under[/media,uri~csid,"wf_deleted=false&pgSz=100"]
-    task :under, [:path, :properties, :params] do |t, args|
+    # rake cs:get:list[/media,uri~csid,"wf_deleted=false&pgSz=100"]
+    task :list, [:path, :properties, :params] do |t, args|
       path       = args[:path]
       properties = args[:properties] || [ "uri" ]
       properties = properties.split("~") if properties.respond_to? :split
