@@ -4,6 +4,10 @@ CSV::Converters[:nil_to_empty] = lambda do |field|
   field ? field : ""
 end
 
+CSV::Converters[:xml_safe] = lambda do |field|
+  field.gsub(/&/, "&amp;")
+end
+
 ##### CS HELPERS
 
 def authority_itemtypes(type)
@@ -66,7 +70,8 @@ def get_config(config_file)
   types = ["required", "optional"]
   fields = Hash.new { |hash, key| hash[key] = [] }
   CSV.foreach(config_file, {
-      headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
+      headers: true,
+      header_converters: :symbol,
     }) do |row|
       data = row.to_hash
       raise "Type must be required or optional but was #{type}" unless types.include? data[:type]
@@ -91,7 +96,9 @@ end
 def process_csv(input_file, output_dir, template_file, fields = {})
   raise "Invalid input file #{input_file}" unless File.file? input_file
   CSV.foreach(input_file, {
-      headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
+      headers: true,
+      header_converters: :symbol,
+      converters: [:nil_to_empty, :xml_safe],
     }) do |row|
 
     data = row.to_hash
