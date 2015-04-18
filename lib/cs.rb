@@ -65,14 +65,14 @@ namespace :cs do
     task :path, [:path, :params] do |t, args|
       path   = args[:path]
       params = args[:params] || nil
-      sh command(base_command, 'GET', { path: path, params: params })
+      run command(base_command, 'GET', { path: path, params: params })
     end
 
     # rake cs:get:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities]
     desc "GET request by url"
     task :url, [:url] do |t, args|
       url    = args[:url]
-      sh command(base_command, 'GET', { url: url })
+      run command(base_command, 'GET', { url: url })
     end
 
     # rake cs:get:list[/media,uri~csid,"wf_deleted=false&pgSz=100"]
@@ -102,7 +102,7 @@ namespace :cs do
 
       Dir["#{args[:directory]}/*.xml"].each do |file|
         Rake::Task["cs:post:file"].invoke(path, file)
-        sh "sleep #{throttle}"
+        `sleep #{throttle}`
         Rake::Task["cs:post:file"].reenable
       end
     end
@@ -113,7 +113,7 @@ namespace :cs do
       path = args[:path]
       file = args[:file]
       raise "Invalid file" unless File.file? file
-      sh command(base_command, 'POST', { path: path, file: file })
+      run command(base_command, 'POST', { path: path, file: file })
       File.unlink file
     end
 
@@ -127,7 +127,7 @@ namespace :cs do
       path = args[:path]
       file = args[:file]
       raise "Invalid file" unless File.file? file
-      sh command(base_command, 'PUT', { path: path, file: file })
+      run command(base_command, 'PUT', { path: path, file: file })
     end
 
   end
@@ -137,14 +137,14 @@ namespace :cs do
     desc "DELETE request by path"
     task :path, [:path] do |t, args|
       path = args[:path]
-      sh command(base_command, 'DELETE', { path: path })
+      run command(base_command, 'DELETE', { path: path })
     end
 
     desc "DELETE request by url"
     task :url, [:url] do |t, args|
       url = args[:url]
       url = url.gsub(/http:/, 'https:') # always https
-      sh command(base_command, 'DELETE', { url: url })
+      run command(base_command, 'DELETE', { url: url })
     end
 
     # rake cs:delete:file[deletes.txt]
@@ -157,7 +157,7 @@ namespace :cs do
       raise "HELL" unless File.file? file
       File.readlines(file).each do |line|
         Rake::Task["cs:delete:#{type}"].invoke(line)
-        sh "sleep #{throttle}"
+        `sleep #{throttle}`
         Rake::Task["cs:delete:#{type}"].reenable
       end
     end

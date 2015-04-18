@@ -35,7 +35,7 @@ def get_identifiers(path, id, throttle = 1)
   if total_items == 1
     identifiers["csid"] = response.css("csid").text
     identifiers["uri"]  = response.css("uri").text
-    sh "sleep #{throttle}"
+    `sleep #{throttle}`
     Rake::Task["cs:get:path"].reenable
   else
     identifiers = nil
@@ -56,6 +56,18 @@ def get_list_properties(path, properties = [], params = nil)
   end
   Rake::Task["cs:get:path"].reenable
   list
+end
+
+def run(command)
+  result = `#{command}`
+  if $?.to_i == 0
+    @log.info command
+    puts command
+  else
+    result = result.gsub("\n", "\t")
+    @log.error "#{command}\t#{result}"
+    puts result
+  end
 end
 
 ##### TEMPLATE HELPERS
