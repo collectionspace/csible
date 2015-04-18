@@ -62,7 +62,7 @@ end
 
 def clear_file(file)
   File.unlink file
-  puts "Deleted: #{file}"
+  @log.info "Deleted: #{file}"
 end
 
 def get_config(config_file)

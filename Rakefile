@@ -1,13 +1,19 @@
 require 'erb'
 require 'csv'
 require 'erb'
+require 'fileutils'
 require 'json'
+require 'logger'
 require 'nokogiri'
 require 'pp'
 
 require_relative "lib/utils"
 require_relative "lib/cs"
 require_relative "lib/template"
+
+log_file = "response.log"
+FileUtils.touch(log_file)
+@log = Logger.new File.open(log_file, "a")
 
 namespace :clear do
 
