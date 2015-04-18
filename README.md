@@ -38,7 +38,7 @@ rake cs:post:file[/locationauthorities/XYZ/items,examples/locations/1.xml]
 # DELETE
 rake cs:delete:path[/locationauthorities/38cc1b61-a597-4b12-b820/items/a22a97ec-57fc-4b86-a366]
 rake cs:delete:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities/38cc1b61-a597-4b12-b820/items/a22a97ec-57fc-4b86-a366]
-rake cs:delete:file[deletes.txt] # assumes file or urls
+rake cs:delete:file[deletes.txt] # assumes file of urls
 rake cs:delete:file[deletes.txt,path] # file of paths
 ```
 
