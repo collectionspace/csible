@@ -109,6 +109,7 @@ namespace :cs do
       file = args[:file]
       raise "Invalid file" unless File.file? file
       sh command(base_command, 'POST', { path: path, file: file })
+      File.unlink file
     end
 
   end
