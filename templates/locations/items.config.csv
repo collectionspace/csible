@@ -1,0 +1,8 @@
+field,type,filename
+shortidentifier,required,true
+termname,required,false
+locationtype,required,false
+address,optional,false
+accessnote,optional,false
+conditionnote,optional,false
+securitynote,optional,false
