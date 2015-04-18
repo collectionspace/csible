@@ -21,6 +21,7 @@ Requires `rake` (Ruby):
 gem install rake
 gem install json
 
+rake -T # list all tasks
 rake cs:config # dump api.json to terminal
 
 # GET

@@ -1,6 +1,5 @@
 # TEMPLATES
 namespace :template do
-  desc "Process CollectionSpace XML template from CSV"
 
   output_dir = 'imports'
 
@@ -16,15 +15,16 @@ namespace :template do
       fields        = get_config(config_file)
 
       # rake template:locations:items:fields
+      desc "Display fields for location authority items"
       task :fields do |t|
         print_fields fields[:required], fields[:optional]
       end
 
       # rake template:locations:items:process[templates/locations/onsite.csv]
+      desc "Create location authority item XML records from csv"
       task :process, [:csv] do |t, args|
         process_csv(args[:csv], output_dir, template_file, fields)
       end
-
     end
   end
 end

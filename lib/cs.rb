@@ -1,14 +1,14 @@
 namespace :cs do
-  desc "Run csible commands"
-
   base_command = "ansible-playbook -i 'localhost,' services.yml --extra-vars='@api.json'"
 
   # rake cs:config
+  desc "Dump csible config to terminal"
   task :config do |t, args|
     pp JSON.parse( IO.read('api.json') )
   end
 
   # rake cs:relationships[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,templates/relationships/relationships.example.csv]
+  desc "Set object relationships using a csv file"
   task :relationships, [:path, :type, :csv] do |t, args|
     path = args[:path]
     type = args[:type]
@@ -61,6 +61,7 @@ namespace :cs do
   namespace :get do
 
     # rake cs:get:path[/locationauthorities]
+    desc "GET request by path"
     task :path, [:path, :params] do |t, args|
       path   = args[:path]
       params = args[:params] || nil
@@ -68,12 +69,14 @@ namespace :cs do
     end
 
     # rake cs:get:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities]
+    desc "GET request by url"
     task :url, [:url] do |t, args|
       url    = args[:url]
       sh command(base_command, 'GET', { url: url })
     end
 
     # rake cs:get:list[/media,uri~csid,"wf_deleted=false&pgSz=100"]
+    desc "GET request by path for results list to csv specifying properties"
     task :list, [:path, :properties, :params] do |t, args|
       path       = args[:path]
       properties = args[:properties] || [ "uri" ]
@@ -89,6 +92,7 @@ namespace :cs do
   namespace :post do
 
     # rake cs:post:directory[/locationauthorities/XYZ/items,examples/locations,1]
+    desc "POST requests by path using directory of files to import"
     task :directory, [:path, :directory, :throttle] do |t, args|
       path      = args[:path]
       directory = args[:directory]
@@ -104,6 +108,7 @@ namespace :cs do
     end
 
     # rake cs:post:file[/locationauthorities/XYZ/items,examples/locations/1.xml]
+    desc "POST request by path using file to import"
     task :file, [:path, :file] do |t, args|
       path = args[:path]
       file = args[:file]
@@ -117,6 +122,7 @@ namespace :cs do
   namespace :put do
 
     # rake cs:put:file[/locationauthorities/XYZ/items/ABC,examples/locations/1.xml]
+    desc "PUT request by path with file of updated metadata"
     task :file, [:path, :file] do |t, args|
       path = args[:path]
       file = args[:file]
@@ -128,11 +134,13 @@ namespace :cs do
 
   namespace :delete do
 
+    desc "DELETE request by path"
     task :path, [:path] do |t, args|
       path = args[:path]
       sh command(base_command, 'DELETE', { path: path })
     end
 
+    desc "DELETE request by url"
     task :url, [:url] do |t, args|
       url = args[:url]
       url = url.gsub(/http:/, 'https:') # always https
@@ -141,6 +149,7 @@ namespace :cs do
 
     # rake cs:delete:file[deletes.txt]
     # rake cs:delete:file[deletes.txt,path,1]
+    desc "DELETE requests by file of urls or paths"
     task :file, [:file, :type, :throttle] do |t, args|
       file      = args[:file]
       type      = args[:type] || "url"
