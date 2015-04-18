@@ -49,7 +49,7 @@ namespace :cs do
 
         # cache result
         output_filename = "#{output_dir}/#{identifiers[item]["csid"]}.xml"
-        File.open(output_filename, 'w') {|f| f.write(result) }
+        write_file(output_filename, result)
 
         # make the introductions
         Rake::Task["cs:put:file"].invoke(identifiers[item]["uri"], output_filename)
