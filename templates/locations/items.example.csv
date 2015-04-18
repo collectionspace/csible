@@ -1,2 +1,2 @@
-shortidentifier,termname,address,locationtype,conditionnote,accessnote,securitynote,hierarchy
-EwoodPark041620151,Ewood Park,"Blackburn, UK",Building,decent,Ticket required.,No bags.,
+shortidentifier,termname,address,locationtype,conditionnote,accessnote,securitynote,from,to
+EwoodPark041620151,Ewood Park,"Blackburn, UK",Building,decent,Ticket required.,No bags.,,
