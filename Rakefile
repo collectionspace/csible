@@ -11,6 +11,12 @@ require_relative "lib/template"
 
 namespace :clear do
 
+  desc "Remove XML files from imports and tmp"
+  task :all do |t|
+    Rake::Task["clear:imports"].invoke
+    Rake::Task["clear:tmp"].invoke
+  end
+
   desc "Remove XML files from imports"
   task :imports do |t|
     Dir["imports/*.xml"].each do |file|
