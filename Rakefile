@@ -5,9 +5,9 @@ require 'json'
 require 'nokogiri'
 require 'pp'
 
+require_relative "lib/utils"
 require_relative "lib/cs"
 require_relative "lib/template"
-require_relative "lib/utils"
 
 namespace :clear do
   desc "Remove XML files from imports or tmp"
