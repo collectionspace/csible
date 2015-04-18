@@ -11,32 +11,18 @@ namespace :template do
     end
 
     namespace :items do
+      config_file   = 'templates/locations/items.config.csv'
       template_file = 'templates/locations/item.xml.erb'
-
-      # todo: process *_fields from config file?
-      required_fields = [
-        "shortidentifier",
-        "termname",
-        "locationtype",
-      ]
-
-      optional_fields = [
-        "address",
-        "accessnote",
-        "conditionnote",
-        "securitynote",
-      ]
-
-      filename_fields = [ "shortidentifier" ]
+      fields        = get_config(config_file)
 
       # rake template:locations:items:fields
       task :fields do |t|
-        print_fields required_fields, optional_fields
+        print_fields fields[:required], fields[:optional]
       end
 
       # rake template:locations:items:process[templates/locations/onsite.csv]
       task :process, [:csv] do |t, args|
-        process_csv(args[:csv], output_dir, template_file, required_fields, filename_fields)
+        process_csv(args[:csv], output_dir, template_file, fields)
       end
 
     end

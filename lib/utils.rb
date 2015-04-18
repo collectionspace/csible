@@ -61,6 +61,24 @@ def clear_file(file)
   puts "Deleted: #{file}"
 end
 
+def get_config(config_file)
+  raise "Invalid input file #{input_file}" unless File.file? config_file
+  types = ["required", "optional"]
+  fields = Hash.new { |hash, key| hash[key] = [] }
+  CSV.foreach(config_file, {
+      headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
+    }) do |row|
+      data = row.to_hash
+      raise "Type must be required or optional but was #{type}" unless types.include? data[:type]
+      fields[:required] << data[:field] if data[:type] == "required"
+      fields[:optional] << data[:field] if data[:type] == "optional"
+      fields[:filename] << data[:field] if data[:filename] =~ /(^t|^true)/
+  end
+  raise "No required fields defined in #{config_file}" if fields[:required].empty?
+  raise "Filename is undefined in #{config_file}" if fields[:filename].empty?
+  fields
+end
+
 def get_template(file)
   File.read(file)
 end
@@ -70,19 +88,21 @@ def print_fields(required, optional)
   puts optional
 end
 
-def process_csv(input_file, output_dir, template_file, required_fields = [], filename_fields = [])
+def process_csv(input_file, output_dir, template_file, fields = {})
   raise "Invalid input file #{input_file}" unless File.file? input_file
   CSV.foreach(input_file, {
       headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
     }) do |row|
 
     data = row.to_hash
-    required_fields.each { |r| raise "HELL" unless data.has_key? r or ! data[r] }
+    # check required fields have value and pad optional fields to allow partial csv
+    fields[:required].each { |r| raise "HELL" unless data.has_key? r.to_sym or data[r.to_sym].empty? }
+    fields[:optional].each { |r| data[r] = "" unless data.has_key? r.to_sym }
 
     template = ERB.new(get_template(template_file))
     result   = template.result(binding) # binding adds variables from scope
 
-    output_filename = filename_fields.inject("") { |fn, field| fn += data[field.to_sym] }
+    output_filename = fields[:filename].inject("") { |fn, field| fn += data[field.to_sym] }
     File.open("#{output_dir}/#{output_filename}.xml", 'w') {|f| f.write(result) }
   end
 end
