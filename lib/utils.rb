@@ -122,7 +122,7 @@ def process_csv(input_file, output_dir, template_file, fields = {})
     result   = template.result(binding) # binding adds variables from scope
 
     output_filename = fields[:filename].inject("") { |fn, field| fn += data[field.to_sym] }
-    write_file(output_filename, result)
+    write_file("#{output_dir}/#{output_filename}.xml", result)
   end
 end
 
