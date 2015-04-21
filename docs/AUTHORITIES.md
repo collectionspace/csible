@@ -14,6 +14,8 @@ rake cs:post:directory[/locationauthorities/38cc1b61-a597-4b12-b820/items,import
 # set relationships -- uses "from", "to" values from the same or a different file
 rake cs:relationships[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,templates/locations/onsite.csv]
 
+rake clear:all
+
 # repeat as needed
 rake template:locations:items:process[templates/locations/offsite.csv]
 rake cs:post:directory[/locationauthorities/add50144-321a-4355-840b/items,imports,1]
