@@ -109,9 +109,10 @@ def get_template(file)
   File.read(file)
 end
 
-def print_fields(required, optional)
-  required.map{ |r| puts "#{r} *" }
+def print_fields(required, optional, generated = [])
+  required.map{ |r| puts "#{r} * required" }
   puts optional
+  generated.map{ |r| puts "#{r} * generated" }
 end
 
 def process_csv(input_file, output_dir, template_file, fields = {})

@@ -32,7 +32,7 @@ namespace :template do
       # rake template:cataloging:objects:fields
       desc "Display fields for cataloging objects"
       task :fields do |t|
-        print_fields fields[:required], fields[:optional]
+        print_fields fields[:required], fields[:optional], fields[:generate].keys
       end
 
       # rake template:cataloging:objects:process[templates/cataloging/objects.example.csv]
@@ -67,7 +67,7 @@ namespace :template do
       # rake template:locations:items:fields
       desc "Display fields for location authority items"
       task :fields do |t|
-        print_fields fields[:required], fields[:optional]
+        print_fields fields[:required], fields[:optional], fields[:generate].keys
       end
 
       # rake template:locations:items:process[templates/locations/onsite.csv]
