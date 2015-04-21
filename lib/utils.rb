@@ -93,6 +93,7 @@ def get_config(config_file)
   end
   raise "No required fields defined in #{config_file}" if fields[:required].empty?
   raise "Filename is undefined in #{config_file}" if fields[:filename].empty?
+  fields[:transforms] = {}
   fields
 end
 
@@ -117,6 +118,13 @@ def process_csv(input_file, output_dir, template_file, fields = {})
     # check required fields have value and pad optional fields to allow partial csv
     fields[:required].each { |r| raise "HELL" unless data.has_key? r.to_sym or data[r.to_sym].empty? }
     fields[:optional].each { |r| data[r] = "" unless data.has_key? r.to_sym }
+
+    fields[:transforms].each do |field, spec|
+      data[field] = spec.call(data[field])
+    end
+
+    # set the domain for cspace urn values
+    data[:domain] = fields[:domain]
 
     template = ERB.new(get_template(template_file))
     result   = template.result(binding) # binding adds variables from scope

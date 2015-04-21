@@ -6,6 +6,7 @@ require 'json'
 require 'logger'
 require 'nokogiri'
 require 'pp'
+require 'uri'
 
 require_relative "lib/utils"
 require_relative "lib/cs"

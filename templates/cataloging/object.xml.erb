@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document name="collectionobjects">
+  <ns2:collectionobjects_common xmlns:ns2="http://collectionspace.org/services/collectionobject" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <objectNumber><%= data[:id] %></objectNumber>
+    <numberOfObjects><%= data[:count] %></numberOfObjects>
+    <titleGroupList>
+      <titleGroup>
+        <title><%= data[:title] %></title>
+        <titleType/>
+        <titleTranslationSubGroupList>
+          <titleTranslationSubGroup>
+            <titleTranslationLanguage>urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(eng)'English'</titleTranslationLanguage>
+            <titleTranslation/>
+          </titleTranslationSubGroup>
+        </titleTranslationSubGroupList>
+        <titleLanguage>urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(eng)'English'</titleLanguage>
+      </titleGroup>
+    </titleGroupList>
+    <briefDescriptions>
+      <briefDescription><%= data[:desc_brief] %></briefDescription>
+    </briefDescriptions>
+    <contentDescription><%= data[:desc_full] %></contentDescription>
+    <styles>
+      <style><%= data[:style]%></style>
+    </styles>
+    <contentLanguages>
+      <contentLanguage>urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(eng)'English'</contentLanguage>
+    </contentLanguages>
+    <recordStatus><%= data[:status] %></recordStatus>
+    <objectProductionDateGroupList>
+      <objectProductionDateGroup>
+        <dateDisplayDate><%= data[:date_display] %></dateDisplayDate>
+        <dateEarliestSingleYear><%= data[:date_earliest] %></dateEarliestSingleYear>
+        <dateLatestYear><%= data[:date_latest] %></dateLatestYear>
+        <datePeriod><%= data[:date_period] %></datePeriod>
+        <dateEarliestSingleEra>urn:cspace:<%= data[:domain] %>:vocabularies:name(dateera):item:name(ce)'CE'</dateEarliestSingleEra>
+        <dateLatestEra>urn:cspace:<%= data[:domain] %>:vocabularies:name(dateera):item:name(ce)'CE'</dateLatestEra>
+        <dateNote/>
+      </objectProductionDateGroup>
+    </objectProductionDateGroupList>
+    <objectProductionPersonGroupList>
+<% unless data[:creator1_id].empty? or data[:creator1_name].empty? %>
+      <objectProductionPersonGroup>
+        <objectProductionPersonRole><%= data[:creator1_role] %></objectProductionPersonRole>
+        <objectProductionPerson>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:creator1_id] %>)'<%= data[:creator1_name] %>'</objectProductionPerson>
+      </objectProductionPersonGroup>
+<% end %>
+<% unless data[:creator2_id].empty? or data[:creator2_name].empty? %>
+      <objectProductionPersonGroup>
+        <objectProductionPersonRole><%= data[:creator2_role] %></objectProductionPersonRole>
+        <objectProductionPerson>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:creator2_id] %>)'<%= data[:creator2_name] %>'</objectProductionPerson>
+      </objectProductionPersonGroup>
+<% end %>
+    </objectProductionPersonGroupList>
+    <objectProductionPeopleGroupList>
+      <objectProductionPeopleGroup>
+        <objectProductionPeople><%= data[:group1_name] %></objectProductionPeople>
+        <objectProductionPeopleRole><%= data[:group1_role] %></objectProductionPeopleRole>
+      </objectProductionPeopleGroup>
+    </objectProductionPeopleGroupList>
+    <ownershipExchangePriceCurrency>urn:cspace:core.collectionspace.org:vocabularies:name(currency):item:name(USD)'US Dollar'</ownershipExchangePriceCurrency>
+  </ns2:collectionobjects_common>
+</document>
