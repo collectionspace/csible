@@ -10,6 +10,21 @@ namespace :template do
       fields          = get_config(config_file)
       fields[:domain] = domain
 
+      fields[:generate] = {
+        creator1_id: {
+          from: :creator1_name,
+          required: false,
+          unique: true,
+          process: :get_short_identifier,
+        },
+        creator2_id: {
+          from: :creator2_name,
+          required: false,
+          unique: true,
+          process: :get_short_identifier,
+        },
+      }
+
       fields[:transforms] = {
         date_period: ->(value) { value.capitalize }
       }

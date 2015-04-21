@@ -1,2 +1,2 @@
-id,count,title,desc_brief,desc_full,style,status,date_display,date_earliest,date_latest,date_period,creator1_role,creator1_id,creator1_name,creator2_role,creator2_id,creator2_name,group1_name,group1_role
-123456,1,Mona Lisa,Famous painting.,Painting of women with weird grin.,sfumato,in-process,16th century,1503,1506,Renaissance,Painter,LeonardoDaVinci0420151,Leonardo Da Vinci,,,,The Catholic Church,Sponsor
+id,count,title,desc_brief,desc_full,style,status,date_display,date_earliest,date_latest,date_period,creator1_role,creator1_name,creator2_role,creator2_name,group1_name,group1_role
+123456,1,Mona Lisa,Famous painting.,Painting of women with weird grin.,sfumato,in-process,16th century,1503,1506,Renaissance,Painter,Leonardo Da Vinci,,,,The Catholic Church,Sponsor

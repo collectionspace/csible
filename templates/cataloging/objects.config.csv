@@ -11,10 +11,10 @@ date_earliest,optional,false
 date_latest,optional,false
 date_period,optional,false
 creator1_role,optional,false
-creator1_id,optional,false
+creator1_id,generated,false
 creator1_name,optional,false
 creator2_role,optional,false
-creator2_id,optional,false
+creator2_id,generated,false
 creator2_name,optional,false
 group1_name,optional,false
 group1_role,optional,false
