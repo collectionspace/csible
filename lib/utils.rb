@@ -131,8 +131,9 @@ def process_csv(input_file, output_dir, template_file, fields = {})
 
     fields[:generate].each do |field, spec|
       source_value  = data[spec[:from]]
-      derived_value = send(spec[:process], source_value)
-      raise "Generated value is invalid for #{source_value}" if spec[:required] and (!derived_value or derived_value.empty?)
+      derived_value = spec[:process].is_a?(Proc) ? spec[:process].call(source_value) : send(spec[:process], source_value)
+      raise "Generated value should not be nil" if derived_value.nil?
+      raise "Generated value is invalid for #{source_value}" if spec[:required] and derived_value.empty?
       raise "Generated value is not unique" if spec[:unique] and generated_values.include? derived_value
       generated_values << derived_value
       data[field] = derived_value

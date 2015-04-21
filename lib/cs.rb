@@ -86,8 +86,7 @@ namespace :cs do
       properties = properties.split("~") if properties.respond_to? :split
       params     = args[:params] || nil
       results    = get_list_properties(path, properties, params)
-      # pp results
-      write_csv(results)
+      write_csv(results) unless results.empty?
     end
 
   end
