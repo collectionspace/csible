@@ -14,7 +14,7 @@
     <accessNote><%= data[:accessnote] %></accessNote>
     <securityNote><%= data[:securitynote] %></securityNote>
 <% if ! data[:locationtype].empty? %>
-    <locationType>urn:cspace:cspace.lyrasistechnology.org:vocabularies:name(locationtype):item:name(<%= data[:locationtype].downcase %>)'<%= data[:locationtype] %>'</locationType>
+    <locationType>urn:cspace:<%= data[:domain] %>:vocabularies:name(locationtype):item:name(<%= data[:locationtype].downcase %>)'<%= data[:locationtype] %>'</locationType>
 <% end %>
     <conditionGroupList>
       <conditionGroup>
