@@ -25,4 +25,22 @@ rake cs:relationships[/locationauthorities/add50144-321a-4355-840b/items,locatio
 rake cs:delete:file[response.txt]
 ```
 
+**Names:**
+
+Names are entered in direct format. This is the `display` name:
+
+```
+Tuto
+Clementine Hunter
+Robert M. Wilson
+```
+
+To parse names split on space characters:
+
+- if 1 one result use `display` name only (no `first`, `middle`, `last` qualifications)
+- if 2 results use `display`, `first` [0], `last` [1]
+- if 3 results use `display`, `first` [0], `middle` [1], `last` [2] except:
+  - if [1] is "([Dd]e|V[ao]n)" concatenate [1] and [2] as `last` (exclude `middle`)
+  - the parsing rules should be reassessed with each migration
+
 ---
