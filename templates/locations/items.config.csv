@@ -1,5 +1,5 @@
 field,type,filename
-shortidentifier,required,true
+shortidentifier,generated,true
 termname,required,false
 locationtype,optional,false
 address,optional,false

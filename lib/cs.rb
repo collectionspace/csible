@@ -25,16 +25,19 @@ namespace :cs do
         headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
       }) do |row|
       data = row.to_hash
+      next if data[:to].empty? or data[:from].empty? # undefined relationship
       relationships[data[:to]] << data[:from]
     end
 
     relationships.each do |broad, related|
-      ids = get_identifiers(path, broad)
-      raise "Invalid relationship #{broad} does not exist." unless ids
+      broad_id = get_short_identifier(broad)
+      ids = get_identifiers(path, broad_id)
+      raise "Invalid relationship #{broad_id} does not exist." unless ids
       identifiers[broad] = ids
       related.each do |item|
-        ids  = get_identifiers(path, item)
-        raise "Invalid relationship #{item} does not exist." unless ids
+        item_id = get_short_identifier(item)
+        ids  = get_identifiers(path, item_id)
+        raise "Invalid relationship #{item_id} does not exist." unless ids
         identifiers[item] = ids
 
         # wrap data for template

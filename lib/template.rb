@@ -40,6 +40,15 @@ namespace :template do
       fields          = get_config(config_file)
       fields[:domain] = domain
 
+      fields[:generate] = {
+        shortidentifier: {
+          from: :termname,
+          required: true,
+          unique: true,
+          process: :get_short_identifier,
+        },
+      }
+
       # rake template:locations:items:fields
       desc "Display fields for location authority items"
       task :fields do |t|

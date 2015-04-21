@@ -79,7 +79,7 @@ end
 
 def get_config(config_file)
   raise "Invalid input file #{input_file}" unless File.file? config_file
-  types = ["required", "optional"]
+  types = ["required", "optional", "generated"]
   fields = Hash.new { |hash, key| hash[key] = [] }
   CSV.foreach(config_file, {
       headers: true,
@@ -93,8 +93,16 @@ def get_config(config_file)
   end
   raise "No required fields defined in #{config_file}" if fields[:required].empty?
   raise "Filename is undefined in #{config_file}" if fields[:filename].empty?
+  fields[:generate]   = {}
   fields[:transforms] = {}
   fields
+end
+
+def get_short_identifier(value)
+  v_str = value.gsub(/\W/, ''); # remove non-words
+  v_enc = Base64.strict_encode64(v_str); # encode it
+  v = v_str + v_enc.gsub(/\W/, ''); # remove non-words from result
+  v
 end
 
 def get_template(file)
@@ -108,6 +116,7 @@ end
 
 def process_csv(input_file, output_dir, template_file, fields = {})
   raise "Invalid input file #{input_file}" unless File.file? input_file
+  generated_values = Set.new
   CSV.foreach(input_file, {
       headers: true,
       header_converters: :symbol,
@@ -118,6 +127,15 @@ def process_csv(input_file, output_dir, template_file, fields = {})
     # check required fields have value and pad optional fields to allow partial csv
     fields[:required].each { |r| raise "HELL" unless data.has_key? r.to_sym or data[r.to_sym].empty? }
     fields[:optional].each { |r| data[r] = "" unless data.has_key? r.to_sym }
+
+    fields[:generate].each do |field, spec|
+      source_value  = data[spec[:from]]
+      derived_value = send(spec[:process], source_value)
+      raise "Generated value is invalid for #{source_value}" if spec[:required] and (!derived_value or derived_value.empty?)
+      raise "Generated value is not unique" if spec[:unique] and generated_values.include? derived_value
+      generated_values << derived_value
+      data[field] = derived_value
+    end
 
     fields[:transforms].each do |field, spec|
       data[field] = spec.call(data[field])

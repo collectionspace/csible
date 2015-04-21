@@ -1,3 +1,4 @@
+require 'base64'
 require 'erb'
 require 'csv'
 require 'erb'
@@ -6,6 +7,7 @@ require 'json'
 require 'logger'
 require 'nokogiri'
 require 'pp'
+require 'set'
 require 'uri'
 
 require_relative "lib/utils"
