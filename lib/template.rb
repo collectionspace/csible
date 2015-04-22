@@ -27,7 +27,8 @@ namespace :template do
       }
 
       fields[:transforms] = {
-        date_period: ->(value) { value.capitalize }
+        date_period: ->(value) { value.capitalize },
+        # prod_place: -> (value) { value.gsub(/\s/,'').split(",").map(&:capitalize).join(", ") },
       }
 
       # rake template:cataloging:objects:fields

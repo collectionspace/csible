@@ -4,7 +4,10 @@ count,optional,false
 title,required,false
 desc_brief,optional,false
 desc_full,optional,false
+desc_phys,optional,false
+comment,optional,false
 style,optional,false
+color,optional,false
 status,optional,false
 date_display,optional,false
 date_earliest,optional,false
