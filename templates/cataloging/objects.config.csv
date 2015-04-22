@@ -10,6 +10,7 @@ date_display,optional,false
 date_earliest,optional,false
 date_latest,optional,false
 date_period,optional,false
+prod_place,optional,false
 creator1_role,optional,false
 creator1_id,generated,false
 creator1_name,optional,false

@@ -38,6 +38,12 @@
         <dateNote/>
       </objectProductionDateGroup>
     </objectProductionDateGroupList>
+    <objectProductionPlaceGroupList>
+      <objectProductionPlaceGroup>
+        <objectProductionPlace><%= data[:prod_place] %></objectProductionPlace>
+        <objectProductionPlaceRole/>
+      </objectProductionPlaceGroup>
+    </objectProductionPlaceGroupList>
     <objectProductionPersonGroupList>
 <% unless data[:creator1_id].empty? or data[:creator1_name].empty? %>
       <objectProductionPersonGroup>
