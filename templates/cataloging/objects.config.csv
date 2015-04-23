@@ -32,3 +32,4 @@ length,optional,false
 length_unit,optional,false
 volume,optional,false
 volume_unit,optional,false
+history,optional,false
