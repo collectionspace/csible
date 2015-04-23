@@ -7,7 +7,7 @@ namespace :cs do
     pp JSON.parse( IO.read('api.json') )
   end
 
-  namespace :relate
+  namespace :relate do
     # rake cs:relate:records
     desc "Set cataloging / procedure relationships using a csv file"
     task :records, [:csv] do |t, args|
@@ -15,7 +15,7 @@ namespace :cs do
       # acq, 001, cat, 001
     end
 
-    # rake cs:relate:authories[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,templates/relationships/relationships.example.csv]
+    # rake cs:relate:authorities[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,templates/relationships/relationships.example.csv]
     desc "Set authority relationships using a csv file"
     task :authorities, [:path, :type, :csv] do |t, args|
       path = args[:path]
