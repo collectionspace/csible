@@ -7,56 +7,65 @@ namespace :cs do
     pp JSON.parse( IO.read('api.json') )
   end
 
-  # rake cs:relationships[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,templates/relationships/relationships.example.csv]
-  desc "Set object relationships using a csv file"
-  task :relationships, [:path, :type, :csv] do |t, args|
-    path = args[:path]
-    type = args[:type]
-    csv  = args[:csv]
-    raise "HELL" unless File.file? csv
-    raise "Unknown itemtype for authority #{type}" unless authority_itemtypes(type)
-
-    output_dir    = "tmp"
-    template_file = "templates/relationships/relationship.xml.erb"
-    relationships = Hash.new { |hash, key| hash[key] = [] }
-    identifiers   = Hash.new { |hash, key| hash[key] = {} }
-
-    CSV.foreach(csv, {
-        headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
-      }) do |row|
-      data = row.to_hash
-      next if data[:to].empty? or data[:from].empty? # undefined relationship
-      relationships[data[:to]] << data[:from]
+  namespace :relate
+    # rake cs:relate:records
+    desc "Set cataloging / procedure relationships using a csv file"
+    task :records, [:csv] do |t, args|
+      # from_type, from, to_type, to,
+      # acq, 001, cat, 001
     end
 
-    relationships.each do |broad, related|
-      broad_id = get_short_identifier(broad)
-      ids = get_identifiers(path, broad_id)
-      raise "Invalid relationship #{broad_id} does not exist." unless ids
-      identifiers[broad] = ids
-      related.each do |item|
-        item_id = get_short_identifier(item)
-        ids  = get_identifiers(path, item_id)
-        raise "Invalid relationship #{item_id} does not exist." unless ids
-        identifiers[item] = ids
+    # rake cs:relate:authority[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,templates/relationships/relationships.example.csv]
+    desc "Set authority relationships using a csv file"
+    task :authority, [:path, :type, :csv] do |t, args|
+      path = args[:path]
+      type = args[:type]
+      csv  = args[:csv]
+      raise "HELL" unless File.file? csv
+      raise "Unknown itemtype for authority #{type}" unless authority_itemtypes(type)
 
-        # wrap data for template
-        data = {}
-        data[:type]     = type
-        data[:itemtype] = authority_itemtypes(type)
-        data[:csid]     = identifiers[broad]["csid"]
-        data[:uri]      = identifiers[broad]["uri"]
+      output_dir    = "tmp"
+      template_file = "templates/relationships/hierarchy.xml.erb"
+      relationships = Hash.new { |hash, key| hash[key] = [] }
+      identifiers   = Hash.new { |hash, key| hash[key] = {} }
 
-        template = ERB.new(get_template(template_file))
-        result   = template.result(binding)
+      CSV.foreach(csv, {
+          headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
+        }) do |row|
+        data = row.to_hash
+        next if data[:to].empty? or data[:from].empty? # undefined relationship
+        relationships[data[:to]] << data[:from]
+      end
 
-        # cache result
-        output_filename = "#{output_dir}/#{identifiers[item]["csid"]}.xml"
-        write_file(output_filename, result)
+      relationships.each do |broad, related|
+        broad_id = get_short_identifier(broad)
+        ids = get_identifiers(path, broad_id)
+        raise "Invalid relationship #{broad_id} does not exist." unless ids
+        identifiers[broad] = ids
+        related.each do |item|
+          item_id = get_short_identifier(item)
+          ids  = get_identifiers(path, item_id)
+          raise "Invalid relationship #{item_id} does not exist." unless ids
+          identifiers[item] = ids
 
-        # make the introductions
-        Rake::Task["cs:put:file"].invoke(identifiers[item]["uri"], output_filename)
-        Rake::Task["cs:put:file"].reenable
+          # wrap data for template
+          data = {}
+          data[:type]     = type
+          data[:itemtype] = authority_itemtypes(type)
+          data[:csid]     = identifiers[broad]["csid"]
+          data[:uri]      = identifiers[broad]["uri"]
+
+          template = ERB.new(get_template(template_file))
+          result   = template.result(binding)
+
+          # cache result
+          output_filename = "#{output_dir}/#{identifiers[item]["csid"]}.xml"
+          write_file(output_filename, result)
+
+          # make the introductions
+          Rake::Task["cs:put:file"].invoke(identifiers[item]["uri"], output_filename)
+          Rake::Task["cs:put:file"].reenable
+        end
       end
     end
   end
