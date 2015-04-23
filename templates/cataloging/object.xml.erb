@@ -25,10 +25,14 @@
       <comment><%= data[:comment] %></comment>
     </comments>
     <styles>
-      <style><%= data[:style] %></style>
+<% data[:styles].split(",").map(&:strip).each do |style| %>
+      <style><%= style %></style>
+<% end %>
     </styles>
     <colors>
-      <color><%= data[:color] %></color>
+<% data[:colors].split(",").map(&:strip).each do |color| %>
+      <color><%= color %></color>
+<% end %>
     </colors>
     <contentLanguages>
       <contentLanguage>urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(eng)'English'</contentLanguage>
@@ -72,5 +76,12 @@
       </objectProductionPeopleGroup>
     </objectProductionPeopleGroupList>
     <ownershipExchangePriceCurrency>urn:cspace:core.collectionspace.org:vocabularies:name(currency):item:name(USD)'US Dollar'</ownershipExchangePriceCurrency>
+    <materialGroupList>
+<% data[:materials].split(",").map(&:strip).each do |material| %>
+      <materialGroup>
+        <material><%= material %></material>
+      <materialGroup>
+<% end %>
+    </materialGroupList>
   </ns2:collectionobjects_common>
 </document>

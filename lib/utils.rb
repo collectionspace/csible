@@ -127,7 +127,7 @@ def process_csv(input_file, output_dir, template_file, fields = {})
     data = row.to_hash
     # check required fields have value and pad optional fields to allow partial csv
     fields[:required].each { |r| raise "HELL" unless data.has_key? r.to_sym or data[r.to_sym].empty? }
-    fields[:optional].each { |r| data[r] = "" unless data.has_key? r.to_sym }
+    fields[:optional].each { |r| data[r.to_sym] = "" unless data.has_key? r.to_sym }
 
     fields[:generate].each do |field, spec|
       source_value  = data[spec[:from]]
@@ -146,6 +146,7 @@ def process_csv(input_file, output_dir, template_file, fields = {})
     # set the domain for cspace urn values
     data[:domain] = fields[:domain]
 
+    # pp data
     template = ERB.new(get_template(template_file))
     result   = template.result(binding) # binding adds variables from scope
 

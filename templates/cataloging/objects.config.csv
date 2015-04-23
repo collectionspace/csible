@@ -6,8 +6,8 @@ desc_brief,optional,false
 desc_full,optional,false
 desc_phys,optional,false
 comment,optional,false
-style,optional,false
-color,optional,false
+styles,optional,false
+colors,optional,false
 status,optional,false
 date_display,optional,false
 date_earliest,optional,false
@@ -22,3 +22,4 @@ creator2_id,generated,false
 creator2_name,optional,false
 group1_name,optional,false
 group1_role,optional,false
+materials,optional,false
