@@ -15,9 +15,9 @@ namespace :cs do
       # acq, 001, cat, 001
     end
 
-    # rake cs:relate:authority[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,templates/relationships/relationships.example.csv]
+    # rake cs:relate:authories[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,templates/relationships/relationships.example.csv]
     desc "Set authority relationships using a csv file"
-    task :authority, [:path, :type, :csv] do |t, args|
+    task :authorities, [:path, :type, :csv] do |t, args|
       path = args[:path]
       type = args[:type]
       csv  = args[:csv]
