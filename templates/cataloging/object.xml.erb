@@ -83,5 +83,41 @@
       <materialGroup>
 <% end %>
     </materialGroupList>
+    <measuredPartGroupList>
+      <measuredPartGroup>
+        <dimensionSummary/>
+        <measuredPart><%= data[:measured] %></measuredPart>
+        <dimensionSubGroupList>
+<% unless data[:height].empty? %>
+          <dimensionSubGroup>
+            <dimension>height</dimension>
+            <measurementUnit><%= data[:height_unit] %></measurementUnit>
+            <value><%= data[:height] %></value>
+          </dimensionSubGroup>
+<% end %>
+<% unless data[:width].empty? %>
+          <dimensionSubGroup>
+            <dimension>width</dimension>
+            <measurementUnit><%= data[:width_unit] %></measurementUnit>
+            <value><%= data[:width] %></value>
+          </dimensionSubGroup>
+<% end %>
+<% unless data[:length].empty? %>
+          <dimensionSubGroup>
+            <dimension>length</dimension>
+            <measurementUnit><%= data[:length_unit] %></measurementUnit>
+            <value><%= data[:length] %></value>
+          </dimensionSubGroup>
+<% end %>
+<% unless data[:volume].empty? %>
+          <dimensionSubGroup>
+            <dimension>volume</dimension>
+            <measurementUnit><%= data[:volume_unit] %></measurementUnit>
+            <value><%= data[:volume] %></value>
+          </dimensionSubGroup>
+<% end %>
+        </dimensionSubGroupList>
+      </measuredPartGroup>
+    </measuredPartGroupList>
   </ns2:collectionobjects_common>
 </document>

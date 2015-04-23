@@ -23,3 +23,12 @@ creator2_name,optional,false
 group1_name,optional,false
 group1_role,optional,false
 materials,optional,false
+measured,optional,false
+height,optional,false
+height_unit,optional,false
+width,optional,false
+width_unit,optional,false
+length,optional,false
+length_unit,optional,false
+volume,optional,false
+volume_unit,optional,false
