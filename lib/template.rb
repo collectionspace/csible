@@ -15,13 +15,13 @@ namespace :template do
         creator1_id: {
           from: :creator1_name,
           required: false,
-          unique: true,
+          unique: false,
           process: :get_short_identifier,
         },
         creator2_id: {
           from: :creator2_name,
           required: false,
-          unique: true,
+          unique: false,
           process: :get_short_identifier,
         },
       }
