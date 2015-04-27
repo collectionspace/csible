@@ -129,6 +129,10 @@ def process_csv(input_file, output_dir, template_file, fields = {})
     fields[:required].each { |r| raise "HELL" unless data.has_key? r.to_sym or data[r.to_sym].empty? }
     fields[:optional].each { |r| data[r.to_sym] = "" unless data.has_key? r.to_sym }
 
+    fields[:transforms].each do |field, spec|
+      data[field] = spec.call(data[field])
+    end
+
     fields[:generate].each do |field, spec|
       source_value  = data[spec[:from]]
       derived_value = spec[:process].is_a?(Proc) ? spec[:process].call(source_value) : send(spec[:process], source_value)
@@ -137,10 +141,6 @@ def process_csv(input_file, output_dir, template_file, fields = {})
       raise "Generated value is not unique" if spec[:unique] and generated_values.include? derived_value
       generated_values << derived_value
       data[field] = derived_value
-    end
-
-    fields[:transforms].each do |field, spec|
-      data[field] = spec.call(data[field])
     end
 
     # set the domain for cspace urn values
