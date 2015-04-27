@@ -2,6 +2,7 @@ field,type,filename
 id,required,true
 count,optional,false
 title,required,false
+objects,optional,false
 desc_brief,optional,false
 desc_full,optional,false
 desc_phys,optional,false

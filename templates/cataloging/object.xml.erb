@@ -16,6 +16,13 @@
         <titleLanguage>urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(eng)'English'</titleLanguage>
       </titleGroup>
     </titleGroupList>
+    <objectNameList>
+<% data[:objects].split(",").map(&:strip).each do |object| %>
+      <objectNameGroup>
+        <objectName><%= object %></objectName>
+      </objectNameGroup>
+<% end %>
+    </objectNameList>
     <briefDescriptions>
       <briefDescription><%= data[:desc_brief] %></briefDescription>
     </briefDescriptions>
