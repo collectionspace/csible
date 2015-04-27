@@ -115,7 +115,7 @@ namespace :template do
             names = value.split(" ")
             if names.length > 2
               first, middle, last = names
-              name = middle unless middle =~ /#{surname_prefix}/
+              name = middle unless middle =~ /^#{surname_prefix}/
             end
             name
           },
@@ -128,7 +128,7 @@ namespace :template do
             name  = ""
             names = value.split(" ")
             name  = names[-1] if names.length >= 2
-            name  = "#{names[1]} #{name}" if names[1] =~ /#{surname_prefix}/
+            name  = "#{names[1]} #{name}" if names[1] =~ /^#{surname_prefix}/
             name
           },
         },
