@@ -127,5 +127,13 @@
       </measuredPartGroup>
     </measuredPartGroupList>
     <objectHistoryNote><%= data[:history] %></objectHistoryNote>
+    <contentConcepts>
+<% unless data[:concept1_id].empty? or data[:concept1_name].empty? %>
+      <contentConcept>urn:cspace:cspace.lyrasistechnology.org:conceptauthorities:name(concept):item:name(<%= data[:concept1_id] %>)'<%= data[:concept1_name] %>'</contentConcept>
+<% end %>
+<% unless data[:concept2_id].empty? or data[:concept2_name].empty? %>
+      <contentConcept>urn:cspace:cspace.lyrasistechnology.org:conceptauthorities:name(concept):item:name(<%= data[:concept2_id] %>)'<%= data[:concept2_name] %>'</contentConcept>
+<% end %>
+    </contentConcepts>
   </ns2:collectionobjects_common>
 </document>

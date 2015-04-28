@@ -12,6 +12,18 @@ namespace :template do
       fields[:domain] = domain
 
       fields[:generate] = {
+        concept1_id: {
+          from: :concept1_name,
+          required: false,
+          unique: false,
+          process: :get_short_identifier,
+        },
+        concept2_id: {
+          from: :concept2_name,
+          required: false,
+          unique: false,
+          process: :get_short_identifier,
+        },
         creator1_id: {
           from: :creator1_name,
           required: false,
@@ -27,6 +39,8 @@ namespace :template do
       }
 
       fields[:transforms] = {
+        concept1_name: ->(value) { value.capitalize },
+        concept2_name: ->(value) { value.capitalize },
         date_period: ->(value) { value.capitalize },
         # prod_place: -> (value) { value.gsub(/\s/,'').split(",").map(&:capitalize).join(", ") },
         title: ->(value) { value.capitalize },
@@ -40,6 +54,40 @@ namespace :template do
 
       # rake template:cataloging:objects:process[templates/cataloging/objects.example.csv]
       desc "Create cataloging XML records from csv"
+      task :process, [:csv] do |t, args|
+        process_csv(args[:csv], output_dir, template_file, fields)
+      end
+    end
+  end
+
+  namespace :concepts do
+    namespace :items do
+      config_file     = 'templates/concepts/items.config.csv'
+      template_file   = 'templates/concepts/item.xml.erb'
+      fields          = get_config(config_file)
+      fields[:domain] = domain
+
+      fields[:generate] = {
+        shortidentifier: {
+          from: :name,
+          required: true,
+          unique: true,
+          process: :get_short_identifier,
+        },
+      }
+
+      fields[:transforms] = {
+        name: ->(value) { value.capitalize },
+      }
+
+      # rake template:concepts:items:fields
+      desc "Display fields for concept authority items"
+      task :fields do |t|
+        print_fields fields[:required], fields[:optional], fields[:generate].keys
+      end
+
+      # rake template:concepts:items:process[templates/concepts/items.example.csv]
+      desc "Create concept authority item XML records from csv"
       task :process, [:csv] do |t, args|
         process_csv(args[:csv], output_dir, template_file, fields)
       end

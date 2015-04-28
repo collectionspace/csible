@@ -34,3 +34,7 @@ length_unit,optional,false
 volume,optional,false
 volume_unit,optional,false
 history,optional,false
+concept1_id,generated,false
+concept1_name,optional,false
+concept2_id,generated,false
+concept2_name,optional,false

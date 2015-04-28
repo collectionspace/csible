@@ -3,6 +3,22 @@ Authorities
 
 Creating authority (item) records and setting relationships:
 
+**Concepts**
+
+```bash
+# get csids for concept authorities
+rake cs:get:list[/conceptauthorities,uri~shortIdentifier]
+# create import xml
+rake template:concepts:items:process[templates/concepts/watermill.csv]
+# import it using csid from csv: `concept` authority
+rake cs:post:directory[/conceptauthorities/02ad348f-828f-4834-a830/items,imports,1]
+
+rake clear:all
+
+# to "undo"
+rake cs:delete:file[response.txt]
+```
+
 **Locations**
 
 ```bash
