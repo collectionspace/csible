@@ -16,6 +16,7 @@
         <titleLanguage>urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(eng)'English'</titleLanguage>
       </titleGroup>
     </titleGroupList>
+    <editionNumber><%= data[:edition] %></editionNumber>
     <objectNameList>
 <% data[:objects].split(",").map(&:strip).each do |object| %>
       <objectNameGroup>
