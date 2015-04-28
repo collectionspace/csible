@@ -15,6 +15,7 @@ date_display,optional,false
 date_earliest,optional,false
 date_latest,optional,false
 date_period,optional,false
+date_note,optional,false
 prod_place,optional,false
 creator1_role,optional,false
 creator1_id,generated,false
