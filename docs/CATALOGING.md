@@ -5,7 +5,7 @@ Cataloging
 # create import xml
 rake template:cataloging:objects:process[templates/cataloging/watermill.csv]
 # import it
-rake cs:post:directory[/collectionobjects,imports,1]
+rake cs:post:directory[/collectionobjects,imports,0.10]
 
 rake clear:all
 ```
