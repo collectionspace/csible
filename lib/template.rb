@@ -1,6 +1,6 @@
 # TEMPLATES
 namespace :template do
-  domain         = URI.parse(JSON.parse( IO.read('api.json') )["base"]).host
+  domain         = JSON.parse( IO.read('api.json') )["urn"]
   surname_prefix = "([Dd]e|V[ao]n)"
   output_dir     = 'imports'
 
