@@ -98,6 +98,13 @@ def get_config(config_file)
   fields
 end
 
+def get_currency_code(value)
+  c = {
+    usdollar: "USD",
+  }[value.downcase.gsub(/\s/, '').to_sym]
+  return c.nil? ? "" : c
+end
+
 def get_short_identifier(value)
   v_str = value.gsub(/\W/, ''); # remove non-words
   v_enc = Base64.strict_encode64(v_str); # encode it

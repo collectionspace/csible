@@ -4,6 +4,48 @@ namespace :template do
   surname_prefix = "([Dd]e|V[ao]n)"
   output_dir     = 'imports'
 
+  namespace :acquisitions do
+    namespace :objects do
+      config_file     = 'templates/acquisitions/objects.config.csv'
+      template_file   = 'templates/acquisitions/object.xml.erb'
+      fields          = get_config(config_file)
+      fields[:domain] = domain
+
+      fields[:generate] = {
+        currency_id: {
+          from: :currency,
+          required: false,
+          unique: false,
+          process: :get_currency_code,
+        },
+        source_id: {
+          from: :source,
+          required: false,
+          unique: false,
+          process: :get_short_identifier,
+        },
+        owner_id: {
+          from: :owner,
+          required: false,
+          unique: false,
+          process: :get_short_identifier,
+        },
+      }
+
+      # rake template:acquisitions:objects:fields
+      desc "Display fields for acquisitions objects"
+      task :fields do |t|
+        print_fields fields[:required], fields[:optional], fields[:generate].keys
+      end
+
+      # rake template:acquisitions:objects:process[templates/acquisitions/objects.example.csv]
+      desc "Create acquisitions XML records from csv"
+      task :process, [:csv] do |t, args|
+        process_csv(args[:csv], output_dir, template_file, fields)
+      end
+    end
+  end
+
   namespace :cataloging do
     namespace :objects do
       config_file     = 'templates/cataloging/objects.config.csv'
