@@ -58,10 +58,12 @@
       </objectProductionDateGroup>
     </objectProductionDateGroupList>
     <objectProductionPlaceGroupList>
+<% data[:prod_place].split(",").map(&:strip).each do |place| %>
       <objectProductionPlaceGroup>
-        <objectProductionPlace><%= data[:prod_place] %></objectProductionPlace>
+        <objectProductionPlace><%= place %></objectProductionPlace>
         <objectProductionPlaceRole/>
       </objectProductionPlaceGroup>
+<% end %>
     </objectProductionPlaceGroupList>
     <objectProductionPersonGroupList>
 <% unless data[:creator1_id].empty? or data[:creator1_name].empty? %>
