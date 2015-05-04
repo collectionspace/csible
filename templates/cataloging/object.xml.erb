@@ -98,32 +98,60 @@
         <dimensionSummary/>
         <measuredPart><%= data[:measured] %></measuredPart>
         <dimensionSubGroupList>
-<% unless data[:height].empty? %>
+<% unless data[:height1].empty? %>
           <dimensionSubGroup>
             <dimension>height</dimension>
-            <measurementUnit><%= data[:height_unit] %></measurementUnit>
-            <value><%= data[:height] %></value>
+            <measurementUnit><%= data[:height1].split(",")[1] %></measurementUnit>
+            <value><%= data[:height1].split(",")[0] %></value>
           </dimensionSubGroup>
 <% end %>
-<% unless data[:width].empty? %>
+<% unless data[:height2].empty? %>
+          <dimensionSubGroup>
+            <dimension>height</dimension>
+            <measurementUnit><%= data[:height2].split(",")[1] %></measurementUnit>
+            <value><%= data[:height2].split(",")[0] %></value>
+          </dimensionSubGroup>
+<% end %>
+<% unless data[:width1].empty? %>
           <dimensionSubGroup>
             <dimension>width</dimension>
-            <measurementUnit><%= data[:width_unit] %></measurementUnit>
-            <value><%= data[:width] %></value>
+            <measurementUnit><%= data[:width1].split(",")[1] %></measurementUnit>
+            <value><%= data[:width1].split(",")[0] %></value>
           </dimensionSubGroup>
 <% end %>
-<% unless data[:length].empty? %>
+<% unless data[:width2].empty? %>
+          <dimensionSubGroup>
+            <dimension>width</dimension>
+            <measurementUnit><%= data[:width2].split(",")[1] %></measurementUnit>
+            <value><%= data[:width2].split(",")[0] %></value>
+          </dimensionSubGroup>
+<% end %>
+<% unless data[:length1].empty? %>
           <dimensionSubGroup>
             <dimension>length</dimension>
-            <measurementUnit><%= data[:length_unit] %></measurementUnit>
-            <value><%= data[:length] %></value>
+            <measurementUnit><%= data[:length1].split(",")[1] %></measurementUnit>
+            <value><%= data[:length1].split(",")[0] %></value>
           </dimensionSubGroup>
 <% end %>
-<% unless data[:volume].empty? %>
+<% unless data[:length2].empty? %>
+          <dimensionSubGroup>
+            <dimension>length</dimension>
+            <measurementUnit><%= data[:length2].split(",")[1] %></measurementUnit>
+            <value><%= data[:length2].split(",")[0] %></value>
+          </dimensionSubGroup>
+<% end %>
+<% unless data[:volume1].empty? %>
           <dimensionSubGroup>
             <dimension>volume</dimension>
-            <measurementUnit><%= data[:volume_unit] %></measurementUnit>
-            <value><%= data[:volume] %></value>
+            <measurementUnit><%= data[:volume1].split(",")[1] %></measurementUnit>
+            <value><%= data[:volume1].split(",")[0] %></value>
+          </dimensionSubGroup>
+<% end %>
+<% unless data[:volume2].empty? %>
+          <dimensionSubGroup>
+            <dimension>volume</dimension>
+            <measurementUnit><%= data[:volume2].split(",")[1] %></measurementUnit>
+            <value><%= data[:volume2].split(",")[0] %></value>
           </dimensionSubGroup>
 <% end %>
         </dimensionSubGroupList>
