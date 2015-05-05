@@ -93,6 +93,7 @@ def get_config(config_file)
   end
   raise "No required fields defined in #{config_file}" if fields[:required].empty?
   raise "Filename is undefined in #{config_file}" if fields[:filename].empty?
+  fields[:filter]     = {}
   fields[:generate]   = {}
   fields[:transforms] = {}
   fields
@@ -132,6 +133,15 @@ def process_csv(input_file, output_dir, template_file, fields = {})
     }) do |row|
 
     data = row.to_hash
+
+    # process filters (skip if filter)
+    skip = false
+    fields[:filter].each do |filter, spec|
+      skip = true if spec.call(data[filter])
+      break if skip
+    end
+    next if skip
+
     # check required fields have value and pad optional fields to allow partial csv
     fields[:required].each { |r| raise "HELL" unless data.has_key? r.to_sym or data[r.to_sym].empty? }
     fields[:optional].each { |r| data[r.to_sym] = "" unless data.has_key? r.to_sym }

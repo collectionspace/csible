@@ -115,6 +115,10 @@ namespace :template do
       fields          = get_config(config_file)
       fields[:domain] = domain
 
+      fields[:filter] = {
+        # note: ->(value) { value.nil? or value.empty? },
+      }
+
       # rake template:conditioncheck:objects:fields
       desc "Display fields for conditioncheck objects"
       task :fields do |t|
@@ -272,6 +276,10 @@ namespace :template do
       template_file   = 'templates/valuationcontrol/object.xml.erb'
       fields          = get_config(config_file)
       fields[:domain] = domain
+
+      fields[:filter] = {
+        # value: ->(value) { value.nil? or value.empty? },
+      }
 
       fields[:generate] = {
         currency_id: {
