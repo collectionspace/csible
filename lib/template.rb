@@ -202,6 +202,36 @@ namespace :template do
     end
   end
 
+  namespace :organizations do
+    namespace :items do
+      config_file     = 'templates/organizations/items.config.csv'
+      template_file   = 'templates/organizations/item.xml.erb'
+      fields          = get_config(config_file)
+      fields[:domain] = domain
+
+      fields[:generate] = {
+        shortidentifier: {
+          from: :name,
+          required: true,
+          unique: true,
+          process: :get_short_identifier,
+        },
+      }
+
+      # rake template:organizations:items:fields
+      desc "Display fields for organization authority items"
+      task :fields do |t|
+        print_fields fields[:required], fields[:optional], fields[:generate].keys
+      end
+
+      # rake template:organizations:items:process[templates/organizations/items.example.csv]
+      desc "Create organization authority item XML records from csv"
+      task :process, [:csv] do |t, args|
+        process_csv(args[:csv], output_dir, template_file, fields)
+      end
+    end
+  end
+
   namespace :persons do
     namespace :items do
       config_file     = 'templates/persons/items.config.csv'
@@ -267,7 +297,6 @@ namespace :template do
         process_csv(args[:csv], output_dir, template_file, fields)
       end
     end
-
   end
 
   namespace :valuationcontrol do

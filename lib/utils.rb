@@ -78,7 +78,7 @@ def clear_file(file)
 end
 
 def get_config(config_file)
-  raise "Invalid input file #{input_file}" unless File.file? config_file
+  raise "Invalid input file #{config_file}" unless File.file? config_file
   types = ["required", "optional", "generated"]
   fields = Hash.new { |hash, key| hash[key] = [] }
   CSV.foreach(config_file, {
