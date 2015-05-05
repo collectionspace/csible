@@ -1,0 +1,7 @@
+field,type,filename
+id,required,true
+type,optional,false
+value,optional,false
+currency,optional,false
+currency_id,generated,false
+note,optional,false

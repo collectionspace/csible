@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document name="valuationcontrols">
+  <ns2:valuationcontrols_common xmlns:ns2="http://collectionspace.org/services/valuationcontrol" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <valuationcontrolRefNumber><%= data[:id] %></valuationcontrolRefNumber>
+    <valueType><%= data[:type] %></valueType>
+<% unless data[:value].empty? or data[:currency].empty? or data[:currency_id].empty? %>
+    <valueAmountsList>
+      <valueAmounts>
+        <valueCurrency>urn:cspace:<%= data[:domain] %>:vocabularies:name(currency):item:name(<%= data[:currency_id] %>)'<%= data[:currency] %>'</valueCurrency>
+        <valueAmount><%= data[:value] %></valueAmount>
+      </valueAmounts>
+    </valueAmountsList>
+<% end %>
+    <valueNote><%= data[:note] %></valueNote>
+  </ns2:valuationcontrols_common>
+</document>
