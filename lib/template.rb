@@ -108,6 +108,27 @@ namespace :template do
     end
   end
 
+  namespace :conditioncheck do
+    namespace :objects do
+      config_file     = 'templates/conditioncheck/objects.config.csv'
+      template_file   = 'templates/conditioncheck/object.xml.erb'
+      fields          = get_config(config_file)
+      fields[:domain] = domain
+
+      # rake template:conditioncheck:objects:fields
+      desc "Display fields for conditioncheck objects"
+      task :fields do |t|
+        print_fields fields[:required], fields[:optional], fields[:generate].keys
+      end
+
+      # rake template:conditioncheck:objects:process[templates/conditioncheck/objects.example.csv]
+      desc "Create conditioncheck XML records from csv"
+      task :process, [:csv] do |t, args|
+        process_csv(args[:csv], output_dir, template_file, fields)
+      end
+    end
+  end
+
   namespace :concepts do
     namespace :items do
       config_file     = 'templates/concepts/items.config.csv'
