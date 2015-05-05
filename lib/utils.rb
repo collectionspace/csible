@@ -101,6 +101,7 @@ end
 def get_currency_code(value)
   c = {
     usdollar: "USD",
+    unitedstatesdollar: "USD",
   }[value.downcase.gsub(/\s/, '').to_sym]
   return c.nil? ? "" : c
 end
