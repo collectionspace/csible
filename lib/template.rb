@@ -78,6 +78,12 @@ namespace :template do
           unique: false,
           process: :get_short_identifier,
         },
+        provenance_id: {
+          from: :provenance,
+          required: false,
+          unique: false,
+          process: :get_short_identifier,
+        },
       }
 
       fields[:transforms] = {

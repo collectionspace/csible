@@ -157,6 +157,15 @@
         </dimensionSubGroupList>
       </measuredPartGroup>
     </measuredPartGroupList>
+    <owners>
+<% unless data[:provenance].empty? %>
+<% if data[:provenance_type] =~ /^org/ %>
+      <owner>urn:cspace:<%= data[:domain] %>:orgauthorities:name(organization):item:name(<%= data[:provenance_id] %>)'<%= data[:provenance] %>'</owner>
+<% elsif data[:provenance_type] =~ /^per/ %>
+      <owner>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:provenance_id] %>)'<%= data[:provenance] %>'</owner>
+<% end %>
+<% end %>
+    </owners>
     <objectHistoryNote><%= data[:history] %></objectHistoryNote>
     <contentConcepts>
 <% unless data[:concept1_id].empty? or data[:concept1_name].empty? %>

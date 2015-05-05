@@ -35,6 +35,8 @@ length1,optional,false
 length2,optional,false
 volume1,optional,false
 volume2,optional,false
+provenance,optional,false
+provenance_type,optional,false
 history,optional,false
 concept1_id,generated,false
 concept1_name,optional,false
