@@ -43,6 +43,15 @@ rake cs:relate:authorities[/locationauthorities/add50144-321a-4355-840b/items,lo
 rake cs:delete:file[response.txt]
 ```
 
+**Organizations:**
+
+```
+# get csids for org authorities
+rake cs:get:list[/orgauthorities,uri~shortIdentifier]
+# import it using csid from csv: `organization` authority
+rake cs:post:directory[/orgauthorities/f1dd741c-0c98-4033-9a1c/items,imports,1]
+```
+
 **Persons:**
 
 Names are entered in direct format. This is the `display` name:
@@ -62,7 +71,7 @@ To parse names split on space characters:
   - the parsing rules should be reassessed with each migration
 
 ```bash
-# get csids for location authorities
+# get csids for person authorities
 rake cs:get:list[/personauthorities,uri~shortIdentifier]
 # create import xml
 rake template:persons:items:process[templates/persons/watermill.csv]
