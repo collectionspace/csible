@@ -8,15 +8,44 @@ namespace :cs do
   end
 
   namespace :relate do
-    # rake cs:relate:records
-    desc "Set cataloging / procedure relationships using a csv file"
+    output_dir = "tmp"
+
+    # rake cs:relate:records[templates/relationships/relations.example.csv]
+    desc "Create cataloging / procedure relationships using a csv file"
     task :records, [:csv] do |t, args|
-      # from_type, from, to_type, to,
-      # acq, 001, cat, 001
+      csv = args[:csv]
+      raise "HELL" unless File.file? csv
+      template_file = "templates/relationships/relation.xml.erb"
+      relationships = []
+
+      CSV.foreach(csv, {
+          headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
+        }) do |row|
+        data = row.to_hash
+        relationships << data
+      end
+
+      relationships.each do |relation|
+        from_csid = get_csid(relation[:from_type], relation[:from_search], relation[:from])
+        to_csid   = get_csid(relation[:to_type], relation[:to_search], relation[:to])
+
+        data = {}
+        data[:from_csid] = from_csid
+        data[:from_type] = relation[:from_type]
+        data[:to_csid]   = to_csid
+        data[:to_type]   = relation[:to_type]
+
+        template  = ERB.new(get_template(template_file))
+        result    = template.result(binding)
+
+        # cache result
+        output_filename = "#{output_dir}/#{from_csid}.xml"
+        write_file(output_filename, result)
+      end
     end
 
     # rake cs:relate:authorities[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,templates/relationships/relationships.example.csv]
-    desc "Set authority relationships using a csv file"
+    desc "Set and PUT authority relationships using a csv file"
     task :authorities, [:path, :type, :csv] do |t, args|
       path = args[:path]
       type = args[:type]
@@ -24,7 +53,6 @@ namespace :cs do
       raise "HELL" unless File.file? csv
       raise "Unknown itemtype for authority #{type}" unless authority_itemtypes(type)
 
-      output_dir    = "tmp"
       template_file = "templates/relationships/hierarchy.xml.erb"
       relationships = Hash.new { |hash, key| hash[key] = [] }
       identifiers   = Hash.new { |hash, key| hash[key] = {} }

@@ -27,7 +27,19 @@ def command(base, method, opts = {})
   command
 end
 
-def get_identifiers(path, id, throttle = 1)
+def get_csid(type, param, value, throttle = 0.25)
+  params = "as=#{type}_common:#{param}%3D%22#{value}%22&wf_deleted=false"
+  Rake::Task["cs:get:path"].invoke("/#{type}", params)
+  response = Nokogiri::XML.parse(File.open("response.xml"))
+  total_items = response.css("totalItems").text.to_i
+  raise "Search result != 1 for #{type} #{param} #{value}" unless total_items == 1
+  csid = response.css("csid").text
+  `sleep #{throttle}`
+  Rake::Task["cs:get:path"].reenable
+  csid
+end
+
+def get_identifiers(path, id, throttle = 0.25)
   identifiers = {}
   Rake::Task["cs:get:path"].invoke(path, "kw=#{id}")
   response    = Nokogiri::XML.parse(File.open("response.xml"))
@@ -35,11 +47,11 @@ def get_identifiers(path, id, throttle = 1)
   if total_items == 1
     identifiers["csid"] = response.css("csid").text
     identifiers["uri"]  = response.css("uri").text
-    `sleep #{throttle}`
-    Rake::Task["cs:get:path"].reenable
   else
     identifiers = nil
   end
+  `sleep #{throttle}`
+  Rake::Task["cs:get:path"].reenable
   identifiers
 end
 
