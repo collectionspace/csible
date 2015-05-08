@@ -39,6 +39,8 @@ rake template:locations:items:process[templates/locations/offsite.csv]
 rake cs:post:directory[/locationauthorities/add50144-321a-4355-840b/items,imports,1] # `offsite_sla` authority
 rake cs:relate:authorities[/locationauthorities/add50144-321a-4355-840b/items,locations,templates/locations/offsite.csv]
 
+rake clear:all
+
 # to "undo"
 rake cs:delete:file[response.txt]
 ```

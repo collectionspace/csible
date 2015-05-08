@@ -6,6 +6,7 @@ Relations
 rake clear:tmp
 
 # generate templates (this will query the services layer for `csid` values)
+# and save the results in the `tmp` directory
 rake cs:relate:records[templates/relationships/relations.example.csv]
 
 # import the relationships
