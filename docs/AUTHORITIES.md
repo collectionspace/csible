@@ -50,6 +50,8 @@ rake cs:delete:file[response.txt]
 ```
 # get csids for org authorities
 rake cs:get:list[/orgauthorities,uri~shortIdentifier]
+# create import xml
+rake template:organizations:items:process[templates/organizations/watermill.csv]
 # import it using csid from csv: `organization` authority
 rake cs:post:directory[/orgauthorities/f1dd741c-0c98-4033-9a1c/items,imports,1]
 ```
