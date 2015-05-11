@@ -12,8 +12,9 @@ namespace :cs do
 
     # rake cs:relate:records[templates/relationships/relations.example.csv]
     desc "Create cataloging / procedure relationships using a csv file"
-    task :records, [:csv] do |t, args|
-      csv = args[:csv]
+    task :records, [:csv, :throttle] do |t, args|
+      csv      = args[:csv]
+      throttle = args[:throttle] || 0.10
       raise "HELL" unless File.file? csv
       template_file = "templates/relationships/relation.xml.erb"
       relationships = []
@@ -26,8 +27,8 @@ namespace :cs do
       end
 
       relationships.each do |relation|
-        from_csid = get_csid(relation[:from_type], relation[:from_search], relation[:from])
-        to_csid   = get_csid(relation[:to_type], relation[:to_search], relation[:to])
+        from_csid = get_csid(relation[:from_type], relation[:from_search], relation[:from], throttle)
+        to_csid   = get_csid(relation[:to_type], relation[:to_search], relation[:to], throttle)
 
         data = {}
         data[:from_csid] = from_csid
