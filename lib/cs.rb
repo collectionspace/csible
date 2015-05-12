@@ -12,13 +12,15 @@ namespace :cs do
 
     # rake cs:relate:records[templates/relationships/relations.example.csv]
     desc "Create cataloging / procedure relationships using a csv file"
-    task :records, [:csv, :filename, :throttle] do |t, args|
+    task :records, [:csv, :fnkey, :throttle] do |t, args|
       csv      = args[:csv]
-      filename = (args[:filename] || "from_csid").intern
+      fnkey    = (args[:fnkey] || "from_csid").intern
+      fnkey    = fnkey.intern
       throttle = args[:throttle] || 0.10
       raise "HELL" unless File.file? csv
       template_file = "templates/relationships/relation.xml.erb"
       relationships = []
+      identifiers   = {}
 
       CSV.foreach(csv, {
           headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
@@ -28,27 +30,32 @@ namespace :cs do
       end
 
       relationships.each do |relation|
-        from_csid = get_csid(relation[:from_type], relation[:from_search], relation[:from], throttle)
-        to_csid   = get_csid(relation[:to_type], relation[:to_search], relation[:to], throttle)
+        unless identifiers.has_key? relation[:from]
+          identifiers[ relation[:from] ] = get_csid(relation[:from_type], relation[:from_search], relation[:from], throttle)
+        end
+
+        unless identifiers.has_key? relation[:to]
+          identifiers[ relation[:to] ]   = get_csid(relation[:to_type], relation[:to_search], relation[:to], throttle)
+        end
 
         data = {}
-        data[:from_csid] = from_csid
+        data[:from_csid] = identifiers[ relation[:from] ]
         data[:from_type] = relation[:from_type]
-        data[:to_csid]   = to_csid
+        data[:to_csid]   = identifiers[ relation[:to] ]
         data[:to_type]   = relation[:to_type]
 
         template  = ERB.new(get_template(template_file))
         result    = template.result(binding)
 
         # cache result and filename
-        filename        = data[filename]
+        filename        = data[fnkey]
         output_filename = "#{output_dir}/#{filename}-1.xml"
         write_file(output_filename, result)
 
         # now invert for the reciprocal relationship
-        data[:from_csid] = to_csid
+        data[:from_csid] = identifiers[ relation[:to] ]
         data[:from_type] = relation[:to_type]
-        data[:to_csid]   = from_csid
+        data[:to_csid]   = identifiers[ relation[:from] ]
         data[:to_type]   = relation[:from_type]
 
         template  = ERB.new(get_template(template_file))
