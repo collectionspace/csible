@@ -10,7 +10,7 @@ rake clear:tmp
 rake cs:relate:records[templates/relationships/relations.example.csv]
 
 # import the relationships
-rake cs:post:directory[/relations,tmp,0.10]
+rake cs:post:directory[/relations,tmp,0.05]
 ```
 
 ---
