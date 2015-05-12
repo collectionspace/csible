@@ -167,6 +167,11 @@
 <% end %>
     </owners>
     <objectHistoryNote><%= data[:history] %></objectHistoryNote>
+    <textualInscriptionGroupList>
+      <textualInscriptionGroup>
+        <inscriptionContent><%= data[:inscription] %></inscriptionContent>
+      </textualInscriptionGroup>
+    </textualInscriptionGroupList>
     <contentConcepts>
 <% unless data[:concept1_id].empty? or data[:concept1_name].empty? %>
       <contentConcept>urn:cspace:<%= data[:domain] %>:conceptauthorities:name(concept):item:name(<%= data[:concept1_id] %>)'<%= data[:concept1_name] %>'</contentConcept>

@@ -38,6 +38,7 @@ volume2,optional,false
 provenance,optional,false
 provenance_type,optional,false
 history,optional,false
+inscription,optional,false
 concept1_id,generated,false
 concept1_name,optional,false
 concept2_id,generated,false
