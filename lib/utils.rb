@@ -28,7 +28,7 @@ def command(base, method, opts = {})
 end
 
 def get_csid(type, param, value, throttle = 0.25)
-  params = "as=#{type}_common:#{param}%3D%22#{value}%22&wf_deleted=false"
+  params = "as=#{type}_common:#{param}%3D%22#{value.gsub(/ /, "+")}%22&wf_deleted=false"
   Rake::Task["cs:get:path"].invoke("/#{type}", params)
   response = Nokogiri::XML.parse(File.open("response.xml"))
   total_items = response.css("totalItems").text.to_i
