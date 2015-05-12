@@ -232,6 +232,27 @@ namespace :template do
     end
   end
 
+  namespace :media do
+    namespace :objects do
+      config_file     = 'templates/media/objects.config.csv'
+      template_file   = 'templates/media/object.xml.erb'
+      fields          = get_config(config_file)
+      fields[:domain] = domain
+
+      # rake template:media:objects:fields
+      desc "Display fields for media objects"
+      task :fields do |t|
+        print_fields fields[:required], fields[:optional], fields[:generate].keys
+      end
+
+      # rake template:media:objects:process[templates/media/objects.example.csv]
+      desc "Create media XML records from csv"
+      task :process, [:csv] do |t, args|
+        process_csv(args[:csv], output_dir, template_file, fields)
+      end
+    end
+  end
+
   namespace :organizations do
     namespace :items do
       config_file     = 'templates/organizations/items.config.csv'
