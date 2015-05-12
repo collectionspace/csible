@@ -202,6 +202,36 @@ namespace :template do
     end
   end
 
+  namespace :loansout do
+    namespace :objects do
+      config_file     = 'templates/loansout/objects.config.csv'
+      template_file   = 'templates/loansout/object.xml.erb'
+      fields          = get_config(config_file)
+      fields[:domain] = domain
+
+      fields[:generate] = {
+        borrower_id: {
+          from: :borrower,
+          required: false,
+          unique: false,
+          process: :get_short_identifier,
+        },
+      }
+
+      # rake template:loansout:objects:fields
+      desc "Display fields for loansout objects"
+      task :fields do |t|
+        print_fields fields[:required], fields[:optional], fields[:generate].keys
+      end
+
+      # rake template:loansout:objects:process[templates/loansout/objects.example.csv]
+      desc "Create loansout XML records from csv"
+      task :process, [:csv] do |t, args|
+        process_csv(args[:csv], output_dir, template_file, fields)
+      end
+    end
+  end
+
   namespace :organizations do
     namespace :items do
       config_file     = 'templates/organizations/items.config.csv'

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document name="loansout">
+  <ns2:loansout_common xmlns:ns2="http://collectionspace.org/services/loanout" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <loanOutNumber><%= data[:id] %></loanOutNumber>
+    <loanPurpose><%= data[:purpose] %></loanPurpose>
+<% if data[:borrower_type] =~ /^org/ %>
+    <borrower>urn:cspace:<%= data[:domain] %>:orgauthorities:name(organization):item:name(<%= data[:borrower_id] %>)'<%= data[:borrower] %>'</borrower>
+<% elsif data[:borrower_type] =~ /^per/ %>
+    <borrower>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:borrower_id] %>)'<%= data[:borrower] %>'</borrower>
+<% end %>
+    <loanStatusGroupList>
+      <loanStatusGroup>
+        <loanStatus>urn:cspace:<%= data[:domain] %>:vocabularies:name(loanoutstatus):item:name(<%= data[:status].downcase %>)'<%= data[:status] %>'</loanStatus>
+        <loanStatusDate/>
+      </loanStatusGroup>
+    </loanStatusGroupList>
+  </ns2:loansout_common>
+</document>
