@@ -12,8 +12,9 @@ namespace :cs do
 
     # rake cs:relate:records[templates/relationships/relations.example.csv]
     desc "Create cataloging / procedure relationships using a csv file"
-    task :records, [:csv, :throttle] do |t, args|
+    task :records, [:csv, :filename, :throttle] do |t, args|
       csv      = args[:csv]
+      filename = (args[:filename] || "from_csid").intern
       throttle = args[:throttle] || 0.10
       raise "HELL" unless File.file? csv
       template_file = "templates/relationships/relation.xml.erb"
@@ -39,8 +40,22 @@ namespace :cs do
         template  = ERB.new(get_template(template_file))
         result    = template.result(binding)
 
+        # cache result and filename
+        filename        = data[filename]
+        output_filename = "#{output_dir}/#{filename}-1.xml"
+        write_file(output_filename, result)
+
+        # now invert for the reciprocal relationship
+        data[:from_csid] = to_csid
+        data[:from_type] = relation[:to_type]
+        data[:to_csid]   = from_csid
+        data[:to_type]   = relation[:from_type]
+
+        template  = ERB.new(get_template(template_file))
+        result    = template.result(binding)
+
         # cache result
-        output_filename = "#{output_dir}/#{from_csid}.xml"
+        output_filename = "#{output_dir}/#{filename}-2.xml"
         write_file(output_filename, result)
       end
     end
