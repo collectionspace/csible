@@ -15,7 +15,6 @@ namespace :cs do
     task :records, [:csv, :fnkey, :throttle] do |t, args|
       csv      = args[:csv]
       fnkey    = (args[:fnkey] || "from_csid").intern
-      fnkey    = fnkey.intern
       throttle = args[:throttle] || 0.10
       raise "HELL" unless File.file? csv
       template_file = "templates/relationships/relation.xml.erb"
