@@ -1,2 +1,2 @@
-id,purpose,borrower,borrower_type,status
-LO123456,exhibition,Blackburn Rovers,organization,Returned
+id,purpose,borrower,borrower_type,status,note
+LO123456,exhibition,Blackburn Rovers,organization,Returned,Champion's Exhibition

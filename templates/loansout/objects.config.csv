@@ -5,3 +5,4 @@ borrower,optional,false
 borrower_type,optional,false
 borrower_id,generated,false
 status,optional,false
+note,optional,false
