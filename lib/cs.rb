@@ -14,7 +14,7 @@ namespace :cs do
     desc "Create cataloging / procedure relationships using a csv file"
     task :records, [:csv, :fnkey, :throttle] do |t, args|
       csv      = args[:csv]
-      fnkey    = (args[:fnkey] || "from_csid").intern
+      fnkey    = (args[:fnkey] || "from").intern
       throttle = args[:throttle] || 0.10
       raise "HELL" unless File.file? csv
       template_file = "templates/relationships/relation.xml.erb"
@@ -38,8 +38,10 @@ namespace :cs do
         end
 
         data = {}
+        data[:from]      = relation[:from]
         data[:from_csid] = identifiers[ relation[:from] ]
         data[:from_type] = relation[:from_type]
+        data[:to]        = relation[:to]
         data[:to_csid]   = identifiers[ relation[:to] ]
         data[:to_type]   = relation[:to_type]
 
@@ -52,8 +54,10 @@ namespace :cs do
         write_file(output_filename, result)
 
         # now invert for the reciprocal relationship
+        data[:from]      = relation[:to]
         data[:from_csid] = identifiers[ relation[:to] ]
         data[:from_type] = relation[:to_type]
+        data[:to]        = relation[:from]
         data[:to_csid]   = identifiers[ relation[:from] ]
         data[:to_type]   = relation[:from_type]
 
