@@ -18,8 +18,7 @@ Quickstart
 Requires `rake` (Ruby):
 
 ```bash
-gem install rake
-gem install json
+bundle install
 
 rake -T # list all tasks
 rake cs:config # dump api.json to terminal

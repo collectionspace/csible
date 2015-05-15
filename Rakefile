@@ -7,6 +7,7 @@ require 'json'
 require 'logger'
 require 'nokogiri'
 require 'pp'
+require 'redis'
 require 'set'
 require 'uri'
 
