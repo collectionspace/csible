@@ -51,7 +51,7 @@ rake cs:clear:tmp
 
 These tasks ensure that only XML files are removed.
 
-**Parsing results**
+**Parsing responses**
 
 Pass element as CSS selector:
 
