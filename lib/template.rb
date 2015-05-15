@@ -167,6 +167,36 @@ namespace :template do
     end
   end
 
+  namespace :groups do
+    namespace :objects do
+      config_file     = 'templates/groups/objects.config.csv'
+      template_file   = 'templates/groups/object.xml.erb'
+      fields          = get_config(config_file)
+      fields[:domain] = domain
+
+      fields[:generate] = {
+        filename: {
+          from: :title,
+          required: true,
+          unique: true,
+          process: :get_short_identifier,
+        },
+      }
+
+      # rake template:groups:objects:fields
+      desc "Display fields for groups"
+      task :fields do |t|
+        print_fields fields[:required], fields[:optional], fields[:generate].keys
+      end
+
+      # rake template:groups:objects:process[templates/groups/objects.example.csv]
+      desc "Create group object XML records from csv"
+      task :process, [:csv] do |t, args|
+        process_csv(args[:csv], output_dir, template_file, fields)
+      end
+    end
+  end
+
   namespace :locations do
     namespace :authorities do
       # todo

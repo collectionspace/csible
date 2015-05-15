@@ -18,7 +18,7 @@ This will return a single list item if found at `["list-item"][0]["csid"]`.
 # create import xml
 rake template:cataloging:objects:process[templates/cataloging/watermill.csv]
 # import it
-rake cs:post:directory[/collectionobjects,imports,0.10]
+rake cs:post:directory[/collectionobjects,imports,0.05]
 
 rake clear:all
 ```
