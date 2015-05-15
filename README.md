@@ -51,6 +51,16 @@ rake cs:clear:tmp
 
 These tasks ensure that only XML files are removed.
 
+**Parsing results**
+
+Pass element as CSS selector:
+
+```bash
+rake cs:parse_xml["relation-list-item > uri"]
+```
+
+By default `response.xml` is the input and `response.txt` is the output.
+
 Raw Examples
 ------------
 

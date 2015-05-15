@@ -7,6 +7,17 @@ namespace :cs do
     pp JSON.parse( IO.read('api.json') )
   end
 
+  # rake cs:parse_xml["relation-list-item > uri"]
+  desc "Parse xml for element value"
+  task :parse_xml, [:element, :input, :output] do |t, args|
+    element = args[:element]
+    input   = args[:input] || "response.xml"
+    output  = args[:output] || "response.txt"
+    raise "HELL" unless File.file? input and File.file? output
+    result  = get_element_values(input, element)
+    write_file output, result.join("\n")
+  end
+
   namespace :relate do
     output_dir = "tmp"
 

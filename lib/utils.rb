@@ -39,6 +39,12 @@ def get_csid(type, param, value, throttle = 0.25)
   csid
 end
 
+def get_element_values(file, element)
+  response = Nokogiri::XML.parse(File.open(file))
+  values = response.css(element).map(&:text)
+  values
+end
+
 def get_identifiers(path, id, throttle = 0.25)
   identifiers = {}
   Rake::Task["cs:get:path"].invoke(path, "kw=#{id}")
