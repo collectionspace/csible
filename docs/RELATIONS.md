@@ -13,4 +13,10 @@ rake cs:relate:records[templates/relationships/relations.example.csv]
 rake cs:post:directory[/relations,tmp,0.05]
 ```
 
+**Finding relationships**
+
+```bash
+rake cs:get:path["/relations","sbjType=CollectionObject&objType=CollectionObject"]
+```
+
 ---
