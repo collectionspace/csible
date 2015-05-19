@@ -2,6 +2,12 @@
 <document name="collectionobjects">
   <ns2:collectionobjects_common xmlns:ns2="http://collectionspace.org/services/collectionobject" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <objectNumber><%= data[:id] %></objectNumber>
+    <otherNumberList>
+      <otherNumber>
+        <numberValue><%= data[:number] %></numberValue>
+        <numberType><%= data[:number_type] %></numberType>
+      </otherNumber>
+    </otherNumberList>
     <numberOfObjects><%= data[:count] %></numberOfObjects>
     <titleGroupList>
       <titleGroup>

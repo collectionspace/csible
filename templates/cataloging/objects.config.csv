@@ -1,5 +1,7 @@
 field,type,filename
 id,required,true
+number,optional,false
+number_type,optional,false
 count,optional,false
 title,required,false
 edition,optional,false
