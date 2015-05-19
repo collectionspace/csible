@@ -23,9 +23,8 @@ namespace :cs do
 
     # rake cs:relate:records[templates/relationships/relations.example.csv]
     desc "Create cataloging / procedure relationships using a csv file"
-    task :records, [:csv, :fnkey, :throttle] do |t, args|
+    task :records, [:csv, :throttle] do |t, args|
       csv      = args[:csv]
-      fnkey    = (args[:fnkey] || "from").intern
       throttle = args[:throttle] || 0.10
       raise "HELL" unless File.file? csv
       template_file = "templates/relationships/relation.xml.erb"
@@ -60,7 +59,7 @@ namespace :cs do
         result    = template.result(binding)
 
         # cache result and filename
-        filename        = data[fnkey]
+        filename        = "#{data[:from]}_#{data[:to]}".gsub(/ /, '')
         output_filename = "#{output_dir}/#{filename}-1.xml"
         write_file(output_filename, result)
 
