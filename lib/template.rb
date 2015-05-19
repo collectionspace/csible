@@ -40,7 +40,8 @@ namespace :template do
 
       # rake template:acquisitions:objects:process[templates/acquisitions/objects.example.csv]
       desc "Create acquisitions XML records from csv"
-      task :process, [:csv] do |t, args|
+      task :process, [:csv, :output_dir] do |t, args|
+        output_dir = args[:output_dir] || output_dir
         process_csv(args[:csv], output_dir, template_file, fields)
       end
     end
@@ -102,7 +103,8 @@ namespace :template do
 
       # rake template:cataloging:objects:process[templates/cataloging/objects.example.csv]
       desc "Create cataloging XML records from csv"
-      task :process, [:csv] do |t, args|
+      task :process, [:csv, :output_dir] do |t, args|
+        output_dir = args[:output_dir] || output_dir
         process_csv(args[:csv], output_dir, template_file, fields)
       end
     end
@@ -127,7 +129,8 @@ namespace :template do
 
       # rake template:conditioncheck:objects:process[templates/conditioncheck/objects.example.csv]
       desc "Create conditioncheck XML records from csv"
-      task :process, [:csv] do |t, args|
+      task :process, [:csv, :output_dir] do |t, args|
+        output_dir = args[:output_dir] || output_dir
         process_csv(args[:csv], output_dir, template_file, fields)
       end
     end
@@ -161,7 +164,8 @@ namespace :template do
 
       # rake template:concepts:items:process[templates/concepts/items.example.csv]
       desc "Create concept authority item XML records from csv"
-      task :process, [:csv] do |t, args|
+      task :process, [:csv, :output_dir] do |t, args|
+        output_dir = args[:output_dir] || output_dir
         process_csv(args[:csv], output_dir, template_file, fields)
       end
     end
@@ -191,7 +195,8 @@ namespace :template do
 
       # rake template:groups:objects:process[templates/groups/objects.example.csv]
       desc "Create group object XML records from csv"
-      task :process, [:csv] do |t, args|
+      task :process, [:csv, :output_dir] do |t, args|
+        output_dir = args[:output_dir] || output_dir
         process_csv(args[:csv], output_dir, template_file, fields)
       end
     end
@@ -226,7 +231,8 @@ namespace :template do
 
       # rake template:locations:items:process[templates/locations/onsite.csv]
       desc "Create location authority item XML records from csv"
-      task :process, [:csv] do |t, args|
+      task :process, [:csv, :output_dir] do |t, args|
+        output_dir = args[:output_dir] || output_dir
         process_csv(args[:csv], output_dir, template_file, fields)
       end
     end
@@ -256,7 +262,8 @@ namespace :template do
 
       # rake template:loansout:objects:process[templates/loansout/objects.example.csv]
       desc "Create loansout XML records from csv"
-      task :process, [:csv] do |t, args|
+      task :process, [:csv, :output_dir] do |t, args|
+        output_dir = args[:output_dir] || output_dir
         process_csv(args[:csv], output_dir, template_file, fields)
       end
     end
@@ -277,7 +284,8 @@ namespace :template do
 
       # rake template:media:objects:process[templates/media/objects.example.csv]
       desc "Create media XML records from csv"
-      task :process, [:csv] do |t, args|
+      task :process, [:csv, :output_dir] do |t, args|
+        output_dir = args[:output_dir] || output_dir
         process_csv(args[:csv], output_dir, template_file, fields)
       end
     end
@@ -307,7 +315,8 @@ namespace :template do
 
       # rake template:organizations:items:process[templates/organizations/items.example.csv]
       desc "Create organization authority item XML records from csv"
-      task :process, [:csv] do |t, args|
+      task :process, [:csv, :output_dir] do |t, args|
+        output_dir = args[:output_dir] || output_dir
         process_csv(args[:csv], output_dir, template_file, fields)
       end
     end
@@ -374,7 +383,8 @@ namespace :template do
 
       # rake template:persons:items:process[templates/persons/items.example.csv]
       desc "Create person authority item XML records from csv"
-      task :process, [:csv] do |t, args|
+      task :process, [:csv, :output_dir] do |t, args|
+        output_dir = args[:output_dir] || output_dir
         process_csv(args[:csv], output_dir, template_file, fields)
       end
     end
@@ -408,7 +418,8 @@ namespace :template do
 
       # rake template:valuationcontrol:objects:process[templates/valuationcontrol/objects.example.csv]
       desc "Create valuationcontrol XML records from csv"
-      task :process, [:csv] do |t, args|
+      task :process, [:csv, :output_dir] do |t, args|
+        output_dir = args[:output_dir] || output_dir
         process_csv(args[:csv], output_dir, template_file, fields)
       end
     end
