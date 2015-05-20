@@ -24,12 +24,13 @@ namespace :cs do
     # rake cs:relate:records[templates/relationships/relations.example.csv]
     desc "Create cataloging / procedure relationships using a csv file"
     task :records, [:csv, :throttle] do |t, args|
+      redis    = Redis.new # fail if redis unavailable
       csv      = args[:csv]
       throttle = args[:throttle] || 0.10
       raise "HELL" unless File.file? csv
       template_file = "templates/relationships/relation.xml.erb"
       relationships = []
-      identifiers   = {}
+      # identifiers   = {}
 
       CSV.foreach(csv, {
           headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
@@ -39,20 +40,20 @@ namespace :cs do
       end
 
       relationships.each do |relation|
-        unless identifiers.has_key? relation[:from]
-          identifiers[ relation[:from] ] = get_csid(relation[:from_type], relation[:from_search], relation[:from], throttle)
+        unless redis.get( relation[:from] )
+          redis.set( relation[:from], get_csid(relation[:from_type], relation[:from_search], relation[:from], throttle) )
         end
 
-        unless identifiers.has_key? relation[:to]
-          identifiers[ relation[:to] ]   = get_csid(relation[:to_type], relation[:to_search], relation[:to], throttle)
+        unless redis.get( relation[:to] )
+          redis.set( relation[:to], get_csid(relation[:to_type], relation[:to_search], relation[:to], throttle) )
         end
 
         data = {}
         data[:from]      = relation[:from]
-        data[:from_csid] = identifiers[ relation[:from] ]
+        data[:from_csid] = redis.get( relation[:from] )
         data[:from_type] = relation[:from_type]
         data[:to]        = relation[:to]
-        data[:to_csid]   = identifiers[ relation[:to] ]
+        data[:to_csid]   = redis.get( relation[:to] )
         data[:to_type]   = relation[:to_type]
 
         template  = ERB.new(get_template(template_file))
@@ -65,10 +66,10 @@ namespace :cs do
 
         # now invert for the reciprocal relationship
         data[:from]      = relation[:to]
-        data[:from_csid] = identifiers[ relation[:to] ]
+        data[:from_csid] = redis.get( relation[:to] )
         data[:from_type] = relation[:to_type]
         data[:to]        = relation[:from]
-        data[:to_csid]   = identifiers[ relation[:from] ]
+        data[:to_csid]   = redis.get( relation[:from] )
         data[:to_type]   = relation[:from_type]
 
         template  = ERB.new(get_template(template_file))
