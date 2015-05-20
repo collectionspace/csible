@@ -1,6 +1,20 @@
 namespace :cs do
   base_command = "ansible-playbook -i 'localhost,' services.yml --extra-vars='@api.json'"
 
+  # rake cs:cache[response.csv]
+  desc "Add key value pairs to redis from csv"
+  task :cache, [:csv] do |t, args|
+    redis = Redis.new # fail if redis unavailable
+    csv   = args[:csv]
+    CSV.foreach(csv, {
+        headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
+      }) do |row|
+      key, value = row.to_hash.values
+      raise "Invalid csv values #{key} #{value}" if key.empty? or value.empty?
+      redis.set(key, value)
+    end
+  end
+
   # rake cs:config
   desc "Dump csible config to terminal"
   task :config do |t, args|
