@@ -9,10 +9,10 @@ docker run -p 6379:6379 --name redis -d redis
 redis-cli # 127.0.0.1:6379>
 ```
 
-Create a `mymuseum` folder with a `.gitignore` file containing "*".
+Create a `mymuseum` folder with a `.gitignore` file containing "*". Put site related csv files in that folder with sub-folders per service endpoint:
 
 ```bash
-##### TEMPLATES
+##### PROCESS TEMPLATES
 rake template:concepts:items:process[mymuseum/mymuseum-concept.csv,mymuseum/concepts]
 rake template:locations:items:process[mymuseum/mymuseum-onsite.csv,mymuseum/onsite]
 rake template:locations:items:process[mymuseum/mymuseum-offsite.csv,mymuseum/offsite]
@@ -25,7 +25,7 @@ rake template:groups:objects:process[mymuseum/mymuseum-grp.csv,mymuseum/grp]
 rake template:loansout:objects:process[mymuseum/mymuseum-loans.csv,mymuseum/loans]
 rake template:valuationcontrol:objects:process[mymuseum/mymuseum-val.csv,mymuseum/vc]
 
-##### AUTHORITIES
+##### IMPORT AND RELATE AUTHORITIES
 
 rake cs:get:list[/conceptauthorities,uri~shortIdentifier]
 rake cs:post:directory[REPLACE/items,mymuseum/concepts,1] # concept
@@ -44,7 +44,7 @@ rake cs:post:directory[REPLACE/items,mymuseum/orgs,1] # organization
 rake cs:get:list[/personauthorities,uri~shortIdentifier]
 rake cs:post:directory[REPLACE/items,mymuseum/persons,1] # person
 
-##### RECORDS
+##### IMPORT RECORDS
 
 rake cs:post:directory[/collectionobjects,mymuseum/cat,0.05]
 rake cs:post:directory[/acquisitions,mymuseum/acq,0.05]
@@ -53,7 +53,7 @@ rake cs:post:directory[/groups,mymuseum/grp,0.05]
 rake cs:post:directory[/loansout,mymuseum/loans,0.05]
 rake cs:post:directory[/valuationcontrols,mymuseum/vc,0.05]
 
-##### CACHE
+##### POPULATE CACHE
 
 rake cs:get:list[/collectionobjects,objectNumber~csid,"wf_deleted=false&pgSz=1000"]
 rake cs:cache[response.csv]
@@ -73,7 +73,7 @@ rake cs:cache[response.csv]
 rake cs:get:list[/valuationcontrols,valuationcontrolRefNumber~csid,"wf_deleted=false&pgSz=1000"]
 rake cs:cache[response.csv]
 
-##### RELATIONS (requires Redis and will output to `tmp/`)
+##### PROCESS RELATIONS (requires Redis and will output to `tmp/`)
 
 rake cs:relate:records[mymuseum/mymuseum-acq.csv]
 rake cs:relate:records[mymuseum/mymuseum-cond.csv]
