@@ -8,6 +8,7 @@
     password: "{{ password }}"
     force_basic_auth: yes
     return_content: yes
+    timeout: 300
   register: response
 
 - name: save response
