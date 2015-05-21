@@ -168,13 +168,14 @@ namespace :cs do
 
     # rake cs:get:list[/media,uri~csid,"wf_deleted=false&pgSz=100"]
     desc "GET request by path for results list to csv specifying properties"
-    task :list, [:path, :properties, :params] do |t, args|
+    task :list, [:path, :properties, :params, :output] do |t, args|
       path       = args[:path]
       properties = args[:properties] || [ "uri" ]
       properties = properties.split("~") if properties.respond_to? :split
       params     = args[:params] || nil
+      output     = args[:output] || "response.csv"
       results    = get_list_properties(path, properties, params)
-      write_csv(results) unless results.empty?
+      write_csv(output, results) unless results.empty?
     end
 
   end

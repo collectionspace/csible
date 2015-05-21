@@ -190,8 +190,8 @@ def process_csv(input_file, output_dir, template_file, fields = {})
   end
 end
 
-def write_csv(data)
-  CSV.open('response.csv', 'w') do |csv|
+def write_csv(filename, data)
+  CSV.open(filename, 'w') do |csv|
     csv << data.first.keys
     data.each { |row| csv << row.values }
   end
