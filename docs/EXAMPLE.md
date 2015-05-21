@@ -55,23 +55,19 @@ rake cs:post:directory[/valuationcontrols,mymuseum/vc,0.05]
 
 ##### POPULATE CACHE
 
-rake cs:get:list[/collectionobjects,objectNumber~csid,"wf_deleted=false&pgSz=1000"]
-rake cs:cache[response.csv]
+rake cs:get:list[/collectionobjects,objectNumber~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/collectionobjects.csv]
+rake cs:get:list[/acquisitions,acquisitionReferenceNumber~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/acquisitions.csv]
+rake cs:get:list[/conditionchecks,conditionCheckRefNumber~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/conditionchecks.csv]
+rake cs:get:list[/groups,title~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/groups.csv]
+rake cs:get:list[/loansout,loanOutNumber~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/loansout.csv]
+rake cs:get:list[/valuationcontrols,valuationcontrolRefNumber~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/valuationcontrols.csv]
 
-rake cs:get:list[/acquisitions,acquisitionReferenceNumber~csid,"wf_deleted=false&pgSz=1000"]
-rake cs:cache[response.csv]
-
-rake cs:get:list[/conditionchecks,conditionCheckRefNumber~csid,"wf_deleted=false&pgSz=1000"]
-rake cs:cache[response.csv]
-
-rake cs:get:list[/groups,title~csid,"wf_deleted=false&pgSz=1000"]
-rake cs:cache[response.csv]
-
-rake cs:get:list[/loansout,loanOutNumber~csid,"wf_deleted=false&pgSz=1000"]
-rake cs:cache[response.csv]
-
-rake cs:get:list[/valuationcontrols,valuationcontrolRefNumber~csid,"wf_deleted=false&pgSz=1000"]
-rake cs:cache[response.csv]
+rake cs:cache[mymuseum/csv/collectionobjects.csv]
+rake cs:cache[mymuseum/csv/acquisitions.csv]
+rake cs:cache[mymuseum/csv/conditionchecks.csv]
+rake cs:cache[mymuseum/csv/groups.csv]
+rake cs:cache[mymuseum/csv/loansout.csv]
+rake cs:cache[mymuseum/csv/valuationcontrols.csv]
 
 ##### PROCESS RELATIONS (requires Redis and will output to `tmp/`)
 
