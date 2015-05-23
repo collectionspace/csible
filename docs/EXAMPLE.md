@@ -53,7 +53,7 @@ rake cs:post:directory[/groups,mymuseum/grp,0.05]
 rake cs:post:directory[/loansout,mymuseum/loans,0.05]
 rake cs:post:directory[/valuationcontrols,mymuseum/vc,0.05]
 
-##### POPULATE CACHE
+##### GET RECORD CSIDS
 
 rake cs:get:list[/collectionobjects,objectNumber~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/collectionobjects.csv]
 rake cs:get:list[/acquisitions,acquisitionReferenceNumber~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/acquisitions.csv]
@@ -62,6 +62,8 @@ rake cs:get:list[/groups,title~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/gr
 rake cs:get:list[/loansout,loanOutNumber~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/loansout.csv]
 rake cs:get:list[/valuationcontrols,valuationcontrolRefNumber~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/valuationcontrols.csv]
 
+##### POPULATE CACHE (redis required)
+
 rake cs:cache[mymuseum/csv/collectionobjects.csv]
 rake cs:cache[mymuseum/csv/acquisitions.csv]
 rake cs:cache[mymuseum/csv/conditionchecks.csv]
@@ -69,7 +71,7 @@ rake cs:cache[mymuseum/csv/groups.csv]
 rake cs:cache[mymuseum/csv/loansout.csv]
 rake cs:cache[mymuseum/csv/valuationcontrols.csv]
 
-##### PROCESS RELATIONS (requires Redis and will output to `tmp/`)
+##### PROCESS RELATIONS (redis required)
 
 rake cs:relate:records[mymuseum/mymuseum-acq.csv]
 rake cs:relate:records[mymuseum/mymuseum-cond.csv]
