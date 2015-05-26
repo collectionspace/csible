@@ -23,6 +23,7 @@ rake template:acquisitions:objects:process[mymuseum/mymuseum-acq.csv,mymuseum/ac
 rake template:conditioncheck:objects:process[mymuseum/mymuseum-cond.csv,mymuseum/cc]
 rake template:groups:objects:process[mymuseum/mymuseum-grp.csv,mymuseum/grp]
 rake template:loansout:objects:process[mymuseum/mymuseum-loans.csv,mymuseum/loans]
+rake template:media:objects:process[mymuseum/mymuseum-media.csv,mymuseum/media]
 rake template:valuationcontrol:objects:process[mymuseum/mymuseum-val.csv,mymuseum/vc]
 
 ##### IMPORT AND RELATE AUTHORITIES
@@ -51,6 +52,7 @@ rake cs:post:directory[/acquisitions,mymuseum/acq,0.05]
 rake cs:post:directory[/conditionchecks,mymuseum/cc,0.05]
 rake cs:post:directory[/groups,mymuseum/grp,0.05]
 rake cs:post:directory[/loansout,mymuseum/loans,0.05]
+rake cs:post:directory[/media,mymuseum/media,0.05]
 rake cs:post:directory[/valuationcontrols,mymuseum/vc,0.05]
 
 ##### GET RECORD CSIDS
@@ -60,6 +62,7 @@ rake cs:get:list[/acquisitions,acquisitionReferenceNumber~csid,"wf_deleted=false
 rake cs:get:list[/conditionchecks,conditionCheckRefNumber~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/conditionchecks.csv]
 rake cs:get:list[/groups,title~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/groups.csv]
 rake cs:get:list[/loansout,loanOutNumber~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/loansout.csv]
+rake cs:get:list[/media,identificationNumber~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/media.csv]
 rake cs:get:list[/valuationcontrols,valuationcontrolRefNumber~csid,"wf_deleted=false&pgSz=1000",mymuseum/csv/valuationcontrols.csv]
 
 ##### POPULATE CACHE (redis required)
@@ -69,12 +72,14 @@ rake cs:cache[mymuseum/csv/acquisitions.csv]
 rake cs:cache[mymuseum/csv/conditionchecks.csv]
 rake cs:cache[mymuseum/csv/groups.csv]
 rake cs:cache[mymuseum/csv/loansout.csv]
+rake cs:cache[mymuseum/csv/media.csv]
 rake cs:cache[mymuseum/csv/valuationcontrols.csv]
 
 ##### PROCESS RELATIONS (redis required)
 
 rake cs:relate:records[mymuseum/mymuseum-acq.csv]
 rake cs:relate:records[mymuseum/mymuseum-cond.csv]
+rake cs:relate:records[mymuseum/mymuseum-media.csv]
 rake cs:relate:records[mymuseum/mymuseum-val.csv]
 
 rake cs:relate:records[mymuseum/mymuseum-loans-items.csv]
