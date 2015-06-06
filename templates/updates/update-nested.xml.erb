@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document name="<%= data[:type] %>">
+  <ns2:<%= data[:type] %>_common xmlns:ns2="http://collectionspace.org/services/<%= data[:type].singularize %>" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <<%= data[:element].pluralize %>>
+      <<%= data[:element] %>><%= data[:value] %></<%= data[:element] %>>
+    </<%= data[:element].pluralize %>>
+  </ns2:<%= data[:type] %>_common>
+</document>

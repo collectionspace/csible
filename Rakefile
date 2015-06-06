@@ -1,3 +1,5 @@
+require 'active_support'
+require 'active_support/core_ext'
 require 'base64'
 require 'erb'
 require 'csv'
