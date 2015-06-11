@@ -298,7 +298,7 @@ namespace :cs do
           headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
         }) do |row|
         data = row.to_hash
-        output_filename = "#{output_dir}/#{data[:uri].split("/")[-1]}.xml"
+        output_filename = "#{output_dir}/#{data[:element]}-#{data[:uri].split("/")[-1]}.xml"
         if File.file? output_filename
           Rake::Task["cs:put:file"].invoke(data[:uri], output_filename)
           `sleep #{throttle}`
@@ -322,7 +322,7 @@ namespace :cs do
         result   = template.result(binding)
 
         # cache result
-        output_filename = "#{output_dir}/#{data[:uri].split("/")[-1]}.xml"
+        output_filename = "#{output_dir}/#{data[:element]}-#{data[:uri].split("/")[-1]}.xml"
         write_file(output_filename, result)
       end
     end
