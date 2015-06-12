@@ -1,2 +1,2 @@
-id,source,owner,owner_type,method,price,currency
-123,Roman Abramovich,Chelsea,organization,purchase,1000000,"US Dollar"
+id,source,owner,owner_type,method,year,price,currency
+123,Roman Abramovich,Chelsea,organization,purchase,2000,1000000,"US Dollar"

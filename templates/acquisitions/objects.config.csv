@@ -6,6 +6,7 @@ owner,optional,false
 owner_type,optional,false
 owner_id,generated,false
 method,optional,false
+year,optional,false
 price,optional,false
 currency,optional,false
 currency_id,generated,false
