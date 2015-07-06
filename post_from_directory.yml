@@ -16,6 +16,7 @@
     return_content: yes
     HEADER_Content-Type: "application/xml"
     status_code: 201
+    validate_certs: "{{ validate_certs }}"
   register: response
   with_fileglob: "{{ directory }}/*.xml"
 

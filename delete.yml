@@ -8,4 +8,5 @@
     password: "{{ password }}"
     force_basic_auth: yes
     return_content: yes
+    validate_certs: "{{ validate_certs }}"
   register: response

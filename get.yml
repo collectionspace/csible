@@ -9,6 +9,7 @@
     force_basic_auth: yes
     return_content: yes
     timeout: 300
+    validate_certs: "{{ validate_certs }}"
   register: response
 
 - name: save response

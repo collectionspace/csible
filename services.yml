@@ -18,6 +18,7 @@
     directory: false
     # savefile: false
     verbose: false
+    validate_certs: no
 
   tasks:
     - include: validate.yml
