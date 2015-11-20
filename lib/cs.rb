@@ -235,7 +235,10 @@ namespace :cs do
     desc "DELETE request by url"
     task :url, [:url] do |t, args|
       url = args[:url]
-      url = url.gsub(/http:/, 'https:') # always https
+
+      protocol = URI.parse( JSON.parse( IO.read('api.json') )["base"] ).scheme
+
+      url = url.gsub(/https?:/, "#{protocol}:") if protocol !~ /url/
       run command(base_command, 'DELETE', { url: url })
     end
 
