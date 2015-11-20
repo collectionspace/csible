@@ -10,7 +10,7 @@ Configuration file
 cp api.json.example api.json
 ```
 
-Edit `api.json` as needed. See [Ansible](docs/ANSIBLE.md) for more detail. There is one setting that is unrelated to api interaction directly: `urn`. The `urn` value should be set to the domain configured for the CollectionSpace instance, which may or may not be the domain used in the `url`. This value is used by Rake templates.
+Edit `api.json` as needed. See [Ansible](docs/ANSIBLE.md) for more detail. There are two settings that are unrelated to api interaction directly: `urn` and `templates_path`. The `urn` value should be set to the domain configured for the CollectionSpace instance, which may or may not be the domain used in the `url`. This value is used by Rake templates. The `templates_path` setting should set the path to the templates configuration (by default "templates"). Custom templates can be downloaded to "custom_templates" (which is git ignored by default) or elsewhere according to preference. Custom templates must follow the same directory structure as "templates" but can supply user defined configuration csv and erb templates.
 
 Quickstart
 ----------

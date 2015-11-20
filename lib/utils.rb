@@ -146,6 +146,7 @@ end
 
 def process_csv(input_file, output_dir, template_file, fields = {})
   raise "Invalid input file #{input_file}" unless File.file? input_file
+  raise "Template not found #{template_file}" unless File.file? template_file
   generated_values = Set.new
   CSV.foreach(input_file, {
       headers: true,
