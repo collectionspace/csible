@@ -2,5 +2,6 @@
   "base": "https://cspace.lyrasistechnology.org",
   "user": "admin@cspace.lyrasistechnology.org",
   "password": "Administrator",
-  "urn": "cspace.lyrasistechnology.org"
+  "urn": "cspace.lyrasistechnology.org",
+  "templates_path": "templates"
 }

@@ -1,13 +1,15 @@
 # TEMPLATES
 namespace :template do
-  domain         = JSON.parse( IO.read('api.json') )["urn"]
+  config         = JSON.parse( IO.read('api.json') )
+  domain         = config["urn"]
+  templates_path = config["templates_path"] ||= "templates"
   surname_prefix = "([Dd]e|V[ao]n)"
   output_dir     = 'imports'
 
   namespace :acquisitions do
     namespace :objects do
-      config_file     = 'templates/acquisitions/objects.config.csv'
-      template_file   = 'templates/acquisitions/object.xml.erb'
+      config_file     = "#{templates_path}/acquisitions/objects.config.csv"
+      template_file   = "#{templates_path}/acquisitions/object.xml.erb"
       fields          = get_config(config_file)
       fields[:domain] = domain
 
@@ -49,8 +51,8 @@ namespace :template do
 
   namespace :cataloging do
     namespace :objects do
-      config_file     = 'templates/cataloging/objects.config.csv'
-      template_file   = 'templates/cataloging/object.xml.erb'
+      config_file     = "#{templates_path}/cataloging/objects.config.csv"
+      template_file   = "#{templates_path}/cataloging/object.xml.erb"
       fields          = get_config(config_file)
       fields[:domain] = domain
 
@@ -112,8 +114,8 @@ namespace :template do
 
   namespace :conditioncheck do
     namespace :objects do
-      config_file     = 'templates/conditioncheck/objects.config.csv'
-      template_file   = 'templates/conditioncheck/object.xml.erb'
+      config_file     = "#{templates_path}/conditioncheck/objects.config.csv"
+      template_file   = "#{templates_path}/conditioncheck/object.xml.erb"
       fields          = get_config(config_file)
       fields[:domain] = domain
 
@@ -138,8 +140,8 @@ namespace :template do
 
   namespace :concepts do
     namespace :items do
-      config_file     = 'templates/concepts/items.config.csv'
-      template_file   = 'templates/concepts/item.xml.erb'
+      config_file     = "#{templates_path}/concepts/items.config.csv"
+      template_file   = "#{templates_path}/concepts/item.xml.erb"
       fields          = get_config(config_file)
       fields[:domain] = domain
 
@@ -173,8 +175,8 @@ namespace :template do
 
   namespace :groups do
     namespace :objects do
-      config_file     = 'templates/groups/objects.config.csv'
-      template_file   = 'templates/groups/object.xml.erb'
+      config_file     = "#{templates_path}/groups/objects.config.csv"
+      template_file   = "#{templates_path}/groups/object.xml.erb"
       fields          = get_config(config_file)
       fields[:domain] = domain
 
@@ -209,8 +211,8 @@ namespace :template do
     end
 
     namespace :items do
-      config_file     = 'templates/locations/items.config.csv'
-      template_file   = 'templates/locations/item.xml.erb'
+      config_file     = "#{templates_path}/locations/items.config.csv"
+      template_file   = "#{templates_path}/locations/item.xml.erb"
       fields          = get_config(config_file)
       fields[:domain] = domain
 
@@ -240,8 +242,8 @@ namespace :template do
 
   namespace :loansout do
     namespace :objects do
-      config_file     = 'templates/loansout/objects.config.csv'
-      template_file   = 'templates/loansout/object.xml.erb'
+      config_file     = "#{templates_path}/loansout/objects.config.csv"
+      template_file   = "#{templates_path}/loansout/object.xml.erb"
       fields          = get_config(config_file)
       fields[:domain] = domain
 
@@ -271,8 +273,8 @@ namespace :template do
 
   namespace :media do
     namespace :objects do
-      config_file     = 'templates/media/objects.config.csv'
-      template_file   = 'templates/media/object.xml.erb'
+      config_file     = "#{templates_path}/media/objects.config.csv"
+      template_file   = "#{templates_path}/media/object.xml.erb"
       fields          = get_config(config_file)
       fields[:domain] = domain
 
@@ -293,8 +295,8 @@ namespace :template do
 
   namespace :organizations do
     namespace :items do
-      config_file     = 'templates/organizations/items.config.csv'
-      template_file   = 'templates/organizations/item.xml.erb'
+      config_file     = "#{templates_path}/organizations/items.config.csv"
+      template_file   = "#{templates_path}/organizations/item.xml.erb"
       fields          = get_config(config_file)
       fields[:domain] = domain
 
@@ -324,8 +326,8 @@ namespace :template do
 
   namespace :persons do
     namespace :items do
-      config_file     = 'templates/persons/items.config.csv'
-      template_file   = 'templates/persons/item.xml.erb'
+      config_file     = "#{templates_path}/persons/items.config.csv"
+      template_file   = "#{templates_path}/persons/item.xml.erb"
       fields          = get_config(config_file)
       fields[:domain] = domain
 
@@ -392,8 +394,8 @@ namespace :template do
 
   namespace :valuationcontrol do
     namespace :objects do
-      config_file     = 'templates/valuationcontrol/objects.config.csv'
-      template_file   = 'templates/valuationcontrol/object.xml.erb'
+      config_file     = "#{templates_path}/valuationcontrol/objects.config.csv"
+      template_file   = "#{templates_path}/valuationcontrol/object.xml.erb"
       fields          = get_config(config_file)
       fields[:domain] = domain
 
