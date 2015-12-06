@@ -13,6 +13,8 @@ end
 def authority_itemtypes(type)
   types = {
     "locations" => "LocationItem",
+    "places" => "Placeitem",
+    "concepts" => "Conceptitem",
   }
   types[type]
 end
@@ -134,6 +136,14 @@ def get_short_identifier(value)
   v
 end
 
+def get_place_refname(value)
+  # Example, urn:cspace:collection.watermillcenter.org:vocabularies:name(placetermtype):item:name(country_code)'Country code'
+  urn_str = JSON.parse( IO.read('api.json') )["urn"]
+  shortid_str = value.gsub(/\W/, '_'); # remove non-words
+  refname_str = "urn:cspace:" + urn_str + ":vocabularies:name(placetermtype):item:name(" + shortid_str.downcase + ")'" + value + "'";
+  refname_str
+end
+
 def get_template(file)
   File.read(file)
 end
@@ -149,7 +159,7 @@ def process_csv(input_file, output_dir, template_file, fields = {})
   generated_values = Set.new
   CSV.foreach(input_file, {
       headers: true,
-      header_converters: :symbol,
+      header_converters: lambda { |h| h.to_sym },
       converters: [:nil_to_empty, :xml_safe],
     }) do |row|
 
@@ -189,6 +199,7 @@ def process_csv(input_file, output_dir, template_file, fields = {})
     result   = template.result(binding).gsub(/\n+/,"\n") # binding adds variables from scope
 
     output_filename = fields[:filename].inject("") { |fn, field| fn += data[field.to_sym] }
+    output_filename = output_filename.gsub(/\s+/, "")
     write_file("#{output_dir}/#{output_filename}.xml", result)
   end
 end

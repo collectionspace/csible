@@ -117,6 +117,7 @@ namespace :cs do
         relationships[data[:to]] << data[:from]
       end
 
+      loop_count = 0
       relationships.each do |broad, related|
         broad_id = get_short_identifier(broad)
         ids = get_identifiers(path, broad_id)
@@ -139,12 +140,13 @@ namespace :cs do
           result   = template.result(binding)
 
           # cache result
-          output_filename = "#{output_dir}/#{identifiers[item]["csid"]}.xml"
+          output_filename = "#{output_dir}/#{identifiers[item]["csid"]}-#{loop_count}.xml"
           write_file(output_filename, result)
 
           # make the introductions
           Rake::Task["cs:put:file"].invoke(identifiers[item]["uri"], output_filename)
           Rake::Task["cs:put:file"].reenable
+          loop_count = loop_count + 1
         end
       end
     end

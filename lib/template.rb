@@ -144,17 +144,17 @@ namespace :template do
       fields[:domain] = domain
 
       fields[:generate] = {
-        shortidentifier: {
-          from: :name,
+        shortIdentifier: {
+          from: :termDisplayName,
           required: true,
           unique: true,
           process: :get_short_identifier,
         },
       }
 
-      fields[:transforms] = {
-        name: ->(value) { value.capitalize },
-      }
+#      fields[:transforms] = {
+#          termDisplayName: ->(value) { value.capitalize },
+#      }
 
       # rake template:concepts:items:fields
       desc "Display fields for concept authority items"
@@ -330,49 +330,49 @@ namespace :template do
       fields[:domain] = domain
 
       fields[:generate] = {
-        shortidentifier: {
-          from: :name,
-          required: true,
-          unique: true,
-          process: :get_short_identifier,
-        },
-        first: {
-          from: :name,
-          required: false,
-          unique: false,
-          process: ->(value) {
-            name  = ""
-            names = value.split(" ")
-            name  = names[0] if names.length > 1
-            name
+          shortidentifier: {
+              from: :name,
+              required: true,
+              unique: true,
+              process: :get_short_identifier,
           },
-        },
-        middle: {
-          from: :name,
-          required: false,
-          unique: false,
-          process: ->(value) {
-            name  = ""
-            names = value.split(" ")
-            if names.length > 2
-              first, middle, last = names
-              name = middle unless middle =~ /^#{surname_prefix}/
-            end
-            name
+          first: {
+              from: :name,
+              required: false,
+              unique: false,
+              process: ->(value) {
+                name  = ""
+                names = value.split(" ")
+                name  = names[0] if names.length > 1
+                name
+              },
           },
-        },
-        last: {
-          from: :name,
-          required: false,
-          unique: false,
-          process: ->(value) {
-            name  = ""
-            names = value.split(" ")
-            name  = names[-1] if names.length >= 2
-            name  = "#{names[1]} #{name}" if names[1] =~ /^#{surname_prefix}/
-            name
+          middle: {
+              from: :name,
+              required: false,
+              unique: false,
+              process: ->(value) {
+                name  = ""
+                names = value.split(" ")
+                if names.length > 2
+                  first, middle, last = names
+                  name = middle unless middle =~ /^#{surname_prefix}/
+                end
+                name
+              },
           },
-        },
+          last: {
+              from: :name,
+              required: false,
+              unique: false,
+              process: ->(value) {
+                name  = ""
+                names = value.split(" ")
+                name  = names[-1] if names.length >= 2
+                name  = "#{names[1]} #{name}" if names[1] =~ /^#{surname_prefix}/
+                name
+              },
+          },
       }
 
       # rake template:persons:items:fields
@@ -383,6 +383,43 @@ namespace :template do
 
       # rake template:persons:items:process[templates/persons/items.example.csv]
       desc "Create person authority item XML records from csv"
+      task :process, [:csv, :output_dir] do |t, args|
+        output_dir = args[:output_dir] || output_dir
+        process_csv(args[:csv], output_dir, template_file, fields)
+      end
+    end
+  end
+
+  namespace :places do
+    namespace :items do
+      config_file     = 'templates/places/items.config.csv'
+      template_file   = 'templates/places/item.xml.erb'
+      fields          = get_config(config_file)
+      fields[:domain] = domain
+
+      fields[:generate] = {
+          shortIdentifier: {
+              from: :termDisplayName,
+              required: true,
+              unique: true,
+              process: :get_short_identifier,
+          },
+          placeType: {
+              from: :placeType,
+              required: true,
+              unique: false,
+              process: :get_place_refname,
+          },
+      }
+
+      # rake template:places:items:fields
+      desc "Display fields for places authority items"
+      task :fields do |t|
+        print_fields fields[:required], fields[:optional], fields[:generate].keys
+      end
+
+      # rake template:places:items:process[templates/places/items.example.csv]
+      desc "Create place authority item XML records from csv"
       task :process, [:csv, :output_dir] do |t, args|
         output_dir = args[:output_dir] || output_dir
         process_csv(args[:csv], output_dir, template_file, fields)
