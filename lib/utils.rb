@@ -168,7 +168,7 @@ def get_sql_term_refname(value, authority_type_str, authority_shortid) # Example
   shortid_str = get_short_identifier(value).gsub(/\W/, '_'); # remove non-words
   term_display_name_str = value.gsub("'", "''"); # add SQL escape char to single quote char
   urn_str = JSON.parse( IO.read('api.json') )["urn"]
-  refname_str = "urn:cspace:" + urn_str + ":" + authority_type_str + ":name(" + authority_shortid + "):item:name(" + shortid_str.downcase + ")''" + term_display_name_str + "''"; # Need to double up single quote chars for SQL
+  refname_str = "urn:cspace:" + urn_str + ":" + authority_type_str + ":name(" + authority_shortid + "):item:name(" + shortid_str + ")''" + term_display_name_str + "''"; # Need to double up single quote chars for SQL
   refname_str
 end
 
