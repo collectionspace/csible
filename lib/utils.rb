@@ -144,12 +144,31 @@ def get_placetype_refname(value)
   refname_str
 end
 
-def get_place_refname(value)
+def xget_place_refname(value)
   # Example, urn:cspace:collection.watermillcenter.org:placeauthorities:name(place):item:name(Oakland1449274470100)'Oakland'
   shortid_str = get_short_identifier(value).gsub(/\W/, '_'); # remove non-words
   term_display_name_str = value.gsub("'", "''"); # add SQL escape char to single quote char
   urn_str = JSON.parse( IO.read('api.json') )["urn"]
   refname_str = "urn:cspace:" + urn_str + ":placeauthorities:name(place):item:name(" + shortid_str.downcase + ")''" + term_display_name_str + "''"; # Need to double up single quote chars for SQL
+  refname_str
+end
+
+def get_place_refname(value)
+  # Example, urn:cspace:collection.watermillcenter.org:placeauthorities:name(place):item:name(Oakland1449274470100)'Oakland'
+  get_sql_term_refname(value, "placeauthorities", "place")
+end
+
+def get_concept_refname(value)
+  # Example, urn:cspace:collection.watermillcenter.org:conceptauthorities:name(material_ca):item:name(Oakland1449274470100)'Oakland'
+  get_sql_term_refname(value, "conceptauthorities", "material_ca")
+end
+
+# Returns term refname. Example, urn:cspace:collection.watermillcenter.org:placeauthorities:name(place):item:name(Oakland1449274470100)'Oakland'
+def get_sql_term_refname(value, authority_type_str, authority_shortid) # Example, (oakland, placeauthorities, place)
+  shortid_str = get_short_identifier(value).gsub(/\W/, '_'); # remove non-words
+  term_display_name_str = value.gsub("'", "''"); # add SQL escape char to single quote char
+  urn_str = JSON.parse( IO.read('api.json') )["urn"]
+  refname_str = "urn:cspace:" + urn_str + ":" + authority_type_str + ":name(" + authority_shortid + "):item:name(" + shortid_str.downcase + ")''" + term_display_name_str + "''"; # Need to double up single quote chars for SQL
   refname_str
 end
 
@@ -175,7 +194,7 @@ def process_csv(input_file, output_dir, template_file, fields = {})
       headers: true,
       header_converters: lambda { |h| h.to_sym },
       converters: [:nil_to_empty, :xml_safe],
-    }) do |row|
+  }) do |row|
 
     data = row.to_hash
 
@@ -218,6 +237,57 @@ def process_csv(input_file, output_dir, template_file, fields = {})
   end
 end
 
+def process_refnames_csv(input_file, output_dir, template_file, fields = {}, output_filename)
+  raise "Invalid input file #{input_file}" unless File.file? input_file
+  generated_values = Set.new
+  CSV.foreach(input_file, {
+      headers: true,
+      header_converters: lambda { |h| h.to_sym },
+      converters: [:nil_to_empty, :xml_safe],
+  }) do |row|
+
+    data = row.to_hash
+
+    # process filters (skip if filter)
+    skip = false
+    fields[:filter].each do |filter, spec|
+      skip = true if spec.call(data[filter])
+      break if skip
+    end
+    next if skip
+
+    # check required fields have value and pad optional fields to allow partial csv
+    fields[:required].each { |r| raise "HELL" unless data.has_key? r.to_sym or data[r.to_sym].empty? }
+    fields[:optional].each { |r| data[r.to_sym] = "" unless data.has_key? r.to_sym }
+
+    fields[:transforms].each do |field, spec|
+      data[field] = spec.call(data[field])
+    end
+
+    fields[:generate].each do |field, spec|
+      source_value  = data[spec[:from]]
+      derived_value = spec[:process].is_a?(Proc) ? spec[:process].call(source_value) : send(spec[:process], source_value)
+      raise "Generated value should not be nil" if derived_value.nil?
+      raise "Generated value is invalid for #{source_value}" if spec[:required] and derived_value.empty?
+      raise "Generated value is not unique #{derived_value}" if spec[:unique] and generated_values.include? derived_value
+      generated_values << derived_value
+      data[field] = derived_value
+    end
+
+    # set the domain for cspace urn values
+    data[:domain] = fields[:domain]
+
+    # pp data
+    template = ERB.new(get_template(template_file))
+    result   = template.result(binding).gsub(/\n+/,"\n") # binding adds variables from scope
+    result = result + "\n"
+
+    #output_filename = fields[:filename].inject("") { |fn, field| fn += data[field.to_sym] }
+    #output_filename = output_filename.gsub(/\s+/, "")
+    append_file("#{output_dir}/#{output_filename}.sql", result)
+  end
+end
+
 def write_csv(filename, data)
   CSV.open(filename, 'w') do |csv|
     csv << data.first.keys
@@ -228,4 +298,9 @@ end
 def write_file(filename, data)
   File.open(filename, 'w') {|f| f.write(data) }
   @log.info "Created #{filename}"
+end
+
+def append_file(filename, data)
+  File.open(filename, 'a') {|f| f.write(data) }
+  @log.info "Appended to #{filename}"
 end

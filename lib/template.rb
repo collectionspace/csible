@@ -428,41 +428,85 @@ namespace :template do
   end
 
   #
-  # Creates a Place refname from a Place term's display name
+  # Creates a set of SQL statements to update Place terms from plain text to a refnames
   #
-  namespace :refnames do
-    namespace :items do
-      config_file     = 'templates/refnames/items.config.csv'
-      template_file   = 'templates/refnames/item.xml.erb'
-      fields          = get_config(config_file)
-      fields[:domain] = domain
+  namespace :places do
+    namespace :refnames do
+      namespace :items do
+        config_file     = 'templates/places/refnames-items.config.csv'
+        template_file   = 'templates/places/refnames-item.csv.erb'
+        fields          = get_config(config_file)
+        fields[:domain] = domain
 
-      fields[:generate] = {
-          placeRefName: {
-              from: :termDisplayName,
-              required: true,
-              unique: false,
-              process: :get_place_refname,
-          },
-          escapedRawName: {
-              from: :rawName,
-              required: true,
-              unique: false,
-              process: :get_escaped_sql,
-          },
-      }
+        fields[:generate] = {
+            termRefName: {
+                from: :termDisplayName,
+                required: true,
+                unique: false,
+                process: :get_place_refname,
+            },
+            escapedRawName: {
+                from: :rawName,
+                required: true,
+                unique: false,
+                process: :get_escaped_sql,
+            },
+        }
 
-      # rake template:refnames:items:fields
-      desc "Display fields for Place refnames items"
-      task :fields do |t|
-        print_fields fields[:required], fields[:optional], fields[:generate].keys
+        # rake template:refnames:items:fields
+        desc "Display fields for Place refnames items"
+        task :fields do |t|
+          print_fields fields[:required], fields[:optional], fields[:generate].keys
+        end
+
+        # rake template:refnames:items:process[templates/refnames/items.example.csv]
+        desc "Creates a set of SQL statements to update Place terms from plain text to a refnames"
+        task :process, [:csv, :output_dir] do |t, args|
+          output_dir = args[:output_dir] || output_dir
+          process_refnames_csv(args[:csv], output_dir, template_file, fields, "places-refnames")
+        end
       end
+    end
+  end
 
-      # rake template:refnames:items:process[templates/refnames/items.example.csv]
-      desc "Create Place refnames/display name tuples csv"
-      task :process, [:csv, :output_dir] do |t, args|
-        output_dir = args[:output_dir] || output_dir
-        process_csv(args[:csv], output_dir, template_file, fields)
+  #
+  # Creates a set of SQL statements to update a Concept terms from plain text to a refnames
+  #
+  namespace :concepts do
+    namespace :refnames do
+      namespace :items do
+        config_file     = 'templates/concepts/refnames-items.config.csv'
+        template_file   = 'templates/concepts/refnames-item.csv.erb'
+        fields          = get_config(config_file)
+        fields[:domain] = domain
+
+        fields[:generate] = {
+            termRefName: {
+                from: :termDisplayName,
+                required: true,
+                unique: false,
+                process: :get_concept_refname,
+            },
+            escapedRawName: {
+                from: :rawName,
+                required: true,
+                unique: false,
+                process: :get_escaped_sql,
+            },
+        }
+
+        # rake template:refnames:items:fields
+        desc "Display fields for Concept refnames items"
+        task :fields do |t|
+          print_fields fields[:required], fields[:optional], fields[:generate].keys
+        end
+
+        # rake template:concepts:refnames:items:process[templates/concepts/refnames-items.example.csv]
+        desc "Creates a set of SQL statements to update a Concept terms from plain text to a refnames."
+        task :process, [:csv, :output_dir] do |t, args|
+          output_dir = args[:output_dir] || output_dir
+          process_refnames_csv(args[:csv], output_dir, template_file, fields, "concepts-refnames")
+        end
       end
     end
   end
