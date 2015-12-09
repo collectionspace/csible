@@ -408,7 +408,7 @@ namespace :template do
               from: :placeType,
               required: true,
               unique: false,
-              process: :get_place_refname,
+              process: :get_placetype_refname,
           },
       }
 
@@ -420,6 +420,40 @@ namespace :template do
 
       # rake template:places:items:process[templates/places/items.example.csv]
       desc "Create place authority item XML records from csv"
+      task :process, [:csv, :output_dir] do |t, args|
+        output_dir = args[:output_dir] || output_dir
+        process_csv(args[:csv], output_dir, template_file, fields)
+      end
+    end
+  end
+
+  #
+  # Creates a Place refname from a Place term's display name
+  #
+  namespace :refnames do
+    namespace :items do
+      config_file     = 'templates/refnames/items.config.csv'
+      template_file   = 'templates/refnames/item.xml.erb'
+      fields          = get_config(config_file)
+      fields[:domain] = domain
+
+      fields[:generate] = {
+          placeRefName: {
+              from: :termDisplayName,
+              required: true,
+              unique: false,
+              process: :get_place_refname,
+          },
+      }
+
+      # rake template:refnames:items:fields
+      desc "Display fields for Place refnames items"
+      task :fields do |t|
+        print_fields fields[:required], fields[:optional], fields[:generate].keys
+      end
+
+      # rake template:refnames:items:process[templates/refnames/items.example.csv]
+      desc "Create Place refnames/display name tuples csv"
       task :process, [:csv, :output_dir] do |t, args|
         output_dir = args[:output_dir] || output_dir
         process_csv(args[:csv], output_dir, template_file, fields)

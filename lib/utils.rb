@@ -136,11 +136,21 @@ def get_short_identifier(value)
   v
 end
 
-def get_place_refname(value)
+def get_placetype_refname(value)
   # Example, urn:cspace:collection.watermillcenter.org:vocabularies:name(placetermtype):item:name(country_code)'Country code'
   urn_str = JSON.parse( IO.read('api.json') )["urn"]
   shortid_str = value.gsub(/\W/, '_'); # remove non-words
   refname_str = "urn:cspace:" + urn_str + ":vocabularies:name(placetermtype):item:name(" + shortid_str.downcase + ")'" + value + "'";
+  refname_str
+end
+
+def get_place_refname(value)
+  # Example, urn:cspace:collection.watermillcenter.org:placeauthorities:name(place):item:name(Oakland1449274470100)'Oakland'
+  shortid_str = get_short_identifier(value);
+  shortid_str = shortid_str.gsub(/\W/, '_'); # remove non-words
+  shortid_str = shortid_str.gsub(/'/, '\'\''); # add SQL escape char to single quote char
+  urn_str = JSON.parse( IO.read('api.json') )["urn"]
+  refname_str = "urn:cspace:" + urn_str + ":placeauthorities:name(place):item:name(" + shortid_str.downcase + ")''" + value + "''"; # Need to double up single quote chars for SQL
   refname_str
 end
 
