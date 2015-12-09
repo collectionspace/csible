@@ -444,6 +444,12 @@ namespace :template do
               unique: false,
               process: :get_place_refname,
           },
+          escapedRawName: {
+              from: :rawName,
+              required: true,
+              unique: false,
+              process: :get_escaped_sql,
+          },
       }
 
       # rake template:refnames:items:fields

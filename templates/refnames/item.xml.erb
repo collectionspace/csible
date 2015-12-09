@@ -1,1 +1,1 @@
-update objectproductionplacegroup set objectproductionplace = '<%= data[:placeRefName] %>' where objectproductionplace ='<%= data[:rawName] %>';
+update objectproductionplacegroup set objectproductionplace = '<%= data[:placeRefName] %>' where objectproductionplace ='<%= data[:escapedRawName] %>';

@@ -146,12 +146,16 @@ end
 
 def get_place_refname(value)
   # Example, urn:cspace:collection.watermillcenter.org:placeauthorities:name(place):item:name(Oakland1449274470100)'Oakland'
-  shortid_str = get_short_identifier(value);
-  shortid_str = shortid_str.gsub(/\W/, '_'); # remove non-words
-  shortid_str = shortid_str.gsub(/'/, '\'\''); # add SQL escape char to single quote char
+  shortid_str = get_short_identifier(value).gsub(/\W/, '_'); # remove non-words
+  term_display_name_str = value.gsub("'", "''"); # add SQL escape char to single quote char
   urn_str = JSON.parse( IO.read('api.json') )["urn"]
-  refname_str = "urn:cspace:" + urn_str + ":placeauthorities:name(place):item:name(" + shortid_str.downcase + ")''" + value + "''"; # Need to double up single quote chars for SQL
+  refname_str = "urn:cspace:" + urn_str + ":placeauthorities:name(place):item:name(" + shortid_str.downcase + ")''" + term_display_name_str + "''"; # Need to double up single quote chars for SQL
   refname_str
+end
+
+def get_escaped_sql(value)
+  escaped_sql_str = value.gsub("'", "''"); # add SQL escape char to single quote char;
+  escaped_sql_str
 end
 
 def get_template(file)
