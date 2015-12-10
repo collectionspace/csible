@@ -1,28 +1,147 @@
 to,from
-aluminum,metal
+bone,animal material
+casein,animal material
+feather,animal material
+fur,animal material
+hair,animal material
+hide,animal material
+horn,animal material
+leather,animal material
+shell,animal material
+ivory,bone
+polar bear bone,bone
+turtle shell,bone
+tusk,bone
+walrus tooth,bone
+whale bone,bone
+china,ceramic
+earthenware,ceramic
+faience,ceramic
+glazed ceramic,ceramic
+porcelain,ceramic
+stoneware,ceramic
+ceramic,clay
+manganton,clay
+terracotta,clay
+acrylic paint,coating
+enamel,coating
+oil paint,coating
+paint,coating
+pencil,coating
+pigment,coating
+plaster,coating
+stucco,coating
+watercolor,coating
+dye,colorant
+ink,colorant
+ink,colorant
+paint,colorant
+pigment,colorant
+river stone,colorant
+natural dye,dye
+linocut on paper,feather
+chicken feather,feather
+banana fiber,fiber and textile
+cane,fiber and textile
+canvas,fiber and textile
+coconut,fiber and textile
+cotton,fiber and textile
+fabric,fiber and textile
+felt,fiber and textile
+grass,fiber and textile
+hard wood,fiber and textile
+linen,fiber and textile
+natural fiber,fiber and textile
+pandanus,fiber and textile
+raffia,fiber and textile
+ramie,fiber and textile
+rattan,fiber and textile
+silk,fiber and textile
+straw,fiber and textile
+string,fiber and textile
+synthetic fur,fiber and textile
+trade cloth,fiber and textile
+velvet,fiber and textile
+wicker,fiber and textile
+wool,fiber and textile
+woven fiber,fiber and textile
+yarn,fiber and textile
+film,film
+instant film,film
+amber tinted glass,glass
+dark glass,glass
+fiberglass,glass
+glass beads,glass
+glassware,glass
+light green glass,glass
+mirror glass,glass
+polychrome glass beads,glass beads
+horsehair,hair
+buffalo horn,horn
+water buffalo horn,horn
+pubic hair,human hair
+hippopotamus leather,leather
+aluminium,metal
 bronze,metal
+cast iron,metal
+coins,metal
 copper,metal
+copper plate,metal
+copper tack,metal
 gold alloy,metal
 iron,metal
+metal bar,metal
+metal string,metal
 nails,metal
 nickel,metal
 silver,metal
 staples,metal
 steel,metal
+steel pipe,metal
+alabaster,mineral
+books,paper
+cardboard,paper
+graph paper,paper
+newsprint,paper
+rice paper,paper
+tracing paper,paper
+vellum,paper
+chalk pigment,pigment
+lime pigment,pigment
+red pigment,pigment
+acrylic,plastic
+plastic sole,plastic
+Plexiglas,plastic
+vinyl,plastic
+soft paste porcelain,porcelain
+conch shell,shell
+cowrie,shell
+cymbium snail,shell
+mother of pearl,shell
+spondylus shell,shell
+steel rod,steel
+hand stone,stone
+limestone,stone
+marble,stone
+schist,stone
+vulcanic tuff,stone
+dutch string,string
+gold string,string
 ash wood,wood
 bamboo,wood
 bark,wood
+birch plywood,wood
 birch wood,wood
-hardwood,wood
-inlaid wood,wood
-ironwood,wood
+hard wood,wood
+iron wood,wood
 jack fruit wood,wood
 light wood,wood
+lime wood,wood
 mahogany,wood
 mangrove wood,wood
 maple wood,wood
 masonite,wood
-MDF,wood
+MDF panel,wood
 molave wood,wood
 oak,wood
 palm wood,wood
@@ -33,101 +152,3 @@ shogwiyaw tree,wood
 teak,wood
 veneer,wood
 walnut wood,wood
-banana fiber,fiber and textile
-cane,fiber and textile
-canvas,fiber and textile
-coconut,fiber and textile
-cotton,fiber and textile
-fabric,fiber and textile
-felt,fiber and textile
-grass,fiber and textile
-linen,fiber and textile
-raffia,fiber and textile
-ramie,fiber and textile
-raffia,fiber and textile
-rattan,fiber and textile
-silk,fiber and textile
-single stick weave,fiber and textile
-straw,fiber and textile
-string,fiber and textile
-synthetic fur,fiber and textile
-velvet,fiber and textile
-wicker,fiber and textile
-wool,fiber and textile
-woven cloth,fiber and textile
-woven fiber,fiber and textile
-yarn,fiber and textile
-acrylic paint,coating
-pencil,coating
-enamel,coating
-lacquer,coating
-oil paint,coating
-paint,coating
-stucco,coating
-watercolor,coating
-chalk pigment,colorant
-dye,colorant
-ink,colorant
-pigment,colorant
-polychrome color,colorant
-books,paper
-cardboard,paper
-corrugated cardboard,paper
-newsprint,paper
-photographic paper,paper
-rice paper,paper
-tracing paper,paper
-vellum,paper
-ceramic,clay
-earthenware,clay
-manganton,clay
-terracotta,clay
-amber tinted glass,glass
-glass beads,glass
-hand stone,stone
-river stone,stone
-schist,stone
-volcanic tuff,stone
-alabaster,mineral
-graphite,mineral
-Plexiglas,plastic
-vinyl,plastic
-hair,animal material
-leather,animal material
-shell,animal material
-bone,animal material
-feather,animal material
-hide,animal material
-fur,animal material
-skin,animal material
-instant film,film
-cast iron,iron
-steel rod,steel
-birch plywood,plywood
-Dutch string,string
-gold string,string
-colored pencil,pencil
-natural dye,dye
-red pigment,pigment
-porcelain,ceramic
-faience,ceramic
-glazed ceramic,ceramic
-stone polished terracotta,terracotta
-polychrome glass beads,glass beads
-horsehair,hair
-human hair,hair
-hippopotamus leather,leather
-cowrie,shell
-cymbium snail,shell
-mother of pearl,shell
-horn,bone
-ivory,bone
-polar bear bone,bone
-sperm whale bone,bone
-tooth,bone
-chicken feather,feather
-china,porcelain
-soft-paste porcelain,porcelain
-buffalo horn,horn
-water buffalo horn,horn
-walrus tooth,tooth
