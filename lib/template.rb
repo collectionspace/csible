@@ -433,8 +433,8 @@ namespace :template do
   namespace :places do
     namespace :refnames do
       namespace :items do
-        config_file     = 'templates/places/refnames-items.config.csv'
-        template_file   = 'templates/places/refnames-item.csv.erb'
+        config_file     = 'imports/places/refnames-items.config.csv'
+        template_file   = 'imports/places/refnames-item.csv.erb'
         fields          = get_config(config_file)
         fields[:domain] = domain
 
@@ -475,8 +475,8 @@ namespace :template do
   namespace :concepts do
     namespace :refnames do
       namespace :items do
-        config_file     = 'templates/concepts/refnames-items.config.csv'
-        template_file   = 'templates/concepts/refnames-item.csv.erb'
+        config_file     = 'imports/concepts/refnames-items.config.csv'
+        template_file   = 'imports/concepts/refnames-item.csv.erb'
         fields          = get_config(config_file)
         fields[:domain] = domain
 
