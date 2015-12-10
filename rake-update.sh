@@ -2,9 +2,9 @@
 #psql -U csadmin -d watermill_watermill -f csible/sql-batch/update-concept-refnames.sql
 
 # Update cataloging's Production Place field
-rake template:places:items:process[imports/places/items.csv,imports/places/payloads]
-rake cs:post:directory[placeauthorities/urn:cspace:name\(place\)/items,imports/places/payloads,1]
-rake cs:relate:authorities[placeauthorities/urn:cspace:name\(place\)/items,places,imports/places/relationships.csv]
+#rake template:places:items:process[imports/places/items.csv,imports/places/payloads]
+#rake cs:post:directory[placeauthorities/urn:cspace:name\(place\)/items,imports/places/payloads,1]
+#rake cs:relate:authorities[placeauthorities/urn:cspace:name\(place\)/items,places,imports/places/relationships.csv]
 #psql -U csadmin -d watermill_watermill -f imports/places/sql/places-refnames.sql
 
 # Update catalogins's Material field
