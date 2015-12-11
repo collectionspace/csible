@@ -1,153 +1,150 @@
 from,to
-bone,animal material
-casein,animal material
-feather,animal material
-fur,animal material
-hair,animal material
-hide,animal material
-horn,animal material
-leather,animal material
-shell,animal material
-ivory,bone
-polar bear bone,bone
-turtle shell,bone
-tusk,bone
-walrus tooth,bone
-whale bone,bone
-china,ceramic
-earthenware,ceramic
-faience,ceramic
-glazed ceramic,ceramic
-porcelain,ceramic
-stoneware,ceramic
-ceramic,clay
-manganton,clay
-terracotta,clay
+acrylic,plastic
 acrylic paint,coating
-enamel,coating
-oil paint,coating
-paint,coating
-pencil,coating
-pigment,coating
-plaster,coating
-stucco,coating
-watercolor,coating
-dye,colorant
-ink,colorant
-ink,colorant
-paint,colorant
-pigment,colorant
-river stone,colorant
-natural dye,dye
-linocut on paper,feather
-chicken feather,feather
+alabaster,mineral
+aluminium,metal
+amber tinted glass,glass
+ash wood,wood
+bamboo,wood
 banana fiber,fiber and textile
+bark,wood
+birch plywood,wood
+birch wood,wood
+bone,animal material
+books,paper
+bronze,metal
+buffalo horn,horn
 cane,fiber and textile
 canvas,fiber and textile
+cardboard,paper
+casein,animal material
+cast iron,metal
+ceramic,clay
+chalk pigment,pigment
+chicken feather,feathers
+china,ceramic
 coconut,fiber and textile
+coins,metal
+conch shell,shell
+copper,metal
+copper plate,metal
+copper tack,metal
 cotton,fiber and textile
+cowrie,shell
+cymbium snail,shell
+dark glass,glass
+dutch string,string
+dye,colorant
+earthenware,ceramic
+enamel,coating
 fabric,fiber and textile
+faience,ceramic
+feather,animal material
 felt,fiber and textile
+fiberglass,glass
+fur,animal material
+glass beads,glass
+glassware,glass
+glazed ceramic,ceramic
+gold alloy,metal
+gold string,string
+graph paper,paper
 grass,fiber and textile
-hard wood,fiber and textile
+hair,animal material
+hand stone,stone
+hard wood,wood
+hard wood,wood
+hide,animal material
+hippopotamus leather,leather
+horn,animal material
+horsehair,hair
+ink,colorant
+instant film,film
+iron,metal
+iron wood,wood
+ivory,bone
+jack fruit wood,wood
+leather,animal material
+light green glass,glass
+light wood,wood
+lime pigment,pigment
+lime wood,wood
+limestone,stone
 linen,fiber and textile
+linocut on paper,feather
+mahogany,wood
+manganton,clay
+mangrove wood,wood
+maple wood,wood
+marble,stone
+masonite,wood
+MDF panel,wood
+metal bar,metal
+metal string,metal
+mirror glass,glass
+molave wood,wood
+mother of pearl,shell
+nails,metal
+natural dye,dye
 natural fiber,fiber and textile
+newsprint,paper
+nickel,metal
+oak,wood
+oil paint,coating
+paint,coating
+palm wood,wood
 pandanus,fiber and textile
+pencil,coating
+pigment,coating
+pine wood,wood
+plaster,coating
+plastic sole,plastic
+Plexiglas,plastic
+plywood,wood
+polar bear bone,bone
+polychrome glass beads,glass beads
+polychrome wood,wood
+porcelain,ceramic
+pubic hair,human hair
 raffia,fiber and textile
 ramie,fiber and textile
 rattan,fiber and textile
+red pigment,pigment
+rice paper,paper
+river stone,colorant
+schist,stone
+shell,animal material
+shogwiyaw tree,wood
 silk,fiber and textile
+silver,metal
+soft paste porcelain,porcelain
+spondylus shell,shell
+staples,metal
+steel,metal
+steel pipe,steel
+steel rod,steel
+stoneware,ceramic
 straw,fiber and textile
 string,fiber and textile
+stucco,coating
 synthetic fur,fiber and textile
+teak,wood
+terracotta,clay
+tracing paper,paper
 trade cloth,fiber and textile
+turtle shell,bone
+tusk,bone
+vellum,paper
 velvet,fiber and textile
+veneer,wood
+vinyl,plastic
+vulcanic tuff,stone
+walnut wood,wood
+walrus tooth,bone
+water buffalo horn,horn
+watercolor,coating
+whale bone,bone
 wicker,fiber and textile
 wool,fiber and textile
 woven fiber,fiber and textile
 yarn,fiber and textile
-instant film,film
-amber tinted glass,glass
-dark glass,glass
-fiberglass,glass
-glass beads,glass
-glassware,glass
-light green glass,glass
-mirror glass,glass
-polychrome glass beads,glass beads
-horsehair,hair
-buffalo horn,horn
-water buffalo horn,horn
-pubic hair,human hair
-hippopotamus leather,leather
-aluminium,metal
-bronze,metal
-cast iron,metal
-coins,metal
-copper,metal
-copper plate,metal
-copper tack,metal
-gold alloy,metal
-iron,metal
-metal bar,metal
-metal string,metal
-nails,metal
-nickel,metal
-silver,metal
-staples,metal
-steel,metal
-steel pipe,metal
-alabaster,mineral
-books,paper
-cardboard,paper
-graph paper,paper
-newsprint,paper
-rice paper,paper
-tracing paper,paper
-vellum,paper
-chalk pigment,pigment
-lime pigment,pigment
-red pigment,pigment
-acrylic,plastic
-plastic sole,plastic
-Plexiglas,plastic
-vinyl,plastic
-soft paste porcelain,porcelain
-conch shell,shell
-cowrie,shell
-cymbium snail,shell
-mother of pearl,shell
-spondylus shell,shell
-steel rod,steel
-hand stone,stone
-limestone,stone
-marble,stone
-schist,stone
-vulcanic tuff,stone
-dutch string,string
-gold string,string
-ash wood,wood
-bamboo,wood
-bark,wood
-birch plywood,wood
-birch wood,wood
-hard wood,wood
-iron wood,wood
-jack fruit wood,wood
-light wood,wood
-lime wood,wood
-mahogany,wood
-mangrove wood,wood
-maple wood,wood
-masonite,wood
-MDF panel,wood
-molave wood,wood
-oak,wood
-palm wood,wood
-pine wood,wood
-plywood,wood
-polychrome wood,wood
-shogwiyaw tree,wood
-teak,wood
-veneer,wood
-walnut wood,wood
