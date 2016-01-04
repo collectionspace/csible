@@ -1,0 +1,10 @@
+field,type,filename
+forDocTypes,required,false
+name,required,false
+notes,optional,false
+supportsSingleDoc,required,false
+supportsDocList,required,false
+supportsGroup,required,false
+supportsNoContext,required,false
+filename,required,true
+outputMIME,required,false

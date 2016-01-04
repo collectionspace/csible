@@ -392,6 +392,28 @@ namespace :template do
     end
   end
 
+  namespace :reports do
+    namespace :objects do
+      config_file     = "#{templates_path}/reports/objects.config.csv"
+      template_file   = "#{templates_path}/reports/object.xml.erb"
+      fields          = get_config(config_file)
+      fields[:domain] = domain
+
+      # rake template:reports:objects:fields
+      desc "Display fields for reports objects"
+      task :fields do |t|
+        print_fields fields[:required], fields[:optional], fields[:generate].keys
+      end
+
+      # rake template:reports:objects:process[templates/reports/objects.example.csv]
+      desc "Create reports XML records from csv"
+      task :process, [:csv, :output_dir] do |t, args|
+        output_dir = args[:output_dir] || output_dir
+        process_csv(args[:csv], output_dir, template_file, fields)
+      end
+    end
+  end
+
   namespace :valuationcontrol do
     namespace :objects do
       config_file     = "#{templates_path}/valuationcontrol/objects.config.csv"
