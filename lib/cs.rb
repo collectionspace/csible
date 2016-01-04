@@ -239,8 +239,7 @@ namespace :cs do
       protocol = URI.parse( JSON.parse( IO.read('api.json') )["base"] ).scheme
 
       url = url.gsub(/https?:/, "#{protocol}:") if protocol !~ /#{url}/
-      puts url
-      # run command(base_command, 'DELETE', { url: url })
+      run command(base_command, 'DELETE', { url: url })
     end
 
     # rake cs:delete:file[deletes.txt]
