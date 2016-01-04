@@ -101,14 +101,13 @@ def get_config(config_file)
   fields = Hash.new { |hash, key| hash[key] = [] }
   CSV.foreach(config_file, {
       headers: true,
-      header_converters: :symbol,
+      header_converters: ->(header) { header.to_sym },
     }) do |row|
       data = row.to_hash
       raise "Type must be required or optional but was #{type}" unless types.include? data[:type]
-      value = data[:field].gsub(/\W/, '').downcase
-      fields[:required] << value if data[:type] == "required"
-      fields[:optional] << value if data[:type] == "optional"
-      fields[:filename] << value if data[:filename] =~ /(^t|^true)/
+      fields[:required] << data[:field] if data[:type] == "required"
+      fields[:optional] << data[:field] if data[:type] == "optional"
+      fields[:filename] << data[:field] if data[:filename] =~ /(^t|^true)/
   end
   raise "No required fields defined in #{config_file}" if fields[:required].empty?
   raise "Filename is undefined in #{config_file}" if fields[:filename].empty?
@@ -151,7 +150,7 @@ def process_csv(input_file, output_dir, template_file, fields = {})
   generated_values = Set.new
   CSV.foreach(input_file, {
       headers: true,
-      header_converters: :symbol,
+      header_converters: ->(header) { header.to_sym },
       converters: [:nil_to_empty, :xml_safe],
     }) do |row|
 
