@@ -15,6 +15,7 @@ require 'redis'
 require 'set'
 require 'uri'
 
+require_relative "lib/client.rb"
 require_relative "lib/utils"
 require_relative "lib/cs"
 require_relative "lib/template"
