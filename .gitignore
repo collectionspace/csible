@@ -3,4 +3,5 @@ Gemfile.lock
 *.bak
 response*
 *.sh
+*.swp
 custom_templates/
