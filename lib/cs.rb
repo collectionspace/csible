@@ -152,12 +152,12 @@ namespace :cs do
 
   namespace :get do
 
-    # rake cs:get:path[/locationauthorities]
+    # rake cs:get:path[locationauthorities]
     desc "GET request by path"
     task :path, [:path, :format, :params] do |t, args|
       path   = args[:path]
       format = (args[:format] || 'parsed').to_sym
-      params = get_params(args[:params]  || '')
+      params = get_paramsyy(args[:params]  || '')
       execute CLIENT, :get, :path, path, format, params
     end
 
@@ -170,15 +170,13 @@ namespace :cs do
       execute CLIENT, :get, :url, url, format, params
     end
 
-    # rake cs:get:list[/media,uri~csid,"wf_deleted=false&pgSz=100"]
+    # rake cs:get:list[media,"wf_deleted=false&pgSz=100"]
     desc "GET request by path for results list to csv specifying properties"
-    task :list, [:path, :properties, :params, :output] do |t, args|
+    task :list, [:path, :params, :output] do |t, args|
       path       = args[:path]
-      properties = args[:properties] || [ "uri" ]
-      properties = properties.split("~") if properties.respond_to? :split
-      params     = args[:params] || nil
+      params     = get_params(args[:params]  || '')
       output     = args[:output] || "response.csv"
-      results    = get_list_properties(path, properties, params)
+      results    = get_properties CLIENT, path, params
       write_csv(output, results) unless results.empty?
     end
 

@@ -94,26 +94,16 @@ def get_identifiers(path, id, throttle = 0.25)
   identifiers
 end
 
-def get_list_properties(path, properties = [], params = nil)
-  list = []
-  Rake::Task["cs:get:path"].invoke(path, params)
-  response = Nokogiri::XML.parse(File.open("response.xml"))
-  response.css("list-item").each do |list_item|
-    i = {}
-    properties.each do |property|
-      i[property] = list_item.css(property).text
-    end
-    list << i
-  end
-  Rake::Task["cs:get:path"].reenable
-  list
-end
-
 def get_params(param_string)
   Hash[CGI.parse(param_string).map {|key,values| [key.to_sym, values[0]||true]}]
 end
 
-def get_properties
+def get_properties(client, path, properties, params = {})
+  list = []
+  client.all(path, params) do |record|
+     list << record
+  end
+  list
 end
 
 def run(command)
