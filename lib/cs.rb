@@ -1,5 +1,5 @@
 namespace :cs do
-  base_command = "ansible-playbook -i 'localhost,' services.yml --extra-vars='@api.json'"
+  CLIENT = get_client( get_client_config[:services] )
 
   # rake cs:cache[response.csv]
   desc "Add key value pairs to redis from csv"
@@ -18,7 +18,7 @@ namespace :cs do
   # rake cs:config
   desc "Dump csible config to terminal"
   task :config do |t, args|
-    pp JSON.parse( IO.read('api.json') )
+    ap CLIENT.config
   end
 
   # rake cs:parse_xml["relation-list-item > uri"]
@@ -154,17 +154,20 @@ namespace :cs do
 
     # rake cs:get:path[/locationauthorities]
     desc "GET request by path"
-    task :path, [:path, :params] do |t, args|
+    task :path, [:path, :format, :params] do |t, args|
       path   = args[:path]
-      params = args[:params] || nil
-      run command(base_command, 'GET', { path: path, params: params })
+      format = (args[:format] || 'parsed').to_sym
+      params = get_params(args[:params]  || '')
+      execute CLIENT, :get, :path, path, format, params
     end
 
     # rake cs:get:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities]
     desc "GET request by url"
-    task :url, [:url] do |t, args|
+    task :url, [:url, :format, :params] do |t, args|
       url    = args[:url]
-      run command(base_command, 'GET', { url: url })
+      format = (args[:format] || 'parsed').to_sym
+      params = get_params(args[:params]  || '')
+      execute CLIENT, :get, :url, url, format, params
     end
 
     # rake cs:get:list[/media,uri~csid,"wf_deleted=false&pgSz=100"]

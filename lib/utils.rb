@@ -27,6 +27,39 @@ def command(base, method, opts = {})
   command
 end
 
+def execute(client, method, type, resource, format = :parsed, params = {}, verbose = true)
+  if type == :path
+    result = client.send method, resource, { query: params }
+  elsif type == :url
+    username = client.config.username
+    password = client.config.password
+    result = HTTParty.send method, resource, { basic_auth: { username: username, password: password }, query: params }
+    result = CollectionSpace::Response.new result # wrap the response
+  else
+    raise "Unrecognized request type: #{type}"
+  end
+
+  raise "Request error: #{result.status}" unless result.status_code.to_s =~ /^2/
+  data = nil
+
+  if format == :xml
+    data = result.xml.to_xml
+    puts data if verbose
+  else
+    data = result.parsed
+    ap data if verbose
+  end
+  data
+end
+
+def get_client(config = {})
+  CollectionSpace::Client.new(CollectionSpace::Configuration.new(config))
+end
+
+def get_client_config
+  JSON.parse( IO.read('api.json'), symbolize_names: true )
+end
+
 def get_csid(type, param, value, throttle = 0.25)
   params = "as=#{type}_common:#{param}%3D%22#{value.gsub(/ /, "+")}%22&wf_deleted=false"
   Rake::Task["cs:get:path"].invoke("/#{type}", params)
@@ -74,6 +107,13 @@ def get_list_properties(path, properties = [], params = nil)
   end
   Rake::Task["cs:get:path"].reenable
   list
+end
+
+def get_params(param_string)
+  Hash[CGI.parse(param_string).map {|key,values| [key.to_sym, values[0]||true]}]
+end
+
+def get_properties
 end
 
 def run(command)

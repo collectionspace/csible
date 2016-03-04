@@ -1,7 +1,12 @@
 {
-  "base": "https://cspace.lyrasistechnology.org",
-  "user": "admin@cspace.lyrasistechnology.org",
-  "password": "Administrator",
-  "urn": "cspace.lyrasistechnology.org",
-  "templates_path": "templates"
+  "services": {
+    "base_uri": "https://cspace.lyrasistechnology.org/cspace-services",
+    "username": "admin@cspace.lyrasistechnology.org",
+    "password": "Administrator",
+    "verify_ssl": false
+  },
+  "templates": {
+    "urn": "cspace.lyrasistechnology.org",
+    "templates_path": "templates"
+  }
 }

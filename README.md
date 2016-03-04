@@ -1,7 +1,7 @@
 CSIBLE
 ======
 
-An Ansible + Rake wrapper to interact with the CollectionSpace backend REST API, plus a CollectionSpace record XML generator.
+A set of Rake tasks to interact with the CollectionSpace backend REST API and generate CollectionSpace XML records.
 
 Configuration file
 ------------------
