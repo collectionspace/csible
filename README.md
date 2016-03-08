@@ -52,7 +52,7 @@ rake cs:get:path[locationauthorities/38cc1b61-a597-4b12-b820/items,kw=EwoodPark7
 rake cs:get:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities]
 
 # GET items from a list with properties delimitied by "~" written to CSV
-rake cs:get:list[media,uri~csid,"wf_deleted=false&pgSz=100"]
+rake cs:get:list[media]
 
 # POST
 rake cs:post:directory[locationauthorities/38cc1b61-a597-4b12-b820/items,locations,1]
