@@ -1,7 +1,7 @@
 namespace :cs do
-  CONFIG = Csible.get_config('api.json')
-  CLIENT = Csible.get_client( CONFIG[:services] )
-  LOG    = CONFIG[:logging][:method] == 'file' ?
+  $config = Csible.get_config('api.json')
+  $client = Csible.get_client( $config[:services] )
+  $log    = $config[:logging][:method] == 'file' ?
     Logger.new(File.open('response.log', 'a+')) : Logger.new(STDOUT)
 
   # rake cs:cache[response.csv]
@@ -21,7 +21,7 @@ namespace :cs do
   # rake cs:config
   desc "Dump csible config to terminal"
   task :config do |t, args|
-    ap CONFIG
+    ap $config
   end
 
   # rake cs:parse_xml["relation-list-item > uri"]
@@ -32,7 +32,7 @@ namespace :cs do
     output  = args[:output] || "response.txt"
     raise "HELL" unless File.file? input and File.file? output
     result  = get_element_values(input, element)
-    write_file output, result.join("\n")
+    Csible.write_file output, result.join("\n", $log)
   end
 
   namespace :relate do
@@ -79,7 +79,7 @@ namespace :cs do
         # cache result and filename
         filename        = "#{data[:from]}_#{data[:to]}".gsub(/ /, '')
         output_filename = "#{output_dir}/#{filename}-1.xml"
-        write_file(output_filename, result)
+        Csible.write_file(output_filename, result, $log)
 
         # now invert for the reciprocal relationship
         data[:from]      = relation[:to]
@@ -94,7 +94,7 @@ namespace :cs do
 
         # cache result
         output_filename = "#{output_dir}/#{filename}-2.xml"
-        write_file(output_filename, result)
+        Csible.write_file(output_filename, result, $log)
       end
     end
 
@@ -143,7 +143,7 @@ namespace :cs do
 
           # cache result
           output_filename = "#{output_dir}/#{identifiers[item]["csid"]}.xml"
-          write_file(output_filename, result)
+          Csible.write_file(output_filename, result, $log)
 
           # make the introductions
           Rake::Task["cs:put:file"].invoke(identifiers[item]["uri"], output_filename)
@@ -161,7 +161,7 @@ namespace :cs do
       path   = args[:path]
       format = (args[:format] || 'parsed').to_sym
       params = Csible.convert_params(args[:params]  || '')
-      get    = Csible::Get.new(CLIENT, LOG)
+      get    = Csible::Get.new($client, $log)
       get.execute :path, path, params
       get.print format
     end
@@ -172,7 +172,7 @@ namespace :cs do
       url    = args[:url]
       format = (args[:format] || 'parsed').to_sym
       params = Csible.convert_params(args[:params]  || '')
-      get    = Csible::Get.new(CLIENT, LOG)
+      get    = Csible::Get.new($client, $log)
       get.execute :url, url, params
       get.print format
     end
@@ -183,9 +183,9 @@ namespace :cs do
       path       = args[:path]
       params     = Csible.convert_params(args[:params]  || '')
       output     = args[:output] || "response.csv"
-      get        = Csible::Get.new(CLIENT, LOG)
+      get        = Csible::Get.new($client, $log)
       results    = get.list path, params
-      write_csv(output, results) unless results.empty?
+      Csible.write_csv(output, results, $log) unless results.empty?
     end
 
   end
@@ -213,10 +213,10 @@ namespace :cs do
       file = args[:file]
       raise "Invalid file" unless File.file? file
       payload = File.read(file)
-      post    = Csible::Post.new(CLIENT, LOG)
+      post    = Csible::Post.new($client, $log)
       post.execute :path, path, payload
       post.print
-      File.unlink file
+      #File.unlink file
     end
 
   end
@@ -230,7 +230,7 @@ namespace :cs do
       file = args[:file]
       raise "Invalid file" unless File.file? file
       payload = File.read(file)
-      put     = Csible::Put.new(CLIENT, LOG)
+      put     = Csible::Put.new($client, $log)
       put.execute :path, path, payload
       put.print
     end
@@ -242,7 +242,7 @@ namespace :cs do
     desc "DELETE request by path"
     task :path, [:path] do |t, args|
       path   = args[:path]
-      delete = Csible::Delete.new(CLIENT, LOG)
+      delete = Csible::Delete.new($client, $log)
       delete.execute :path, path
       delete.print
     end
@@ -250,9 +250,9 @@ namespace :cs do
     desc "DELETE request by url"
     task :url, [:url] do |t, args|
       url      = args[:url]
-      protocol = URI.parse( CLIENT.config[:base_uri] ).scheme
+      protocol = URI.parse( $client.config[:base_uri] ).scheme
       url      = url.gsub(/https?:/, "#{protocol}:") if protocol !~ /#{url}/
-      delete   = Csible::Delete.new(CLIENT, LOG)
+      delete   = Csible::Delete.new($client, $log)
       delete.execute :url, url
       delete.print
     end
@@ -292,7 +292,7 @@ namespace :cs do
         data[:uri] = uri
         generated << data
       end
-      write_csv(output_filename, generated)
+      Csible.write_csv(output_filename, generated, $log)
     end
 
     # rake cs:update:nested[templates/updates/update-nested.example.csv]
@@ -339,7 +339,7 @@ namespace :cs do
 
         # cache result
         output_filename = "#{output_dir}/#{data[:element]}-#{data[:uri].split("/")[-1]}.xml"
-        write_file(output_filename, result)
+        Csible.write_file(output_filename, result, $log)
       end
     end
   end

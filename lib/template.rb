@@ -1,8 +1,8 @@
 # TEMPLATES
 namespace :template do
-  config         = JSON.parse( IO.read('api.json') )
-  domain         = config["urn"]
-  templates_path = config["templates_path"] ||= "templates"
+  $config        = Csible.get_config('api.json')
+  domain         = $config[:templates][:urn]
+  templates_path = $config[:templates][:templates_path] ||= "templates"
   surname_prefix = "([Dd]e|V[ao]n)"
   output_dir     = 'imports'
 

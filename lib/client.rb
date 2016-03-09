@@ -12,10 +12,22 @@ module Csible
     JSON.parse( IO.read(path), symbolize_names: true )
   end
 
+  def self.write_csv(filename, data, log = Logger.new(STDOUT))
+    CSV.open(filename, 'w') do |csv|
+      csv << data.first.keys
+      data.each { |row| csv << row.values }
+    end
+  end
+
+  def self.write_file(filename, data, log = Logger.new(STDOUT))
+    File.open(filename, 'w') {|f| f.write(data) }
+    log.info "Created #{filename}"
+  end
+
   module Helpers
 
     def	check_status
-      raise "Request error: #{@result.status}" unless @result.status_code.to_s =~ /^2/
+      raise "Request error: #{@result.status.inspect}" unless @result.status_code.to_s =~ /^2/
     end
 
     def print(format = :parsed)
@@ -96,7 +108,6 @@ module Csible
 
   class Put < Request
     include Helpers
-
 
     def execute(type, resource, payload)
       raise "Payload error" unless payload

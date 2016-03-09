@@ -1,12 +1,11 @@
 ##### CSV helpers
 
-CSV::Converters[:nil_to_empty] = lambda do |field|
-  field ? field : ""
-end
-
-CSV::Converters[:xml_safe] = lambda do |field|
-  field.gsub(/&/, "&amp;")
-end
+CSV::Converters[:nil_to_empty] = ->(field) { field.nil? ? "" : field }
+CSV::Converters[:xml_safe]     = ->(field) { field.gsub(/&/, "&amp;") }
+# converters not working with some Ruby versions so handle it this way for now
+$csv_nil_to_empty = -> (field) { field.nil? ? "" : field }
+$csv_xml_safe     = -> (field) { field.gsub(/&/, "&amp;") }
+$converters = [ $csv_nil_to_empty, $csv_xml_safe ]
 
 ##### CS HELPERS
 
@@ -118,6 +117,8 @@ def process_csv(input_file, output_dir, template_file, fields = {})
     }) do |row|
 
     data = row.to_hash
+    # use stop gap converters
+    data.each { |key, value| $converters.each { |c| data[key] = c.call(data[key]) } }
 
     # process filters (skip if filter)
     skip = false
@@ -153,18 +154,6 @@ def process_csv(input_file, output_dir, template_file, fields = {})
     result   = template.result(binding).gsub(/\n+/,"\n") # binding adds variables from scope
 
     output_filename = fields[:filename].inject("") { |fn, field| fn += data[field.to_sym] }
-    write_file("#{output_dir}/#{output_filename}.xml", result)
+    Csible.write_file("#{output_dir}/#{output_filename}.xml", result)
   end
-end
-
-def write_csv(filename, data)
-  CSV.open(filename, 'w') do |csv|
-    csv << data.first.keys
-    data.each { |row| csv << row.values }
-  end
-end
-
-def write_file(filename, data)
-  File.open(filename, 'w') {|f| f.write(data) }
-  @log.info "Created #{filename}"
 end
