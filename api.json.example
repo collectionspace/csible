@@ -3,13 +3,13 @@
     "method": "file"
   },
   "services": {
-    "base_uri": "https://cspace.lyrasistechnology.org/cspace-services",
-    "username": "admin@cspace.lyrasistechnology.org",
+    "base_uri": "http://core.collectionspace.org/cspace-services",
+    "username": "admin@core.collectionspace.org",
     "password": "Administrator",
     "verify_ssl": false
   },
   "templates": {
-    "urn": "cspace.lyrasistechnology.org",
+    "urn": "core.collectionspace.org",
     "templates_path": "templates"
   }
 }
