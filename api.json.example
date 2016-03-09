@@ -1,4 +1,7 @@
 {
+  "logging": {
+    "method": "file"
+  },
   "services": {
     "base_uri": "https://cspace.lyrasistechnology.org/cspace-services",
     "username": "admin@cspace.lyrasistechnology.org",

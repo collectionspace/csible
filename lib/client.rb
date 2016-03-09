@@ -30,10 +30,11 @@ module Csible
 
   class Request
 
-    attr_reader :client, :result
+    attr_reader :client, :log, :result
 
-    def initialize(client)
+    def initialize(client, log = Logger.new(STDOUT))
       @client = client
+      @log    = log
       @result = nil
     end
 
@@ -44,6 +45,7 @@ module Csible
     include Helpers
 
     def execute(type, resource, params = {})
+      log.info "GET [#{resource}]"
       if type == :path
 	@result = client.get resource, { query: params }
       elsif type == :url
@@ -63,6 +65,7 @@ module Csible
       list = []
       client.all(path, params) do |record|
 	list << record
+	log.info "LIST [#{record["uri"]}]"
       end
       list
     end
@@ -74,6 +77,7 @@ module Csible
 
     def execute(type, resource, payload)
       raise "Payload error" unless payload
+      log.info "POST [#{resource}]"
       if type == :path
 	@result = client.post resource, payload
       elsif type == :url
@@ -96,6 +100,7 @@ module Csible
 
     def execute(type, resource, payload)
       raise "Payload error" unless payload
+      log.info "PUT [#{resource}]"
       if type == :path
 	@result = client.put resource, payload
       elsif type == :url
@@ -116,6 +121,7 @@ module Csible
     include Helpers
 
     def execute(type, resource)
+      log.info "DELETE [#{resource}]"
       if type == :path
 	@result = client.delete resource
       elsif type == :url

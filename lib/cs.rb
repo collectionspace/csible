@@ -1,6 +1,8 @@
 namespace :cs do
   CONFIG = Csible.get_config('api.json')
   CLIENT = Csible.get_client( CONFIG[:services] )
+  LOG    = CONFIG[:logging][:method] == 'file' ?
+    Logger.new(File.open('response.log', 'a+')) : Logger.new(STDOUT)
 
   # rake cs:cache[response.csv]
   desc "Add key value pairs to redis from csv"
@@ -159,7 +161,7 @@ namespace :cs do
       path   = args[:path]
       format = (args[:format] || 'parsed').to_sym
       params = Csible.convert_params(args[:params]  || '')
-      get    = Csible::Get.new(CLIENT)
+      get    = Csible::Get.new(CLIENT, LOG)
       get.execute :path, path, params
       get.print format
     end
@@ -170,7 +172,7 @@ namespace :cs do
       url    = args[:url]
       format = (args[:format] || 'parsed').to_sym
       params = Csible.convert_params(args[:params]  || '')
-      get    = Csible::Get.new(CLIENT)
+      get    = Csible::Get.new(CLIENT, LOG)
       get.execute :url, url, params
       get.print format
     end
@@ -181,7 +183,7 @@ namespace :cs do
       path       = args[:path]
       params     = Csible.convert_params(args[:params]  || '')
       output     = args[:output] || "response.csv"
-      get        = Csible::Get.new(CLIENT)
+      get        = Csible::Get.new(CLIENT, LOG)
       results    = get.list path, params
       write_csv(output, results) unless results.empty?
     end
@@ -211,7 +213,7 @@ namespace :cs do
       file = args[:file]
       raise "Invalid file" unless File.file? file
       payload = File.read(file)
-      post    = Csible::Post.new(CLIENT)
+      post    = Csible::Post.new(CLIENT, LOG)
       post.execute :path, path, payload
       post.print
       File.unlink file
@@ -228,7 +230,7 @@ namespace :cs do
       file = args[:file]
       raise "Invalid file" unless File.file? file
       payload = File.read(file)
-      put     = Csible::Put.new(CLIENT)
+      put     = Csible::Put.new(CLIENT, LOG)
       put.execute :path, path, payload
       put.print
     end
@@ -240,7 +242,7 @@ namespace :cs do
     desc "DELETE request by path"
     task :path, [:path] do |t, args|
       path   = args[:path]
-      delete = Csible::Delete.new(CLIENT)
+      delete = Csible::Delete.new(CLIENT, LOG)
       delete.execute :path, path
       delete.print
     end
@@ -250,7 +252,7 @@ namespace :cs do
       url      = args[:url]
       protocol = URI.parse( CLIENT.config[:base_uri] ).scheme
       url      = url.gsub(/https?:/, "#{protocol}:") if protocol !~ /#{url}/
-      delete   = Csible::Delete.new(CLIENT)
+      delete   = Csible::Delete.new(CLIENT, LOG)
       delete.execute :url, url
       delete.print
     end
