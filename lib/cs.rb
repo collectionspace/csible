@@ -159,7 +159,7 @@ namespace :cs do
     desc "GET request by path"
     task :path, [:path, :format, :params] do |t, args|
       path   = args[:path]
-      format = (args[:format] || 'parsed').to_sym
+      format = (args[:format] || 'json').to_sym
       params = Csible.convert_params(args[:params]  || '')
       get    = Csible::Get.new($client, $log)
       begin
@@ -174,7 +174,7 @@ namespace :cs do
     desc "GET request by url"
     task :url, [:url, :format, :params] do |t, args|
       url    = args[:url]
-      format = (args[:format] || 'parsed').to_sym
+      format = (args[:format] || 'json').to_sym
       params = Csible.convert_params(args[:params]  || '')
       get    = Csible::Get.new($client, $log)
       begin
@@ -240,7 +240,7 @@ namespace :cs do
     task :file, [:path, :file, :format] do |t, args|
       path = args[:path]
       file = args[:file]
-      format = (args[:format] || 'parsed').to_sym
+      format = (args[:format] || 'json').to_sym
       raise "Invalid file" unless File.file? file
       payload = File.read(file)
       put     = Csible::Put.new($client, $log)

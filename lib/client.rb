@@ -30,9 +30,11 @@ module Csible
       raise "ERROR [#{self.class.to_s.upcase}] #{result.status_code.to_s} #{@result.status.inspect} #{resource}" unless @result.status_code.to_s =~ /^2/
     end
 
-    def print(format = :parsed)
+    def print(format = :json)
       if format == :xml
         puts @result.xml.to_xml
+      elsif format == :json
+        puts JSON.pretty_generate @result.parsed
       else
         ap @result.parsed
       end
