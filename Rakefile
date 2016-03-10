@@ -1,7 +1,9 @@
 require 'active_support'
 require 'active_support/core_ext'
+require 'awesome_print'
 require 'base64'
-require 'erb'
+require 'cgi'
+require 'collectionspace/client'
 require 'csv'
 require 'erb'
 require 'fileutils'
@@ -13,13 +15,13 @@ require 'redis'
 require 'set'
 require 'uri'
 
+# support libs
+require_relative "lib/client"
 require_relative "lib/utils"
+
+# cli tasks
 require_relative "lib/cs"
 require_relative "lib/template"
-
-log_file = "response.log"
-FileUtils.touch(log_file)
-@log = Logger.new File.open(log_file, "a")
 
 namespace :clear do
 

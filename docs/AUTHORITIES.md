@@ -7,11 +7,11 @@ Creating authority (item) records and setting relationships:
 
 ```bash
 # get csids for concept authorities
-rake cs:get:list[/conceptauthorities,uri~shortIdentifier]
+rake cs:get:list[conceptauthorities]
 # create import xml
 rake template:concepts:items:process[templates/concepts/watermill.csv]
 # import it using csid from csv: `concept` authority
-rake cs:post:directory[/conceptauthorities/02ad348f-828f-4834-a830/items,imports,1]
+rake cs:post:directory[conceptauthorities/02ad348f-828f-4834-a830/items,imports]
 
 rake clear:all
 
@@ -23,21 +23,21 @@ rake cs:delete:file[response.txt]
 
 ```bash
 # get csids for location authorities
-rake cs:get:list[/locationauthorities,uri~shortIdentifier]
+rake cs:get:list[locationauthorities]
 
 # create import xml
 rake template:locations:items:process[templates/locations/onsite.csv]
 # import it using csid from csv: `location` authority
-rake cs:post:directory[/locationauthorities/38cc1b61-a597-4b12-b820/items,imports,1]
+rake cs:post:directory[locationauthorities/38cc1b61-a597-4b12-b820/items,imports]
 # set relationships -- uses "from", "to" values from the same or a different file
-rake cs:relate:authorities[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,templates/locations/onsite.csv]
+rake cs:relate:authorities[locationauthorities/38cc1b61-a597-4b12-b820/items,locations,templates/locations/onsite.csv]
 
 rake clear:all
 
 # repeat as needed
 rake template:locations:items:process[templates/locations/offsite.csv]
-rake cs:post:directory[/locationauthorities/add50144-321a-4355-840b/items,imports,1] # `offsite_sla` authority
-rake cs:relate:authorities[/locationauthorities/add50144-321a-4355-840b/items,locations,templates/locations/offsite.csv]
+rake cs:post:directory[locationauthorities/add50144-321a-4355-840b/items,imports] # `offsite_sla` authority
+rake cs:relate:authorities[locationauthorities/add50144-321a-4355-840b/items,locations,templates/locations/offsite.csv]
 
 rake clear:all
 
@@ -49,11 +49,11 @@ rake cs:delete:file[response.txt]
 
 ```
 # get csids for org authorities
-rake cs:get:list[/orgauthorities,uri~shortIdentifier]
+rake cs:get:list[orgauthorities]
 # create import xml
 rake template:organizations:items:process[templates/organizations/watermill.csv]
 # import it using csid from csv: `organization` authority
-rake cs:post:directory[/orgauthorities/f1dd741c-0c98-4033-9a1c/items,imports,1]
+rake cs:post:directory[orgauthorities/f1dd741c-0c98-4033-9a1c/items,imports]
 ```
 
 **Persons:**
@@ -76,11 +76,11 @@ To parse names split on space characters:
 
 ```bash
 # get csids for person authorities
-rake cs:get:list[/personauthorities,uri~shortIdentifier]
+rake cs:get:list[personauthorities]
 # create import xml
 rake template:persons:items:process[templates/persons/watermill.csv]
 # import it using csid from csv: `person` authority
-rake cs:post:directory[/personauthorities/92c6d196-d88e-4e0e-8dbb/items,imports,1]
+rake cs:post:directory[personauthorities/92c6d196-d88e-4e0e-8dbb/items,imports]
 
 rake clear:all
 

@@ -1,5 +1,8 @@
 namespace :cs do
-  base_command = "ansible-playbook -i 'localhost,' services.yml --extra-vars='@api.json'"
+  $config = Csible.get_config('api.json')
+  $client = Csible.get_client( $config[:services] )
+  $log    = $config[:logging][:method] == 'file' ?
+    Logger.new(File.open('response.log', 'a+')) : Logger.new(STDOUT)
 
   # rake cs:cache[response.csv]
   desc "Add key value pairs to redis from csv"
@@ -18,7 +21,7 @@ namespace :cs do
   # rake cs:config
   desc "Dump csible config to terminal"
   task :config do |t, args|
-    pp JSON.parse( IO.read('api.json') )
+    ap $config
   end
 
   # rake cs:parse_xml["relation-list-item > uri"]
@@ -29,7 +32,7 @@ namespace :cs do
     output  = args[:output] || "response.txt"
     raise "HELL" unless File.file? input and File.file? output
     result  = get_element_values(input, element)
-    write_file output, result.join("\n")
+    Csible.write_file output, result.join("\n", $log)
   end
 
   namespace :relate do
@@ -76,7 +79,7 @@ namespace :cs do
         # cache result and filename
         filename        = "#{data[:from]}_#{data[:to]}".gsub(/ /, '')
         output_filename = "#{output_dir}/#{filename}-1.xml"
-        write_file(output_filename, result)
+        Csible.write_file(output_filename, result, $log)
 
         # now invert for the reciprocal relationship
         data[:from]      = relation[:to]
@@ -91,7 +94,7 @@ namespace :cs do
 
         # cache result
         output_filename = "#{output_dir}/#{filename}-2.xml"
-        write_file(output_filename, result)
+        Csible.write_file(output_filename, result, $log)
       end
     end
 
@@ -140,7 +143,7 @@ namespace :cs do
 
           # cache result
           output_filename = "#{output_dir}/#{identifiers[item]["csid"]}.xml"
-          write_file(output_filename, result)
+          Csible.write_file(output_filename, result, $log)
 
           # make the introductions
           Rake::Task["cs:put:file"].invoke(identifiers[item]["uri"], output_filename)
@@ -152,74 +155,101 @@ namespace :cs do
 
   namespace :get do
 
-    # rake cs:get:path[/locationauthorities]
+    # rake cs:get:path[locationauthorities]
     desc "GET request by path"
-    task :path, [:path, :params] do |t, args|
+    task :path, [:path, :format, :params] do |t, args|
       path   = args[:path]
-      params = args[:params] || nil
-      run command(base_command, 'GET', { path: path, params: params })
+      format = (args[:format] || 'parsed').to_sym
+      params = Csible.convert_params(args[:params]  || '')
+      get    = Csible::Get.new($client, $log)
+      begin
+        get.execute :path, path, params
+        get.print format
+      rescue Exception => ex
+        $log.error ex.message
+      end
     end
 
     # rake cs:get:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities]
     desc "GET request by url"
-    task :url, [:url] do |t, args|
+    task :url, [:url, :format, :params] do |t, args|
       url    = args[:url]
-      run command(base_command, 'GET', { url: url })
+      format = (args[:format] || 'parsed').to_sym
+      params = Csible.convert_params(args[:params]  || '')
+      get    = Csible::Get.new($client, $log)
+      begin
+        get.execute :url, url, params
+        get.print format
+      rescue Exception => ex
+        $log.error ex.message
+      end
+
     end
 
-    # rake cs:get:list[/media,uri~csid,"wf_deleted=false&pgSz=100"]
+    # rake cs:get:list[media,"wf_deleted=false&pgSz=100"]
     desc "GET request by path for results list to csv specifying properties"
-    task :list, [:path, :properties, :params, :output] do |t, args|
+    task :list, [:path, :params, :output] do |t, args|
       path       = args[:path]
-      properties = args[:properties] || [ "uri" ]
-      properties = properties.split("~") if properties.respond_to? :split
-      params     = args[:params] || nil
+      params     = Csible.convert_params(args[:params]  || '')
       output     = args[:output] || "response.csv"
-      results    = get_list_properties(path, properties, params)
-      write_csv(output, results) unless results.empty?
+      get        = Csible::Get.new($client, $log)
+      results    = get.list path, params
+      Csible.write_csv(output, results, $log) unless results.empty?
     end
 
   end
 
   namespace :post do
 
-    # rake cs:post:directory[/locationauthorities/XYZ/items,examples/locations,1]
+    # rake cs:post:directory[locationauthorities/XYZ/items,examples/locations]
     desc "POST requests by path using directory of files to import"
-    task :directory, [:path, :directory, :throttle] do |t, args|
+    task :directory, [:path, :directory] do |t, args|
       path      = args[:path]
       directory = args[:directory]
-      throttle  = args[:throttle] || 1
 
       raise "Invalid directory" unless File.directory? directory
 
       Dir["#{args[:directory]}/*.xml"].each do |file|
         Rake::Task["cs:post:file"].invoke(path, file)
-        `sleep #{throttle}`
         Rake::Task["cs:post:file"].reenable
       end
     end
 
-    # rake cs:post:file[/locationauthorities/XYZ/items,examples/locations/1.xml]
+    # rake cs:post:file[locationauthorities/XYZ/items,examples/locations/1.xml]
     desc "POST request by path using file to import"
     task :file, [:path, :file] do |t, args|
       path = args[:path]
       file = args[:file]
       raise "Invalid file" unless File.file? file
-      run command(base_command, 'POST', { path: path, file: file })
-      File.unlink file
+      payload = File.read(file)
+      post    = Csible::Post.new($client, $log)
+      begin
+        post.execute :path, path, payload
+        File.unlink file
+      rescue Exception => ex
+        $log.error ex.message
+      end
     end
 
   end
 
   namespace :put do
 
-    # rake cs:put:file[/locationauthorities/XYZ/items/ABC,examples/locations/1.xml]
+    # rake cs:put:file[locationauthorities/XYZ/items/ABC,examples/locations/1.xml]
     desc "PUT request by path with file of updated metadata"
-    task :file, [:path, :file] do |t, args|
+    task :file, [:path, :file, :format] do |t, args|
       path = args[:path]
       file = args[:file]
+      format = (args[:format] || 'parsed').to_sym
       raise "Invalid file" unless File.file? file
-      run command(base_command, 'PUT', { path: path, file: file })
+      payload = File.read(file)
+      put     = Csible::Put.new($client, $log)
+      begin
+        put.execute :path, path, payload
+        put.print format
+      rescue Exception => ex
+        $log.error ex.message
+      end
     end
 
   end
@@ -228,31 +258,37 @@ namespace :cs do
 
     desc "DELETE request by path"
     task :path, [:path] do |t, args|
-      path = args[:path]
-      run command(base_command, 'DELETE', { path: path })
+      path   = args[:path]
+      delete = Csible::Delete.new($client, $log)
+      begin
+        delete.execute :path, path
+      rescue Exception => ex
+        $log.error ex.message
+      end
     end
 
     desc "DELETE request by url"
     task :url, [:url] do |t, args|
-      url = args[:url]
-
-      protocol = URI.parse( JSON.parse( IO.read('api.json') )["base"] ).scheme
-
-      url = url.gsub(/https?:/, "#{protocol}:") if protocol !~ /#{url}/
-      run command(base_command, 'DELETE', { url: url })
+      url      = args[:url]
+      protocol = URI.parse( $client.config.base_uri ).scheme
+      url      = url.gsub(/https?:/, "#{protocol}:") if protocol !~ /#{url}/
+      delete   = Csible::Delete.new($client, $log)
+      begin
+        delete.execute :url, url
+      rescue Exception => ex
+        $log.error ex.message
+      end
     end
 
     # rake cs:delete:file[deletes.txt]
-    # rake cs:delete:file[deletes.txt,path,1]
+    # rake cs:delete:file[deletes.txt,path]
     desc "DELETE requests by file of urls or paths"
     task :file, [:file, :type, :throttle] do |t, args|
       file      = args[:file]
       type      = args[:type] || "url"
-      throttle  = args[:throttle] || 1
       raise "HELL" unless File.file? file
       File.readlines(file).each do |line|
         Rake::Task["cs:delete:#{type}"].invoke(line)
-        `sleep #{throttle}`
         Rake::Task["cs:delete:#{type}"].reenable
       end
     end
@@ -279,7 +315,7 @@ namespace :cs do
         data[:uri] = uri
         generated << data
       end
-      write_csv(output_filename, generated)
+      Csible.write_csv(output_filename, generated, $log)
     end
 
     # rake cs:update:nested[templates/updates/update-nested.example.csv]
@@ -326,7 +362,7 @@ namespace :cs do
 
         # cache result
         output_filename = "#{output_dir}/#{data[:element]}-#{data[:uri].split("/")[-1]}.xml"
-        write_file(output_filename, result)
+        Csible.write_file(output_filename, result, $log)
       end
     end
   end

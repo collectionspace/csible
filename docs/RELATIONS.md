@@ -10,13 +10,13 @@ rake clear:tmp
 rake cs:relate:records[templates/relationships/relations.example.csv]
 
 # import the relationships
-rake cs:post:directory[/relations,tmp,0.05]
+rake cs:post:directory[relations,tmp]
 ```
 
 **Finding relationships**
 
 ```bash
-rake cs:get:path["/relations","sbjType=CollectionObject&objType=CollectionObject"]
+rake cs:get:path["relations","sbjType=CollectionObject&objType=CollectionObject"]
 ```
 
 ---
