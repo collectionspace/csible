@@ -26,8 +26,8 @@ module Csible
 
   module Helpers
 
-    def check_status!
-      raise "ERROR [#{self.class.to_s.upcase}] #{result.status_code.to_s} #{@result.status.inspect}" unless @result.status_code.to_s =~ /^2/
+    def check_status!(resource)
+      raise "ERROR [#{self.class.to_s.upcase}] #{result.status_code.to_s} #{@result.status.inspect} #{resource}" unless @result.status_code.to_s =~ /^2/
     end
 
     def print(format = :parsed)
@@ -68,7 +68,7 @@ module Csible
         raise "Unrecognized request type: #{type}"
       end
 
-      check_status!
+      check_status!(resource)
       log.info "GET #{result.status_code.to_s} #{result.status.inspect}"
       result
     end
@@ -99,8 +99,8 @@ module Csible
       else
         raise "Unrecognized request type: #{type}"
       end
-      check_status!
-      log.info "POST #{result.status_code.to_s} #{result.status.inspect}"
+      check_status!(resource)
+      log.info "POST #{result.status_code.to_s} #{result.status.inspect} #{result.headers['Location']}"
       result
     end
 
@@ -121,7 +121,7 @@ module Csible
       else
         raise "Unrecognized request type: #{type}"
       end
-      check_status!
+      check_status!(resource)
       log.info "PUT #{result.status_code.to_s} #{result.status.inspect}"
       result
     end
@@ -142,8 +142,8 @@ module Csible
       else
         raise "Unrecognized request type: #{type}"
       end
-      check_status!
-      log.info "DELETE #{result.status_code.to_s} #{result.status.inspect}"
+      check_status!(resource)
+      log.info "DELETE #{result.status_code.to_s} #{result.status.inspect} #{resource}"
       result
     end
 

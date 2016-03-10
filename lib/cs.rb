@@ -237,14 +237,16 @@ namespace :cs do
 
     # rake cs:put:file[locationauthorities/XYZ/items/ABC,examples/locations/1.xml]
     desc "PUT request by path with file of updated metadata"
-    task :file, [:path, :file] do |t, args|
+    task :file, [:path, :file, :format] do |t, args|
       path = args[:path]
       file = args[:file]
+      format = (args[:format] || 'parsed').to_sym
       raise "Invalid file" unless File.file? file
       payload = File.read(file)
       put     = Csible::Put.new($client, $log)
       begin
         put.execute :path, path, payload
+        put.print format
       rescue Exception => ex
         $log.error ex.message
       end
@@ -268,7 +270,7 @@ namespace :cs do
     desc "DELETE request by url"
     task :url, [:url] do |t, args|
       url      = args[:url]
-      protocol = URI.parse( $client.config[:base_uri] ).scheme
+      protocol = URI.parse( $client.config.base_uri ).scheme
       url      = url.gsub(/https?:/, "#{protocol}:") if protocol !~ /#{url}/
       delete   = Csible::Delete.new($client, $log)
       begin
