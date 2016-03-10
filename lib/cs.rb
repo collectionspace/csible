@@ -162,8 +162,12 @@ namespace :cs do
       format = (args[:format] || 'parsed').to_sym
       params = Csible.convert_params(args[:params]  || '')
       get    = Csible::Get.new($client, $log)
-      get.execute :path, path, params
-      get.print format
+      begin
+        get.execute :path, path, params
+        get.print format
+      rescue Exception => ex
+        $log.error ex.message
+      end
     end
 
     # rake cs:get:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities]
@@ -173,8 +177,13 @@ namespace :cs do
       format = (args[:format] || 'parsed').to_sym
       params = Csible.convert_params(args[:params]  || '')
       get    = Csible::Get.new($client, $log)
-      get.execute :url, url, params
-      get.print format
+      begin
+        get.execute :url, url, params
+        get.print format
+      rescue Exception => ex
+        $log.error ex.message
+      end
+
     end
 
     # rake cs:get:list[media,"wf_deleted=false&pgSz=100"]
@@ -214,9 +223,12 @@ namespace :cs do
       raise "Invalid file" unless File.file? file
       payload = File.read(file)
       post    = Csible::Post.new($client, $log)
-      post.execute :path, path, payload
-      post.print
-      #File.unlink file
+      begin
+        post.execute :path, path, payload
+        File.unlink file
+      rescue Exception => ex
+        $log.error ex.message
+      end
     end
 
   end
@@ -231,8 +243,11 @@ namespace :cs do
       raise "Invalid file" unless File.file? file
       payload = File.read(file)
       put     = Csible::Put.new($client, $log)
-      put.execute :path, path, payload
-      put.print
+      begin
+        put.execute :path, path, payload
+      rescue Exception => ex
+        $log.error ex.message
+      end
     end
 
   end
@@ -243,8 +258,11 @@ namespace :cs do
     task :path, [:path] do |t, args|
       path   = args[:path]
       delete = Csible::Delete.new($client, $log)
-      delete.execute :path, path
-      delete.print
+      begin
+        delete.execute :path, path
+      rescue Exception => ex
+        $log.error ex.message
+      end
     end
 
     desc "DELETE request by url"
@@ -253,8 +271,11 @@ namespace :cs do
       protocol = URI.parse( $client.config[:base_uri] ).scheme
       url      = url.gsub(/https?:/, "#{protocol}:") if protocol !~ /#{url}/
       delete   = Csible::Delete.new($client, $log)
-      delete.execute :url, url
-      delete.print
+      begin
+        delete.execute :url, url
+      rescue Exception => ex
+        $log.error ex.message
+      end
     end
 
     # rake cs:delete:file[deletes.txt]

@@ -26,8 +26,8 @@ module Csible
 
   module Helpers
 
-    def	check_status
-      raise "Request error: #{@result.status.inspect}" unless @result.status_code.to_s =~ /^2/
+    def check_status!
+      raise "ERROR [#{self.class.to_s.upcase}] #{result.status_code.to_s} #{@result.status.inspect}" unless @result.status_code.to_s =~ /^2/
     end
 
     def print(format = :parsed)
@@ -57,7 +57,6 @@ module Csible
     include Helpers
 
     def execute(type, resource, params = {})
-      log.info "GET [#{resource}]"
       if type == :path
 	@result = client.get resource, { query: params }
       elsif type == :url
@@ -69,7 +68,8 @@ module Csible
 	raise "Unrecognized request type: #{type}"
       end
 
-      check_status
+      check_status!
+      log.info "GET #{result.status_code.to_s} #{result.status.inspect}"
       result
     end
 
@@ -89,7 +89,6 @@ module Csible
 
     def execute(type, resource, payload)
       raise "Payload error" unless payload
-      log.info "POST [#{resource}]"
       if type == :path
 	@result = client.post resource, payload
       elsif type == :url
@@ -100,7 +99,8 @@ module Csible
       else
 	raise "Unrecognized request type: #{type}"
       end
-      check_status
+      check_status!
+      log.info "POST #{result.status_code.to_s} #{result.status.inspect}"
       result
     end
 
@@ -111,7 +111,6 @@ module Csible
 
     def execute(type, resource, payload)
       raise "Payload error" unless payload
-      log.info "PUT [#{resource}]"
       if type == :path
 	@result = client.put resource, payload
       elsif type == :url
@@ -122,7 +121,8 @@ module Csible
       else
 	raise "Unrecognized request type: #{type}"
       end
-      check_status
+      check_status!
+      log.info "PUT #{result.status_code.to_s} #{result.status.inspect}"
       result
     end
 
@@ -132,7 +132,6 @@ module Csible
     include Helpers
 
     def execute(type, resource)
-      log.info "DELETE [#{resource}]"
       if type == :path
 	@result = client.delete resource
       elsif type == :url
@@ -143,7 +142,8 @@ module Csible
       else
 	raise "Unrecognized request type: #{type}"
       end
-      check_status
+      check_status!
+      log.info "DELETE #{result.status_code.to_s} #{result.status.inspect}"
       result
     end
 
