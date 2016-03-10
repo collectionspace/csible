@@ -94,4 +94,9 @@ sudo apt-get install libxml2-utils
 xmllint --format response.xml
 ```
 
+License
+---
+
+The project is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
 ---
