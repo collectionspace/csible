@@ -32,9 +32,9 @@ module Csible
 
     def print(format = :parsed)
       if format == :xml
-	puts @result.xml.to_xml
+        puts @result.xml.to_xml
       else
-	ap @result.parsed
+        ap @result.parsed
       end
     end
 
@@ -58,14 +58,14 @@ module Csible
 
     def execute(type, resource, params = {})
       if type == :path
-	@result = client.get resource, { query: params }
+        @result = client.get resource, { query: params }
       elsif type == :url
-	username = client.config.username
-	password = client.config.password
-	@result = HTTParty.get resource, { basic_auth: { username: username, password: password }, query: params }
-	@result = CollectionSpace::Response.new result # wrap the response
+        username = client.config.username
+        password = client.config.password
+        @result = HTTParty.get resource, { basic_auth: { username: username, password: password }, query: params }
+        @result = CollectionSpace::Response.new result # wrap the response
       else
-	raise "Unrecognized request type: #{type}"
+        raise "Unrecognized request type: #{type}"
       end
 
       check_status!
@@ -76,8 +76,8 @@ module Csible
     def list(path, params = {})
       list = []
       client.all(path, params) do |record|
-	list << record
-	log.info "LIST [#{record["uri"]}]"
+        list << record
+        log.info "LIST [#{record["uri"]}]"
       end
       list
     end
@@ -90,14 +90,14 @@ module Csible
     def execute(type, resource, payload)
       raise "Payload error" unless payload
       if type == :path
-	@result = client.post resource, payload
+        @result = client.post resource, payload
       elsif type == :url
-	username = client.config.username
-	password = client.config.password
-	@result = HTTParty.post resource, { basic_auth: { username: username, password: password }, body: payload }
-	@result = CollectionSpace::Response.new result # wrap the response
+        username = client.config.username
+        password = client.config.password
+        @result = HTTParty.post resource, { basic_auth: { username: username, password: password }, body: payload }
+        @result = CollectionSpace::Response.new result # wrap the response
       else
-	raise "Unrecognized request type: #{type}"
+        raise "Unrecognized request type: #{type}"
       end
       check_status!
       log.info "POST #{result.status_code.to_s} #{result.status.inspect}"
@@ -112,14 +112,14 @@ module Csible
     def execute(type, resource, payload)
       raise "Payload error" unless payload
       if type == :path
-	@result = client.put resource, payload
+        @result = client.put resource, payload
       elsif type == :url
-	username = client.config.username
-	password = client.config.password
-	@result = HTTParty.put method, resource, { basic_auth: { username: username, password: password }, body: payload }
-	@result = CollectionSpace::Response.new result # wrap the response
+        username = client.config.username
+        password = client.config.password
+        @result = HTTParty.put method, resource, { basic_auth: { username: username, password: password }, body: payload }
+        @result = CollectionSpace::Response.new result # wrap the response
       else
-	raise "Unrecognized request type: #{type}"
+        raise "Unrecognized request type: #{type}"
       end
       check_status!
       log.info "PUT #{result.status_code.to_s} #{result.status.inspect}"
@@ -133,14 +133,14 @@ module Csible
 
     def execute(type, resource)
       if type == :path
-	@result = client.delete resource
+        @result = client.delete resource
       elsif type == :url
-	username = client.config.username
-	password = client.config.password
-	@result = HTTParty.delete resource, { basic_auth: { username: username, password: password } }
-	@result = CollectionSpace::Response.new result # wrap the response
+        username = client.config.username
+        password = client.config.password
+        @result = HTTParty.delete resource, { basic_auth: { username: username, password: password } }
+        @result = CollectionSpace::Response.new result # wrap the response
       else
-	raise "Unrecognized request type: #{type}"
+        raise "Unrecognized request type: #{type}"
       end
       check_status!
       log.info "DELETE #{result.status_code.to_s} #{result.status.inspect}"
