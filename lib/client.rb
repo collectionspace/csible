@@ -52,8 +52,26 @@ module Csible
       @result = nil
     end
 
-  end
+    def do_raw(method = :get, resource, data)
+      username = client.config.username
+      password = client.config.password
+      case method
+      when :get
+        @result = HTTParty.get resource, { basic_auth: { username: username, password: password }, query: data }
+      when :post
+        @result = HTTParty.post resource, { basic_auth: { username: username, password: password }, body: data }
+      when :put
+        @result = HTTParty.put resource, { basic_auth: { username: username, password: password }, body: data }
+      when :delete
+        @result = HTTParty.delete resource, { basic_auth: { username: username, password: password } }
+      else
+        raise "ERROR invalid or unsupported http method #{method.to_s}"
+      end
+      @result = CollectionSpace::Response.new result # wrap the response
+      @result
+    end
 
+  end
 
   class Get < Request
     include Helpers
@@ -62,10 +80,7 @@ module Csible
       if type == :path
         @result = client.get resource, { query: params }
       elsif type == :url
-        username = client.config.username
-        password = client.config.password
-        @result = HTTParty.get resource, { basic_auth: { username: username, password: password }, query: params }
-        @result = CollectionSpace::Response.new result # wrap the response
+        @result = do_raw :get, resource, params
       else
         raise "Unrecognized request type: #{type}"
       end
@@ -94,10 +109,7 @@ module Csible
       if type == :path
         @result = client.post resource, payload
       elsif type == :url
-        username = client.config.username
-        password = client.config.password
-        @result = HTTParty.post resource, { basic_auth: { username: username, password: password }, body: payload }
-        @result = CollectionSpace::Response.new result # wrap the response
+        @result = do_raw :post, resource, payload
       else
         raise "Unrecognized request type: #{type}"
       end
@@ -116,10 +128,7 @@ module Csible
       if type == :path
         @result = client.put resource, payload
       elsif type == :url
-        username = client.config.username
-        password = client.config.password
-        @result = HTTParty.put method, resource, { basic_auth: { username: username, password: password }, body: payload }
-        @result = CollectionSpace::Response.new result # wrap the response
+        @result = do_raw :put, resource, payload
       else
         raise "Unrecognized request type: #{type}"
       end
@@ -137,10 +146,7 @@ module Csible
       if type == :path
         @result = client.delete resource
       elsif type == :url
-        username = client.config.username
-        password = client.config.password
-        @result = HTTParty.delete resource, { basic_auth: { username: username, password: password } }
-        @result = CollectionSpace::Response.new result # wrap the response
+        @result = do_raw :delete, resource
       else
         raise "Unrecognized request type: #{type}"
       end
