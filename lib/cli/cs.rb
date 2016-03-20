@@ -31,7 +31,7 @@ namespace :cs do
     input   = args[:input] || "response.xml"
     output  = args[:output] || "response.txt"
     raise "HELL" unless File.file? input and File.file? output
-    result  = get_element_values(input, element)
+    result  = Csible.get_element_values(input, element)
     Csible.write_file output, result.join("\n", $log)
   end
 
@@ -40,14 +40,13 @@ namespace :cs do
 
     # rake cs:relate:records[templates/relationships/relations.example.csv]
     desc "Create cataloging / procedure relationships using a csv file"
-    task :records, [:csv, :throttle] do |t, args|
+    task :records, [:csv] do |t, args|
       redis    = Redis.new # fail if redis unavailable
       csv      = args[:csv]
-      throttle = args[:throttle] || 0.10
       raise "HELL" unless File.file? csv
       template_file = "templates/relationships/relation.xml.erb"
       relationships = []
-      # identifiers   = {}
+      get           = Csible::HTTP::Get.new($client, $log)
 
       CSV.foreach(csv, {
           headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
@@ -57,44 +56,48 @@ namespace :cs do
       end
 
       relationships.each do |relation|
-        unless redis.get( relation[:from] )
-          redis.set( relation[:from], get_csid(relation[:from_type], relation[:from_search], relation[:from], throttle) )
+        begin
+          unless redis.get( relation[:from] )
+            redis.set( relation[:from], get.csid_for(relation[:from_type], relation[:from_search], relation[:from]) )
+          end
+
+          unless redis.get( relation[:to] )
+            redis.set( relation[:to], get.csid_for(relation[:to_type], relation[:to_search], relation[:to]) )
+          end
+
+          data = {}
+          data[:from]      = relation[:from]
+          data[:from_csid] = redis.get( relation[:from] )
+          data[:from_type] = relation[:from_type]
+          data[:to]        = relation[:to]
+          data[:to_csid]   = redis.get( relation[:to] )
+          data[:to_type]   = relation[:to_type]
+
+          template  = Csible.get_template template_file
+          result    = template.result(binding)
+
+          # cache result and filename
+          filename        = "#{data[:from]}_#{data[:to]}".gsub(/ /, '')
+          output_filename = "#{output_dir}/#{filename}-1.xml"
+          Csible.write_file(output_filename, result, $log)
+
+          # now invert for the reciprocal relationship
+          data[:from]      = relation[:to]
+          data[:from_csid] = redis.get( relation[:to] )
+          data[:from_type] = relation[:to_type]
+          data[:to]        = relation[:from]
+          data[:to_csid]   = redis.get( relation[:from] )
+          data[:to_type]   = relation[:from_type]
+
+          template  = Csible.get_template template_file
+          result    = template.result(binding)
+
+          # cache result
+          output_filename = "#{output_dir}/#{filename}-2.xml"
+          Csible.write_file(output_filename, result, $log)
+        rescue Exception => ex
+          $log.error ex.message
         end
-
-        unless redis.get( relation[:to] )
-          redis.set( relation[:to], get_csid(relation[:to_type], relation[:to_search], relation[:to], throttle) )
-        end
-
-        data = {}
-        data[:from]      = relation[:from]
-        data[:from_csid] = redis.get( relation[:from] )
-        data[:from_type] = relation[:from_type]
-        data[:to]        = relation[:to]
-        data[:to_csid]   = redis.get( relation[:to] )
-        data[:to_type]   = relation[:to_type]
-
-        template  = ERB.new(get_template(template_file))
-        result    = template.result(binding)
-
-        # cache result and filename
-        filename        = "#{data[:from]}_#{data[:to]}".gsub(/ /, '')
-        output_filename = "#{output_dir}/#{filename}-1.xml"
-        Csible.write_file(output_filename, result, $log)
-
-        # now invert for the reciprocal relationship
-        data[:from]      = relation[:to]
-        data[:from_csid] = redis.get( relation[:to] )
-        data[:from_type] = relation[:to_type]
-        data[:to]        = relation[:from]
-        data[:to_csid]   = redis.get( relation[:from] )
-        data[:to_type]   = relation[:from_type]
-
-        template  = ERB.new(get_template(template_file))
-        result    = template.result(binding)
-
-        # cache result
-        output_filename = "#{output_dir}/#{filename}-2.xml"
-        Csible.write_file(output_filename, result, $log)
       end
     end
 
@@ -105,12 +108,15 @@ namespace :cs do
       type = args[:type]
       csv  = args[:csv]
       raise "HELL" unless File.file? csv
-      # TODO: replace with 'singularize'
-      raise "Unknown itemtype for authority #{type}" unless authority_itemtypes(type)
 
       template_file = "templates/relationships/hierarchy.xml.erb"
       relationships = Hash.new { |hash, key| hash[key] = [] }
       identifiers   = Hash.new { |hash, key| hash[key] = {} }
+      get           = Csible::HTTP::Get.new($client, $log)
+      processor     = Csible::CSV::Processor.new('', '', '') # for helpers
+
+      # TODO: replace with 'singularize'
+      raise "Unknown itemtype for authority #{type}" unless processor.authority_itemtypes(type)
 
       CSV.foreach(csv, {
           headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
@@ -121,33 +127,37 @@ namespace :cs do
       end
 
       relationships.each do |broad, related|
-        broad_id = get_short_identifier(broad)
-        ids = get_identifiers(path, broad_id)
-        raise "Invalid relationship #{broad_id} does not exist." unless ids
-        identifiers[broad] = ids
-        related.each do |item|
-          item_id = get_short_identifier(item)
-          ids  = get_identifiers(path, item_id)
-          raise "Invalid relationship #{item_id} does not exist." unless ids
-          identifiers[item] = ids
+        begin
+          broad_id = processor.get_short_identifier(broad)
+          ids = get.identifiers_for(path, broad_id)
+          raise "Invalid relationship #{broad_id} does not exist." unless ids
+          identifiers[broad] = ids
+          related.each do |item|
+            item_id = processor.get_short_identifier(item)
+            ids  = get.identifiers_for(path, item_id)
+            raise "Invalid relationship #{item_id} does not exist." unless ids
+            identifiers[item] = ids
 
-          # wrap data for template
-          data = {}
-          data[:type]     = type
-          data[:itemtype] = authority_itemtypes(type)
-          data[:csid]     = identifiers[broad]["csid"]
-          data[:uri]      = identifiers[broad]["uri"]
+            # wrap data for template
+            data = {}
+            data[:type]     = type
+            data[:itemtype] = authority_itemtypes(type)
+            data[:csid]     = identifiers[broad]["csid"]
+            data[:uri]      = identifiers[broad]["uri"]
 
-          template = ERB.new(get_template(template_file))
-          result   = template.result(binding)
+            template = Csible.get_template template_file
+            result   = template.result(binding)
 
-          # cache result
-          output_filename = "#{output_dir}/#{identifiers[item]["csid"]}.xml"
-          Csible.write_file(output_filename, result, $log)
+            # cache result
+            output_filename = "#{output_dir}/#{identifiers[item]["csid"]}.xml"
+            Csible.write_file(output_filename, result, $log)
 
-          # make the introductions
-          Rake::Task["cs:put:file"].invoke(identifiers[item]["uri"], output_filename)
-          Rake::Task["cs:put:file"].reenable
+            # make the introductions
+            Rake::Task["cs:put:file"].invoke(identifiers[item]["uri"], output_filename)
+            Rake::Task["cs:put:file"].reenable
+          end
+        rescue Exception => ex
+          $log.error ex.message
         end
       end
     end
@@ -160,8 +170,8 @@ namespace :cs do
     task :path, [:path, :format, :params] do |t, args|
       path   = args[:path]
       format = (args[:format] || 'json').to_sym
-      params = Csible.convert_params(args[:params]  || '')
-      get    = Csible::Get.new($client, $log)
+      params = Csible::HTTP.convert_params(args[:params]  || '')
+      get    = Csible::HTTP::Get.new($client, $log)
       begin
         get.execute :path, path, params
         get.print format
@@ -175,8 +185,8 @@ namespace :cs do
     task :url, [:url, :format, :params] do |t, args|
       url    = args[:url]
       format = (args[:format] || 'json').to_sym
-      params = Csible.convert_params(args[:params]  || '')
-      get    = Csible::Get.new($client, $log)
+      params = Csible::HTTP.convert_params(args[:params]  || '')
+      get    = Csible::HTTP::Get.new($client, $log)
       begin
         get.execute :url, url, params
         get.print format
@@ -190,9 +200,9 @@ namespace :cs do
     desc "GET request by path for results list to csv specifying properties"
     task :list, [:path, :params, :output] do |t, args|
       path       = args[:path]
-      params     = Csible.convert_params(args[:params]  || '')
+      params     = Csible::HTTP.convert_params(args[:params]  || '')
       output     = args[:output] || "response.csv"
-      get        = Csible::Get.new($client, $log)
+      get        = Csible::HTTP::Get.new($client, $log)
       results    = get.list path, params
       Csible.write_csv(output, results, $log) unless results.empty?
     end
@@ -222,7 +232,7 @@ namespace :cs do
       file = args[:file]
       raise "Invalid file" unless File.file? file
       payload = File.read(file)
-      post    = Csible::Post.new($client, $log)
+      post    = Csible::HTTP::Post.new($client, $log)
       begin
         post.execute :path, path, payload
         File.unlink file
@@ -243,7 +253,7 @@ namespace :cs do
       format = (args[:format] || 'json').to_sym
       raise "Invalid file" unless File.file? file
       payload = File.read(file)
-      put     = Csible::Put.new($client, $log)
+      put     = Csible::HTTP::Put.new($client, $log)
       begin
         put.execute :path, path, payload
         put.print format
@@ -259,7 +269,7 @@ namespace :cs do
     desc "DELETE request by path"
     task :path, [:path] do |t, args|
       path   = args[:path]
-      delete = Csible::Delete.new($client, $log)
+      delete = Csible::HTTP::Delete.new($client, $log)
       begin
         delete.execute :path, path
       rescue Exception => ex
@@ -272,7 +282,7 @@ namespace :cs do
       url      = args[:url]
       protocol = URI.parse( $client.config.base_uri ).scheme
       url      = url.gsub(/https?:/, "#{protocol}:") if protocol !~ /#{url}/
-      delete   = Csible::Delete.new($client, $log)
+      delete   = Csible::HTTP::Delete.new($client, $log)
       begin
         delete.execute :url, url
       rescue Exception => ex
@@ -357,7 +367,7 @@ namespace :cs do
         }) do |row|
         data = row.to_hash
 
-        template = ERB.new(get_template(template_file))
+        template = Csible.get_template template_file
         result   = template.result(binding)
 
         # cache result
