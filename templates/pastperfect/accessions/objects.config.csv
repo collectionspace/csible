@@ -1,0 +1,3 @@
+field,type,filename
+accessno,required,true
+accdate,optional,false

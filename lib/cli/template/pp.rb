@@ -6,20 +6,20 @@ namespace :template do
     output_dir     = 'transforms'
     templates_path = $config[:templates][:templates_path] ||= "templates"
 
-    namespace :acquisitions do
+    namespace :accessions do
       namespace :objects do
-        config_file     = "#{templates_path}/pastperfect/acquisitions/objects.config.csv"
-        mapping_file    = "#{templates_path}/pastperfect/acquisitions/objects.map.json"
+        config_file     = "#{templates_path}/pastperfect/accessions/objects.config.csv"
+        mapping_file    = "#{templates_path}/pastperfect/accessions/objects.map.csv"
         fields          = Csible::CSV.get_config(config_file)
 
-        # rake template:pp:acquisitions:objects:fields
-        desc "Display fields for acquisitions objects"
+        # rake template:pp:accessions:objects:fields
+        desc "Display fields for accessions objects"
         task :fields do |t|
           Csible::CSV.print_fields fields[:required], fields[:optional], fields[:generate].keys
         end
 
-        # rake template:pp:acquisitions:objects:process[templates/pastperfect/acquisitions/objects.example.csv]
-        desc "Create CollectionSpace acquisitions CSV from Past Perfect csv"
+        # rake template:pp:accessions:objects:process[templates/pastperfect/accessions/objects.example.csv]
+        desc "Create CollectionSpace accessions CSV from Past Perfect csv"
         task :process, [:csv, :output_dir] do |t, args|
           output_dir = args[:output_dir] || output_dir
           processor = Csible::CSV::PastPerfect.new(args[:csv], output_dir, mapping_file, fields)

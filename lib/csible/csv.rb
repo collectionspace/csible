@@ -45,6 +45,17 @@ module Csible
         raise "Invalid output directory #{output}" unless File.directory? output
       end
 
+      # reads config as csv
+      def get_map_from_csv
+        ::CSV.foreach(config, {
+            headers: true,
+            header_converters: ->(header) { header.to_sym },
+          }) do |row|
+            data = row.to_hash
+            yield data
+        end
+      end
+
     end
 
     class Processor
@@ -168,8 +179,36 @@ module Csible
 
     class PastPerfect < Processor
 
+      def convert(key, value, map)
+        return map[key][:type].to_sym, { map[key][:to].to_sym => value }
+      end
+
+      def get_map
+        map = {}
+        get_map_from_csv do |data|
+          ppfield = data[:ppfield].to_sym
+          map[ppfield] = {}
+          map[ppfield][:type] = data.fetch(:cspaceprocedure, data[:cspaceauthority])
+          map[ppfield][:to]   = data.fetch(:cspacefield)
+        end
+        map
+      end
+
       def process
-        puts "PROCESSING CSV ..."
+        map = get_map
+        mapped_data = Hash.new { |h,k| h[k] = [] }
+
+        run do |data|
+          cspace_data = Hash.new { |h,k| h[k] = {} }
+          data.each do |k,v|
+            t, d = convert(k, v, map)
+            cspace_data[t] = cspace_data[t].merge d
+          end
+          cspace_data.keys.each { |type| mapped_data[type] << cspace_data[type] }
+        end
+
+        # TODO: write csv output to file for each mapped record type
+        ap mapped_data
       end
 
     end
