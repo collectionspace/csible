@@ -1,2 +1,2 @@
-id,source,owner,owner_type,method,year,price,currency
+acquisitionReferenceNumber,acquisitionSource,owner,ownerType,acquisitionMethod,dateDisplayDate,objectPurchasePriceValue,objectPurchasePriceCurrency
 123,Roman Abramovich,Chelsea,organization,purchase,2000,1000000,"US Dollar"

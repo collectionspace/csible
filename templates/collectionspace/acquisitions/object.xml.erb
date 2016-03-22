@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document name="acquisitions">
   <ns2:acquisitions_common xmlns:ns2="http://collectionspace.org/services/acquisition" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <acquisitionReferenceNumber><%= data[:id] %></acquisitionReferenceNumber>
-    <acquisitionMethod><%= data[:method] %></acquisitionMethod>
-<% if data[:method] == "purchase" %>
-    <objectPurchasePriceValue><%= data[:price] %></objectPurchasePriceValue>
+    <acquisitionReferenceNumber><%= data[:acquisitionReferenceNumber] %></acquisitionReferenceNumber>
+    <acquisitionMethod><%= data[:acquisitionMethod] %></acquisitionMethod>
+<% if data[:acquisitionMethod] == "purchase" %>
+    <objectPurchasePriceValue><%= data[:objectPurchasePriceValue] %></objectPurchasePriceValue>
 <% end %>
-<% unless data[:price].empty? or data[:currency].empty? or data[:currency_id].empty? %>
-    <objectPurchasePriceCurrency>urn:cspace:<%= data[:domain] %>:vocabularies:name(currency):item:name(<%= data[:currency_id] %>)'<%= data[:currency] %>'</objectPurchasePriceCurrency>
+<% unless data[:objectPurchasePriceValue].empty? or data[:objectPurchasePriceCurrency].empty? or data[:objectPurchasePriceCurrencyId].empty? %>
+    <objectPurchasePriceCurrency>urn:cspace:<%= data[:domain] %>:vocabularies:name(currency):item:name(<%= data[:objectPurchasePriceCurrencyId] %>)'<%= data[:objectPurchasePriceCurrency] %>'</objectPurchasePriceCurrency>
 <% end %>
     <acquisitionSources>
-<% unless data[:source].empty? %>
-      <acquisitionSource>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:source_id] %>)'<%= data[:source] %>'</acquisitionSource>
+<% unless data[:acquisitionSource].empty? %>
+      <acquisitionSource>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:acquisitionSourceId] %>)'<%= data[:acquisitionSource] %>'</acquisitionSource>
 <% end %>
     </acquisitionSources>
     <owners>
 <% unless data[:owner].empty? %>
-<% if data[:owner_type] =~ /^org/ %>
-      <owner>urn:cspace:<%= data[:domain] %>:orgauthorities:name(organization):item:name(<%= data[:owner_id] %>)'<%= data[:owner] %>'</owner>
-<% elsif data[:owner_type] =~ /^per/ %>
-      <owner>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:owner_id] %>)'<%= data[:owner] %>'</owner>
+<% if data[:ownerType] =~ /^org/ %>
+      <owner>urn:cspace:<%= data[:domain] %>:orgauthorities:name(organization):item:name(<%= data[:ownerId] %>)'<%= data[:owner] %>'</owner>
+<% elsif data[:ownerType] =~ /^per/ %>
+      <owner>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:ownerId] %>)'<%= data[:owner] %>'</owner>
 <% end %>
 <% end %>
     </owners>
     <acquisitionDateGroupList>
       <acquisitionDateGroup>
         <dateEarliestSingleQualifier/>
-        <dateDisplayDate><%= data[:year] %></dateDisplayDate>
+        <dateDisplayDate><%= data[:dateDisplayDate] %></dateDisplayDate>
       </acquisitionDateGroup>
     </acquisitionDateGroupList>
   </ns2:acquisitions_common>
