@@ -126,11 +126,7 @@ module Csible
         data 
       end
 
-    end
-
-    class CollectionSpace < Processor
-
-      def process
+      def run
         check_files!
         generated_values = Set.new
         ::CSV.foreach(input, {
@@ -142,19 +138,29 @@ module Csible
           data = row.to_hash
           begin
             data = process_fields data, generated_values
-
-            # set the domain for cspace urn values
-            data[:domain] = fields[:domain]
-
-            # pp data
-            template = Csible.get_template config
-            result   = template.result(binding).gsub(/\n+/,"\n") # binding adds variables from scope
-
-            output_filename = fields[:filename].inject("") { |fn, field| fn += data[field.to_sym] }
-            Csible.write_file("#{output}/#{output_filename}.xml", result)
+            yield data
           rescue Exception => ex
             log.error ex.message
           end
+        end
+
+      end
+
+    end
+
+    class CollectionSpace < Processor
+
+      def process
+        run do |data|
+          # set the domain for cspace urn values
+          data[:domain] = fields[:domain]
+
+          # pp data
+          template = Csible.get_template config
+          result   = template.result(binding).gsub(/\n+/,"\n") # binding adds variables from scope
+
+          output_filename = fields[:filename].inject("") { |fn, field| fn += data[field.to_sym] }
+          Csible.write_file("#{output}/#{output_filename}.xml", result)
         end
       end
 
