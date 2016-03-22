@@ -23,6 +23,14 @@ module Csible
     ERB.new( File.read(template_file) )
   end
 
+  def self.write_csv(filename, data, log = Logger.new(STDOUT))
+    ::CSV.open(filename, 'w') do |csv|
+      csv << data.first.keys
+      data.each { |row| csv << row.values }
+    end
+    log.info "Created #{filename}"
+  end
+
   def self.write_file(filename, data, log = Logger.new(STDOUT))
     File.open(filename, 'w') {|f| f.write(data) }
     log.info "Created #{filename}"

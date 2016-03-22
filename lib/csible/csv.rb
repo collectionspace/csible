@@ -14,10 +14,8 @@ module Csible
           raise "Type must be required or optional but was #{type}" unless types.include? data[:type]
           fields[:required] << data[:field] if data[:type] == "required"
           fields[:optional] << data[:field] if data[:type] == "optional"
-          fields[:filename] << data[:field] if data[:filename] =~ /(^t|^true)/
       end
       raise "No required fields defined in #{config_file}" if fields[:required].empty?
-      raise "Filename is undefined in #{config_file}" if fields[:filename].empty?
       fields[:filter]     = {}
       fields[:generate]   = {}
       fields[:transforms] = {}
@@ -161,7 +159,7 @@ module Csible
 
     class CollectionSpace < Processor
 
-      def process
+      def process(filename_field)
         run do |data|
           # set the domain for cspace urn values
           data[:domain] = fields[:domain]
@@ -170,7 +168,7 @@ module Csible
           template = Csible.get_template config
           result   = template.result(binding).gsub(/\n+/,"\n") # binding adds variables from scope
 
-          output_filename = fields[:filename].inject("") { |fn, field| fn += data[field.to_sym] }
+          output_filename = data[filename_field].gsub(/\W/, '')
           Csible.write_file("#{output}/#{output_filename}.xml", result)
         end
       end
@@ -195,7 +193,7 @@ module Csible
       end
 
       def process
-        map = get_map
+        map         = get_map
         mapped_data = Hash.new { |h,k| h[k] = [] }
 
         run do |data|
@@ -207,8 +205,7 @@ module Csible
           cspace_data.keys.each { |type| mapped_data[type] << cspace_data[type] }
         end
 
-        # TODO: write csv output to file for each mapped record type
-        ap mapped_data
+        mapped_data.each { |type, data| Csible.write_csv "#{output}/#{type.to_s}.csv", data }
       end
 
     end

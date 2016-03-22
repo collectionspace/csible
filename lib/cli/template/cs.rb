@@ -44,10 +44,11 @@ namespace :template do
 
         # rake template:cs:acquisitions:objects:process[templates/collectionspace/acquisitions/objects.example.csv]
         desc "Create acquisitions XML records from csv"
-        task :process, [:csv, :output_dir] do |t, args|
-          output_dir = args[:output_dir] || output_dir
+        task :process, [:csv, :output_dir, :filename_field] do |t, args|
+          output_dir     = args[:output_dir] || output_dir
+          filename_field = (args[:filename_field] || "id").to_sym
           processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
-          processor.process
+          processor.process filename_field
         end
       end
     end
@@ -108,10 +109,11 @@ namespace :template do
 
         # rake template:cs:cataloging:objects:process[templates/collectionspace/cataloging/objects.example.csv]
         desc "Create cataloging XML records from csv"
-        task :process, [:csv, :output_dir] do |t, args|
-          output_dir = args[:output_dir] || output_dir
+        task :process, [:csv, :output_dir, :filename_field] do |t, args|
+          output_dir     = args[:output_dir] || output_dir
+          filename_field = (args[:filename_field] || "id").to_sym
           processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
-          processor.process
+          processor.process filename_field
         end
       end
     end
@@ -135,10 +137,11 @@ namespace :template do
 
         # rake template:cs:conditioncheck:objects:process[templates/collectionspace/conditioncheck/objects.example.csv]
         desc "Create conditioncheck XML records from csv"
-        task :process, [:csv, :output_dir] do |t, args|
-          output_dir = args[:output_dir] || output_dir
+        task :process, [:csv, :output_dir, :filename_field] do |t, args|
+          output_dir     = args[:output_dir] || output_dir
+          filename_field = (args[:filename_field] || "id").to_sym
           processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
-          processor.process
+          processor.process filename_field
         end
       end
     end
@@ -171,10 +174,11 @@ namespace :template do
 
         # rake template:cs:concepts:items:process[templates/collectionspace/concepts/items.example.csv]
         desc "Create concept authority item XML records from csv"
-        task :process, [:csv, :output_dir] do |t, args|
-          output_dir = args[:output_dir] || output_dir
+        task :process, [:csv, :output_dir, :filename_field] do |t, args|
+          output_dir     = args[:output_dir] || output_dir
+          filename_field = (args[:filename_field] || "shortidentifier").to_sym
           processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
-          processor.process
+          processor.process filename_field
         end
       end
     end
@@ -186,15 +190,6 @@ namespace :template do
         fields          = Csible::CSV.get_config(config_file)
         fields[:domain] = domain
 
-        fields[:generate] = {
-          filename: {
-            from: :title,
-            required: true,
-            unique: true,
-            process: :get_short_identifier,
-          },
-        }
-
         # rake template:cs:groups:objects:fields
         desc "Display fields for groups"
         task :fields do |t|
@@ -203,10 +198,11 @@ namespace :template do
 
         # rake template:cs:groups:objects:process[templates/collectionspace/groups/objects.example.csv]
         desc "Create group object XML records from csv"
-        task :process, [:csv, :output_dir] do |t, args|
-          output_dir = args[:output_dir] || output_dir
+        task :process, [:csv, :output_dir, :filename_field] do |t, args|
+          output_dir     = args[:output_dir] || output_dir
+          filename_field = (args[:filename_field] || "title").to_sym
           processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
-          processor.process
+          processor.process filename_field
         end
       end
     end
@@ -240,10 +236,11 @@ namespace :template do
 
         # rake template:cs:locations:items:process[templates/collectionspace/locations/onsite.csv]
         desc "Create location authority item XML records from csv"
-        task :process, [:csv, :output_dir] do |t, args|
-          output_dir = args[:output_dir] || output_dir
+        task :process, [:csv, :output_dir, :filename_field] do |t, args|
+          output_dir     = args[:output_dir] || output_dir
+          filename_field = (args[:filename_field] || "shortidentifier").to_sym
           processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
-          processor.process
+          processor.process filename_field
         end
       end
     end
@@ -272,10 +269,11 @@ namespace :template do
 
         # rake template:cs:loansout:objects:process[templates/collectionspace/loansout/objects.example.csv]
         desc "Create loansout XML records from csv"
-        task :process, [:csv, :output_dir] do |t, args|
-          output_dir = args[:output_dir] || output_dir
+        task :process, [:csv, :output_dir, :filename_field] do |t, args|
+          output_dir     = args[:output_dir] || output_dir
+          filename_field = (args[:filename_field] || "id").to_sym
           processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
-          processor.process
+          processor.process filename_field
         end
       end
     end
@@ -295,10 +293,11 @@ namespace :template do
 
         # rake template:cs:media:objects:process[templates/collectionspace/media/objects.example.csv]
         desc "Create media XML records from csv"
-        task :process, [:csv, :output_dir] do |t, args|
-          output_dir = args[:output_dir] || output_dir
+        task :process, [:csv, :output_dir, :filename_field] do |t, args|
+          output_dir     = args[:output_dir] || output_dir
+          filename_field = (args[:filename_field] || "id").to_sym
           processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
-          processor.process
+          processor.process filename_field
         end
       end
     end
@@ -327,10 +326,11 @@ namespace :template do
 
         # rake template:cs:organizations:items:process[templates/collectionspace/organizations/items.example.csv]
         desc "Create organization authority item XML records from csv"
-        task :process, [:csv, :output_dir] do |t, args|
-          output_dir = args[:output_dir] || output_dir
+        task :process, [:csv, :output_dir, :filename_field] do |t, args|
+          output_dir     = args[:output_dir] || output_dir
+          filename_field = (args[:filename_field] || "shortidentifier").to_sym
           processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
-          processor.process
+          processor.process filename_field
         end
       end
     end
@@ -396,10 +396,11 @@ namespace :template do
 
         # rake template:cs:persons:items:process[templates/collectionspace/persons/items.example.csv]
         desc "Create person authority item XML records from csv"
-        task :process, [:csv, :output_dir] do |t, args|
-          output_dir = args[:output_dir] || output_dir
+        task :process, [:csv, :output_dir, :filename_field] do |t, args|
+          output_dir     = args[:output_dir] || output_dir
+          filename_field = (args[:filename_field] || "shortidentifier").to_sym
           processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
-          processor.process
+          processor.process filename_field
         end
       end
     end
@@ -419,10 +420,11 @@ namespace :template do
 
         # rake template:cs:reports:objects:process[templates/collectionspace/reports/objects.example.csv]
         desc "Create reports XML records from csv"
-        task :process, [:csv, :output_dir] do |t, args|
-          output_dir = args[:output_dir] || output_dir
+        task :process, [:csv, :output_dir, :filename_field] do |t, args|
+          output_dir     = args[:output_dir] || output_dir
+          filename_field = (args[:filename_field] || "filename").to_sym
           processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
-          processor.process
+          processor.process filename_field
         end
       end
     end
@@ -455,10 +457,11 @@ namespace :template do
 
         # rake template:cs:valuationcontrol:objects:process[templates/collectionspace/valuationcontrol/objects.example.csv]
         desc "Create valuationcontrol XML records from csv"
-        task :process, [:csv, :output_dir] do |t, args|
-          output_dir = args[:output_dir] || output_dir
+        task :process, [:csv, :output_dir, :filename_field] do |t, args|
+          output_dir     = args[:output_dir] || output_dir
+          filename_field = (args[:filename_field] || "id").to_sym
           processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
-          processor.process
+          processor.process filename_field
         end
       end
     end

@@ -1,6 +1,6 @@
-field,type,filename
-shortidentifier,generated,true
-name,required,false
-first,generated,false
-middle,generated,false
-last,generated,false
+field,type
+shortidentifier,generated
+name,required
+first,generated
+middle,generated
+last,generated
