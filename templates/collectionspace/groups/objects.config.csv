@@ -1,3 +1,2 @@
-field,type,filename
-filename,generated,true
-title,required,false
+field,type
+title,required

@@ -1,8 +1,8 @@
-field,type,filename
-shortidentifier,generated,true
-termname,required,false
-locationtype,optional,false
-address,optional,false
-accessnote,optional,false
-conditionnote,optional,false
-securitynote,optional,false
+field,type
+shortidentifier,generated
+termname,required
+locationtype,optional
+address,optional
+accessnote,optional
+conditionnote,optional
+securitynote,optional

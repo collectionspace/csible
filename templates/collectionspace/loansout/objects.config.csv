@@ -1,8 +1,8 @@
-field,type,filename
-id,required,true
-purpose,optional,false
-borrower,optional,false
-borrower_type,optional,false
-borrower_id,generated,false
-status,optional,false
-note,optional,false
+field,type
+id,required
+purpose,optional
+borrower,optional
+borrower_type,optional
+borrower_id,generated
+status,optional
+note,optional
