@@ -25,33 +25,38 @@ Version 1.9.3+, `chruby` or `rbenv` is recommended, but for system Ruby and pre-
 
 ```
 sudo apt-get install libxslt-dev libxml2-dev ruby zlib1g-dev
-sudo gem install bundler nokogiri
-```
-
-For the api client functionality Ansible 1.9+ is required:
-
-```
-sudo apt-get install python-pip
-sudo pip install ansible
+sudo gem install bundler nokogiri rake
+bundle install
 ```
 
 Quickstart
 ----------
 
-Requires `rake` (Ruby):
+**Tasks**
 
 ```bash
-bundle install
-
 rake -T # list all tasks
 rake cs:config # dump api.json to terminal
+```
 
+**Templates**
+
+```bash
+# convert Past Perfect accession csv to CollectionSpace csv
+rake template:pp:accessions:objects:process[templates/pastperfect/accessions/objects.example.csv]
+# convert CollectionSpace csv to XML
+rake template:cs:acquisitions:objects:process[transforms/acquisitions.csv]
+```
+
+**API**
+
+```bash
 # GET
 rake cs:get:path[media]
-rake cs:get:path[locationauthorities/38cc1b61-a597-4b12-b820/items,kw=EwoodPark702918]
+rake cs:get:path[locationauthorities/38cc1b61-a597-4b12-b820/items,kw=EwoodPark702918,xml] # xml output
 rake cs:get:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities]
 
-# GET items from a list with properties delimitied by "~" written to CSV
+# GET items list
 rake cs:get:list[media]
 
 # POST
@@ -83,16 +88,6 @@ rake cs:parse_xml["relation-list-item > uri"]
 ```
 
 By default `response.xml` is the input and `response.txt` is the output.
-
-Tidy XML output
----------------
-
-CollectionSpace GET requests return XML. To improve readability:
-
-```bash
-sudo apt-get install libxml2-utils
-xmllint --format response.xml
-```
 
 License
 ---
