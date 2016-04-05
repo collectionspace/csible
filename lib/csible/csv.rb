@@ -18,6 +18,7 @@ module Csible
       raise "No required fields defined in #{config_file}" if fields[:required].empty?
       fields[:filter]     = {}
       fields[:generate]   = {}
+      fields[:merge]      = {}
       fields[:transforms] = {}
       fields
     end
@@ -119,6 +120,11 @@ module Csible
         fields[:required].each { |r| raise "HELL" unless data.has_key? r.to_sym or data[r.to_sym].empty? }
         fields[:optional].each { |r| data[r.to_sym] = "" unless data.has_key? r.to_sym }
 
+        fields[:merge].each do |from, to|
+          data[to] += ". #{data[from]}"
+          data.delete from
+        end
+
         fields[:transforms].each do |field, spec|
           data[field] = spec.call(data[field])
         end
@@ -149,7 +155,7 @@ module Csible
             data = process_fields data, generated_values
             yield data
           rescue Exception => ex
-            log.error ex.message
+            log.error "#{ex.message} #{data}"
           end
         end
 
@@ -177,34 +183,74 @@ module Csible
 
     class PastPerfect < Processor
 
-      def convert(key, value, map)
-        return map[key][:type].to_sym, { map[key][:to].to_sym => value }
+      def convert(type, key, value, map)
+        return nil, nil unless map[key][type][:type]
+        return map[key][type][:type].to_sym, { map[key][type][:to].to_sym => value }
       end
 
       def get_map
         map = {}
         get_map_from_csv do |data|
           ppfield = data[:ppfield].to_sym
-          map[ppfield] = {}
-          map[ppfield][:type] = data.fetch(:cspaceprocedure, data[:cspaceauthority])
-          map[ppfield][:to]   = data.fetch(:cspacefield)
+          map[ppfield] = Hash.new { |h,k| h[k] = {} }
+          map[ppfield][:procedure][:type] = data.fetch(:cspaceprocedure, nil)
+          map[ppfield][:procedure][:to]   = data.fetch(:cspaceprocedurefield)
+
+          map[ppfield][:authority][:type] = data.fetch(:cspaceauthority, nil)
+          map[ppfield][:authority][:to]   = data.fetch(:cspaceauthorityfield)
+          map[ppfield][:authority][:ref]  = data.fetch(:cspaceauthorityref)
         end
         map
+      end
+
+
+      def process_authorities(mapped_data, data, map, auth_data)
+        hdrs = {}
+        refs = Hash.new { |h,k| h[k] = {} }
+        data.each do |k, v|
+          ref = map[k][:authority][:ref]
+          if ref
+            ref = ref.to_sym
+            t, d = convert(:authority, k, v, map)
+            refs[ref] = refs[ref].merge d unless t.nil?
+            data.delete k
+            hdrs[ map[k][:authority][:to].to_sym ] = ''
+          end
+        end
+
+        cspace_data = Hash.new { |h,k| h[k] = [] }
+        data.each do |k,v|
+          t, d = convert(:authority, k, v, map)
+          unless t.nil?
+            d = hdrs.merge(d.merge( refs[k] ) ) # if refs.has_key? k
+            cspace_data[t] << d unless auth_data.include? d
+            auth_data << d
+          end
+        end
+        cspace_data.keys.each { |type| mapped_data[type].concat(cspace_data[type]) }
+      end
+
+
+      def process_procedures(mapped_data, data, map)
+        cspace_data = Hash.new { |h,k| h[k] = {} }
+        data.each do |k,v|
+          t, d = convert(:procedure, k, v, map)
+          cspace_data[t] = cspace_data[t].merge d unless t.nil?
+        end
+        cspace_data.keys.each { |type| mapped_data[type] << cspace_data[type] }
       end
 
       def process
         map         = get_map
         mapped_data = Hash.new { |h,k| h[k] = [] }
+        auth_data   = Set.new # used to prevent duplication of authority records
 
         run do |data|
-          cspace_data = Hash.new { |h,k| h[k] = {} }
-          data.each do |k,v|
-            t, d = convert(k, v, map)
-            cspace_data[t] = cspace_data[t].merge d
-          end
-          cspace_data.keys.each { |type| mapped_data[type] << cspace_data[type] }
+          process_procedures mapped_data, data, map
+          process_authorities mapped_data, data, map, auth_data
         end
 
+        #ap mapped_data
         mapped_data.each { |type, data| Csible.write_csv "#{output}/#{type.to_s}.csv", data }
       end
 

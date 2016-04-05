@@ -1,3 +1,25 @@
-ppfield,ppexamplevalue,cspaceprocedure,cspaceauthority,cspacefield,notes
-accessno,1982.1,acquisitions,,acquisitionReferenceNumber,
-accdate,11/11/1980,acquisitions,,dateDisplayDate,
+ppfield,ppexamplevalue,cspaceprocedure,cspaceauthority,cspaceprocedurefield,cspaceauthorityfield,cspaceauthorityref,notes
+accessno,1982.1,acquisitions,,acquisitionReferenceNumber,,,
+accdate,11/11/2000,acquisitions,,accessionDateGroup,,,
+accby,"Pusey, Sarah",acquisitions,person,acquisitionAuthorizer,termDisplayName,,
+recdate,11/30/1981,acquisitions,,acquisitionDateGroup,,,
+recby,"Ayliffe, Craig",,person,,termDisplayName,,"No current field, Org home was going to add new one for Institution X"
+recas,Gift,acquisitions,,acquisitionMethod,,,Controlled list - static
+recfrom,"Neal, Sharon",acquisitions,person,owner,termDisplayName,,
+credit,Gift of M.L. Paul Ryan,acquisitions,,creditLine,,,
+price,7500,acquisitions,,objectPurchasePriceValue,,,
+descrip_,"Private collection of Paul Ryan, inherited from his ""godmother,"" Anna Budlong Cook of Bolinas and Stockton, CA.  Photos taken primarily by Anna Cook, other material property of Anna Cook.  Mrs. Cook (a widow) lived in tent house above Wharf's End, lived",acquisitions,,,,,merge into notes_
+restrict_,No copies are to be made for anyone outside of the copies you need for display,acquisitions,,acquisitionProvisos,,,
+notes_,"Roy Farrington Jones was a former Mayor and council member of Ross, CA",acquisitions,,acquisitionNote,,,
+email,judith@sfelectricworks.com,,person,,email,recfrom,Bolinas has some ZIPs in email column
+website,www.marydanielhobson.com,,person,,webAddress,recfrom,
+phoneh,707/526-7585,,person,,telephoneNumberHome,recfrom,Set telephoneNumberType = home
+phonecell,707/526-7585,,person,,telephoneNumberMobile,recfrom,Set telephoneNumberType = mobile
+phonew,415/868-0300,,person,,telephoneNumber,recfrom,Set telephoneNumberType = business
+faxno,415/868-0300,,person,,faxNumber,recfrom,
+address1,1290 Rowland Avenue,,person,,addressPlace1,recfrom,
+address2,870 Market Street #547,,person,,addressPlace2,recfrom,
+city,Bolinas,,person,,addressMunicipality,recfrom,could be reference to place auth
+state,CA,,person,,addressStateOrProvince,recfrom,could be reference to place auth
+zip,94924,,person,,addressPostCode,recfrom,
+ownertype,,acquisitions,,ownerType,,,generated field

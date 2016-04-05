@@ -12,6 +12,19 @@ namespace :template do
         mapping_file    = "#{templates_path}/pastperfect/accessions/objects.map.csv"
         fields          = Csible::CSV.get_config(config_file)
 
+        fields[:generate] = {
+          ownertype: {
+            from: :accessno,
+            required: false,
+            unique: false,
+            process: ->(value) { 'person' }
+          },
+        }
+
+        fields[:merge] = {
+          descrip_: :notes_,
+        }
+
         # rake template:pp:accessions:objects:fields
         desc "Display fields for accessions objects"
         task :fields do |t|
