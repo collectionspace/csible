@@ -161,6 +161,8 @@ namespace :cs do
         end
       end
     end
+
+    # rake cs:relate:contacts[personauthorities/e3308f39-d3dc-46f8-a1f8/items,templates/persons/item.example.csv]
   end
 
   namespace :get do

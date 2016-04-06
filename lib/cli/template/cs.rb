@@ -343,46 +343,60 @@ namespace :template do
         fields[:domain] = domain
 
         fields[:generate] = {
-          shortidentifier: {
-            from: :name,
+          shortIdentifier: {
+            from: :termDisplayName,
             required: true,
             unique: true,
             process: :get_short_identifier,
           },
           first: {
-            from: :name,
+            from: :termDisplayName,
             required: false,
             unique: false,
             process: ->(value) {
               name  = ""
-              names = value.split(" ")
-              name  = names[0] if names.length > 1
+              if value =~ /,/
+                name = value.split(",")[1].split(" ")[0]
+              else
+                names = value.split(" ")
+                name  = names[0] if names.length > 1
+              end
               name
             },
           },
           middle: {
-            from: :name,
+            from: :termDisplayName,
             required: false,
             unique: false,
             process: ->(value) {
               name  = ""
-              names = value.split(" ")
-              if names.length > 2
-                first, middle, last = names
-                name = middle unless middle =~ /^#{surname_prefix}/
+              if value =~ /,/
+                names = value.split(",")[1]
+                parts = names.split(" ")
+                name  = parts[1] if parts.length > 1
+              else
+                names = value.split(" ")
+                if names.length > 2
+                  first, middle, last = names
+                  name = middle unless middle =~ /^#{surname_prefix}/
+                end
               end
               name
             },
           },
           last: {
-            from: :name,
+            from: :termDisplayName,
             required: false,
             unique: false,
             process: ->(value) {
               name  = ""
-              names = value.split(" ")
-              name  = names[-1] if names.length >= 2
-              name  = "#{names[1]} #{name}" if names[1] =~ /^#{surname_prefix}/
+              if value =~ /,/
+                name = value.split(",")[0]
+              else
+                names = value.split(" ")
+                name  = names[-1] if names.length >= 2
+                name  = "#{names[1]} #{name}" if names[1] =~ /^#{surname_prefix}/
+              end
               name
             },
           },
@@ -398,7 +412,7 @@ namespace :template do
         desc "Create person authority item XML records from csv"
         task :process, [:csv, :output_dir, :filename_field] do |t, args|
           output_dir     = args[:output_dir] || output_dir
-          filename_field = (args[:filename_field] || "shortidentifier").to_sym
+          filename_field = (args[:filename_field] || "shortIdentifier").to_sym
           processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
           processor.process filename_field
         end

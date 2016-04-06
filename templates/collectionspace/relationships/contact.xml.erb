@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document name="contacts">
+  <ns2:contacts_common xmlns:ns2="http://collectionspace.org/services/contact" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <emailGroupList>
+      <emailGroup>
+        <emailType/>
+        <email><%= data[:email] %></email>
+      </emailGroup>
+    </emailGroupList>
+    <webAddressGroupList>
+      <webAddressGroup>
+        <webAddress><%= data[:webAddress] %></webAddress>
+        <webAddressType/>
+      </webAddressGroup>
+    </webAddressGroupList>
+    <displayName><%= data[:termDisplayName] %></displayName>
+    <addressGroupList>
+      <addressGroup>
+        <addressStateOrProvince><%= data[:addressStateOrProvince] %></addressStateOrProvince>
+        <addressPostCode><%= data[:addressPostCode] %></addressPostCode>
+        <addressType/>
+        <addressCountry><%= data[:addressCountry] %></addressCountry>
+        <addressPlace1><%= data[:addressPlace1] %></addressPlace1>
+        <addressPlace2><%= data[:addressPlace2] %></addressPlace2>
+        <addressMunicipality><%= data[:addressMunicipality] %></addressMunicipality>
+      </addressGroup>
+    </addressGroupList>
+    <telephoneNumberGroupList>
+<% unless data[:telephoneNumberHome].empty? %>
+      <telephoneNumberGroup>
+        <telephoneNumberType>home</telephoneNumberType>
+        <telephoneNumber><%= data[:telephoneNumberHome] %></telephoneNumber>
+      </telephoneNumberGroup>
+<% end %>
+<% unless data[:telephoneNumberMobile].empty? %>
+      <telephoneNumberGroup>
+        <telephoneNumberType>mobile</telephoneNumberType>
+        <telephoneNumber><%= data[:telephoneNumberMobile] %></telephoneNumber>
+      </telephoneNumberGroup>
+<% end %>
+<% unless data[:telephoneNumber].empty? %>
+      <telephoneNumberGroup>
+        <telephoneNumberType>other</telephoneNumberType>
+        <telephoneNumber><%= data[:telephoneNumber] %></telephoneNumber>
+      </telephoneNumberGroup>
+<% end %>
+    </telephoneNumberGroupList>
+    <faxNumberGroupList>
+      <faxNumberGroup>
+        <faxNumber><%= data[:faxNumber] %></faxNumber>
+        <faxNumberType/>
+      </faxNumberGroup>
+    </faxNumberGroupList>
+  </ns2:contacts_common>
+</document>
