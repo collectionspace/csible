@@ -3,6 +3,8 @@ api.json
 Gemfile.lock
 *.bak
 response*
+*.csv
 *.sh
 *.swp
+*.xml
 custom_templates/

@@ -1,2 +1,2 @@
-acquisitionReferenceNumber,acquisitionSource,owner,ownerType,acquisitionMethod,dateDisplayDate,objectPurchasePriceValue,objectPurchasePriceCurrency
-123,Roman Abramovich,Chelsea,organization,purchase,2000,1000000,"US Dollar"
+acquisitionReferenceNumber,acquisitionSource,acquisitionAuthorizer,owner,ownerType,acquisitionMethod,acquisitionReason,acquisitionNote,acquisitionProvisos,acquisitionDateDisplayDate,objectPurchasePriceValue,objectPurchasePriceCurrency,creditLine,accessionDateDisplayDate
+123,Roman Abramovich,Dennis Wise,Chelsea,organization,purchase,Shiny,Tax write-off,Sell off when convenient,2000,1000000,"US Dollar",Gazprom,2000

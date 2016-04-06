@@ -28,6 +28,12 @@ namespace :template do
             unique: false,
             process: :get_short_identifier,
           },
+          acquisitionAuthorizerId: {
+            from: :acquisitionAuthorizer,
+            required: false,
+            unique: false,
+            process: :get_short_identifier,
+          },
           ownerId: {
             from: :owner,
             required: false,

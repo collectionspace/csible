@@ -14,6 +14,12 @@
       <acquisitionSource>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:acquisitionSourceId] %>)'<%= data[:acquisitionSource] %>'</acquisitionSource>
 <% end %>
     </acquisitionSources>
+    <acquisitionReason><%= data[:acquisitionReason] %></acquisitionReason>
+    <acquisitionNote><%= data[:acquisitionNote] %></acquisitionNote>
+    <acquisitionProvisos><%= data[:acquisitionProvisos] %></acquisitionProvisos>
+<% unless data[:acquisitionAuthorizer].empty? %>
+    <acquisitionAuthorizer>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:acquisitionAuthorizerId] %>)'<%= data[:acquisitionAuthorizer] %>'</acquisitionAuthorizer>
+<% end %>
     <owners>
 <% unless data[:owner].empty? %>
 <% if data[:ownerType] =~ /^org/ %>
@@ -26,8 +32,12 @@
     <acquisitionDateGroupList>
       <acquisitionDateGroup>
         <dateEarliestSingleQualifier/>
-        <dateDisplayDate><%= data[:dateDisplayDate] %></dateDisplayDate>
+        <dateDisplayDate><%= data[:acquisitionDateDisplayDate] %></dateDisplayDate>
       </acquisitionDateGroup>
     </acquisitionDateGroupList>
+    <accessionDateGroup>
+      <dateEarliestSingleQualifier/>
+      <dateDisplayDate><%= data[:accessionDateDisplayDate] %></dateDisplayDate>
+    </accessionDateGroup>
   </ns2:acquisitions_common>
 </document>
