@@ -16,7 +16,7 @@ This will return a single list item if found at `["list-item"][0]["csid"]`.
 
 ```bash
 # create import xml
-rake template:cataloging:objects:process[templates/cataloging/watermill.csv]
+rake template:cataloging:process[templates/cataloging/watermill.csv]
 # import it
 rake cs:post:directory[collectionobjects,imports]
 

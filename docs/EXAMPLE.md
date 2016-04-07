@@ -15,18 +15,18 @@ Create a `mymuseum` folder with a `.gitignore` file containing "*". Put site rel
 ##### PROCESS TEMPLATES
 
 # SEE mymuseum.sh
-rake template:concepts:items:process[mymuseum/mymuseum-concept.csv,mymuseum/concepts]
-rake template:locations:items:process[mymuseum/mymuseum-onsite.csv,mymuseum/onsite]
-rake template:locations:items:process[mymuseum/mymuseum-offsite.csv,mymuseum/offsite]
-rake template:organizations:items:process[mymuseum/mymuseum-org.csv,mymuseum/orgs]
-rake template:persons:items:process[mymuseum/mymuseum-person.csv,mymuseum/persons]
-rake template:cataloging:objects:process[mymuseum/mymuseum-cat.csv,mymuseum/cat]
-rake template:acquisitions:objects:process[mymuseum/mymuseum-acq.csv,mymuseum/acq]
-rake template:conditioncheck:objects:process[mymuseum/mymuseum-cond.csv,mymuseum/cc]
-rake template:groups:objects:process[mymuseum/mymuseum-grp.csv,mymuseum/grp]
-rake template:loansout:objects:process[mymuseum/mymuseum-loans.csv,mymuseum/loans]
-rake template:media:objects:process[mymuseum/mymuseum-media.csv,mymuseum/media]
-rake template:valuationcontrol:objects:process[mymuseum/mymuseum-val.csv,mymuseum/vc]
+rake template:concepts:process[mymuseum/mymuseum-concept.csv,mymuseum/concepts]
+rake template:locations:process[mymuseum/mymuseum-onsite.csv,mymuseum/onsite]
+rake template:locations:process[mymuseum/mymuseum-offsite.csv,mymuseum/offsite]
+rake template:organizations:process[mymuseum/mymuseum-org.csv,mymuseum/orgs]
+rake template:persons:process[mymuseum/mymuseum-person.csv,mymuseum/persons]
+rake template:cataloging:process[mymuseum/mymuseum-cat.csv,mymuseum/cat]
+rake template:acquisitions:process[mymuseum/mymuseum-acq.csv,mymuseum/acq]
+rake template:conditioncheck:process[mymuseum/mymuseum-cond.csv,mymuseum/cc]
+rake template:groups:process[mymuseum/mymuseum-grp.csv,mymuseum/grp]
+rake template:loansout:process[mymuseum/mymuseum-loans.csv,mymuseum/loans]
+rake template:media:process[mymuseum/mymuseum-media.csv,mymuseum/media]
+rake template:valuationcontrol:process[mymuseum/mymuseum-val.csv,mymuseum/vc]
 
 ##### IMPORT AND RELATE AUTHORITIES
 
@@ -110,18 +110,18 @@ Wrapper script `mymuseum.sh`:
 ```bash
 #!/bin/bash
 
-rake template:concepts:items:process[mymuseum/mymuseum-concept.csv,mymuseum/concepts]
-rake template:locations:items:process[mymuseum/mymuseum-onsite.csv,mymuseum/onsite]
-rake template:locations:items:process[mymuseum/mymuseum-offsite.csv,mymuseum/offsite]
-rake template:organizations:items:process[mymuseum/mymuseum-org.csv,mymuseum/orgs]
-rake template:persons:items:process[mymuseum/mymuseum-person.csv,mymuseum/persons]
-rake template:cataloging:objects:process[mymuseum/mymuseum-cat.csv,mymuseum/cat]
-rake template:acquisitions:objects:process[mymuseum/mymuseum-acq.csv,mymuseum/acq]
-rake template:conditioncheck:objects:process[mymuseum/mymuseum-cond.csv,mymuseum/cc]
-rake template:groups:objects:process[mymuseum/mymuseum-grp.csv,mymuseum/grp]
-rake template:loansout:objects:process[mymuseum/mymuseum-loans.csv,mymuseum/loans]
-rake template:media:objects:process[mymuseum/mymuseum-media.csv,mymuseum/media]
-rake template:valuationcontrol:objects:process[mymuseum/mymuseum-val.csv,mymuseum/vc]
+rake template:concepts:process[mymuseum/mymuseum-concept.csv,mymuseum/concepts]
+rake template:locations:process[mymuseum/mymuseum-onsite.csv,mymuseum/onsite]
+rake template:locations:process[mymuseum/mymuseum-offsite.csv,mymuseum/offsite]
+rake template:organizations:process[mymuseum/mymuseum-org.csv,mymuseum/orgs]
+rake template:persons:process[mymuseum/mymuseum-person.csv,mymuseum/persons]
+rake template:cataloging:process[mymuseum/mymuseum-cat.csv,mymuseum/cat]
+rake template:acquisitions:process[mymuseum/mymuseum-acq.csv,mymuseum/acq]
+rake template:conditioncheck:process[mymuseum/mymuseum-cond.csv,mymuseum/cc]
+rake template:groups:process[mymuseum/mymuseum-grp.csv,mymuseum/grp]
+rake template:loansout:process[mymuseum/mymuseum-loans.csv,mymuseum/loans]
+rake template:media:process[mymuseum/mymuseum-media.csv,mymuseum/media]
+rake template:valuationcontrol:process[mymuseum/mymuseum-val.csv,mymuseum/vc]
 ```
 
 Wrapper script `mycache.sh`:
