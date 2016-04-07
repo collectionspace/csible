@@ -24,6 +24,13 @@ namespace :template do
         descrip_: :notes_,
       }
 
+      fields[:transforms] = {
+        accby: ->(value) { value.gsub(/^\W/, "").gsub(/\;/, " and ").squeeze(" ").strip },
+        accdate: ->(value) { value.gsub(/^(\s*)-(\s*)-/, "") },
+        recby: ->(value) { value.gsub(/^\W/, "").gsub(/\;/, " and ").squeeze(" ").strip },
+        recfrom: ->(value) { value.gsub(/^\W/, "").gsub(/\;/, " and ").squeeze(" ").strip },
+      }
+
       # rake template:pp:accessions:fields
       desc "Display fields for accessions objects"
       task :fields do |t|
