@@ -1,2 +1,6 @@
-name,type
-id,required
+field,type
+objectid,required
+otherno,optional
+descrip_,optional
+objname,optional
+title,optional

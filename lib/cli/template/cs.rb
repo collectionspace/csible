@@ -64,32 +64,32 @@ namespace :template do
       fields[:domain] = domain
 
       fields[:generate] = {
-        concept1_id: {
-          from: :concept1_name,
+        contentConcept1Id: {
+          from: :contentConcept1,
           required: false,
           unique: false,
           process: :get_short_identifier,
         },
-        concept2_id: {
-          from: :concept2_name,
+        contentConcept2Id: {
+          from: :contentConcept2,
           required: false,
           unique: false,
           process: :get_short_identifier,
         },
-        creator1_id: {
-          from: :creator1_name,
+        objectProductionPerson1Id: {
+          from: :objectProductionPerson1,
           required: false,
           unique: false,
           process: :get_short_identifier,
         },
-        creator2_id: {
-          from: :creator2_name,
+        objectProductionPerson2Id: {
+          from: :objectProductionPerson2,
           required: false,
           unique: false,
           process: :get_short_identifier,
         },
-        provenance_id: {
-          from: :provenance,
+        ownerId: {
+          from: :owner,
           required: false,
           unique: false,
           process: :get_short_identifier,
@@ -97,10 +97,10 @@ namespace :template do
       }
 
       fields[:transforms] = {
-        concept1_name: ->(value) { value.capitalize },
-        concept2_name: ->(value) { value.capitalize },
-        date_period: ->(value) { value.capitalize },
-        # prod_place: -> (value) { value.gsub(/\s/,'').split(",").map(&:capitalize).join(", ") },
+        contentConcept1: ->(value) { value.capitalize },
+        contentConcept2: ->(value) { value.capitalize },
+        objectProductionDatePeriod: ->(value) { value.capitalize },
+        # objectProductionPlaces: -> (value) { value.gsub(/\s/,'').split(",").map(&:capitalize).join(", ") },
         title: ->(value) { value.capitalize },
       }
 
@@ -114,7 +114,7 @@ namespace :template do
       desc "Create cataloging XML records from csv"
       task :process, [:csv, :output_dir, :filename_field] do |t, args|
         output_dir     = args[:output_dir] || output_dir
-        filename_field = (args[:filename_field] || "id").to_sym
+        filename_field = (args[:filename_field] || "objectNumber").to_sym
         processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
         processor.process filename_field
       end

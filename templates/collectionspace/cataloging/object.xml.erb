@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document name="collectionobjects">
   <ns2:collectionobjects_common xmlns:ns2="http://collectionspace.org/services/collectionobject" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <objectNumber><%= data[:id] %></objectNumber>
+    <objectNumber><%= data[:objectNumber] %></objectNumber>
     <otherNumberList>
       <otherNumber>
-        <numberValue><%= data[:number] %></numberValue>
-        <numberType><%= data[:number_type] %></numberType>
+        <numberValue><%= data[:numberValue] %></numberValue>
+        <numberType><%= data[:numberType] %></numberType>
       </otherNumber>
     </otherNumberList>
-    <numberOfObjects><%= data[:count] %></numberOfObjects>
+    <numberOfObjects><%= data[:numberOfObjects] %></numberOfObjects>
     <titleGroupList>
       <titleGroup>
         <title><%= data[:title] %></title>
@@ -22,19 +22,19 @@
         <titleLanguage>urn:cspace:<%= data[:domain] %>:vocabularies:name(languages):item:name(eng)'English'</titleLanguage>
       </titleGroup>
     </titleGroupList>
-    <editionNumber><%= data[:edition] %></editionNumber>
+    <editionNumber><%= data[:editionNumber] %></editionNumber>
     <objectNameList>
-<% data[:objects].split(",").map(&:strip).each do |object| %>
+<% data[:objectNames].split(",").map(&:strip).each do |objectName| %>
       <objectNameGroup>
-        <objectName><%= object %></objectName>
+        <objectName><%= objectName %></objectName>
       </objectNameGroup>
 <% end %>
     </objectNameList>
     <briefDescriptions>
-      <briefDescription><%= data[:desc_brief] %></briefDescription>
+      <briefDescription><%= data[:briefDescription] %></briefDescription>
     </briefDescriptions>
-    <contentDescription><%= data[:desc_full] %></contentDescription>
-    <physicalDescription><%= data[:desc_phys] %></physicalDescription>
+    <contentDescription><%= data[:contentDescription] %></contentDescription>
+    <physicalDescription><%= data[:physicalDescription] %></physicalDescription>
     <comments>
       <comment><%= data[:comment] %></comment>
     </comments>
@@ -51,44 +51,44 @@
     <contentLanguages>
       <contentLanguage>urn:cspace:<%= data[:domain] %>:vocabularies:name(languages):item:name(eng)'English'</contentLanguage>
     </contentLanguages>
-    <recordStatus><%= data[:status] %></recordStatus>
+    <recordStatus><%= data[:recordStatus] %></recordStatus>
     <objectProductionDateGroupList>
       <objectProductionDateGroup>
-        <dateDisplayDate><%= data[:date_display] %></dateDisplayDate>
-        <dateEarliestSingleYear><%= data[:date_earliest] %></dateEarliestSingleYear>
-        <dateLatestYear><%= data[:date_latest] %></dateLatestYear>
-        <datePeriod><%= data[:date_period] %></datePeriod>
+        <dateDisplayDate><%= data[:objectProductionDateDisplayDate] %></dateDisplayDate>
+        <dateEarliestSingleYear><%= data[:objectProductionDateEarliestSingleYear] %></dateEarliestSingleYear>
+        <dateLatestYear><%= data[:objectProductionDateLatestYear] %></dateLatestYear>
+        <datePeriod><%= data[:objectProductionDatePeriod] %></datePeriod>
         <dateEarliestSingleEra>urn:cspace:<%= data[:domain] %>:vocabularies:name(dateera):item:name(ce)'CE'</dateEarliestSingleEra>
         <dateLatestEra>urn:cspace:<%= data[:domain] %>:vocabularies:name(dateera):item:name(ce)'CE'</dateLatestEra>
-        <dateNote><%= data[:date_note] %></dateNote>
+        <dateNote><%= data[:objectProductionDateNote] %></dateNote>
       </objectProductionDateGroup>
     </objectProductionDateGroupList>
     <objectProductionPlaceGroupList>
-<% data[:prod_place].split(",").map(&:strip).each do |place| %>
+<% data[:objectProductionPlaces].split(",").map(&:strip).each do |objectProductionPlace| %>
       <objectProductionPlaceGroup>
-        <objectProductionPlace><%= place %></objectProductionPlace>
+        <objectProductionPlace><%= objectProductionPlace %></objectProductionPlace>
         <objectProductionPlaceRole/>
       </objectProductionPlaceGroup>
 <% end %>
     </objectProductionPlaceGroupList>
     <objectProductionPersonGroupList>
-<% unless data[:creator1_id].empty? or data[:creator1_name].empty? %>
+<% unless data[:objectProductionPerson1Id].empty? or data[:objectProductionPerson1].empty? %>
       <objectProductionPersonGroup>
-        <objectProductionPersonRole><%= data[:creator1_role] %></objectProductionPersonRole>
-        <objectProductionPerson>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:creator1_id] %>)'<%= data[:creator1_name] %>'</objectProductionPerson>
+        <objectProductionPersonRole><%= data[:objectProductionPerson1Role] %></objectProductionPersonRole>
+        <objectProductionPerson>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:objectProductionPerson1Id] %>)'<%= data[:objectProductionPerson1] %>'</objectProductionPerson>
       </objectProductionPersonGroup>
 <% end %>
-<% unless data[:creator2_id].empty? or data[:creator2_name].empty? %>
+<% unless data[:objectProductionPerson2Id].empty? or data[:objectProductionPerson2].empty? %>
       <objectProductionPersonGroup>
-        <objectProductionPersonRole><%= data[:creator2_role] %></objectProductionPersonRole>
-        <objectProductionPerson>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:creator2_id] %>)'<%= data[:creator2_name] %>'</objectProductionPerson>
+        <objectProductionPersonRole><%= data[:objectProductionPerson2Role] %></objectProductionPersonRole>
+        <objectProductionPerson>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:objectProductionPerson2Id] %>)'<%= data[:objectProductionPerson2] %>'</objectProductionPerson>
       </objectProductionPersonGroup>
 <% end %>
     </objectProductionPersonGroupList>
     <objectProductionPeopleGroupList>
       <objectProductionPeopleGroup>
-        <objectProductionPeople><%= data[:group1_name] %></objectProductionPeople>
-        <objectProductionPeopleRole><%= data[:group1_role] %></objectProductionPeopleRole>
+        <objectProductionPeople><%= data[:objectProductionPeople1] %></objectProductionPeople>
+        <objectProductionPeopleRole><%= data[:objectProductionPeople1Role] %></objectProductionPeopleRole>
       </objectProductionPeopleGroup>
     </objectProductionPeopleGroupList>
     <ownershipExchangePriceCurrency>urn:cspace:<%= data[:domain] %>:vocabularies:name(currency):item:name(USD)'US Dollar'</ownershipExchangePriceCurrency>
@@ -102,88 +102,88 @@
     <measuredPartGroupList>
       <measuredPartGroup>
         <dimensionSummary/>
-        <measuredPart><%= data[:measured] %></measuredPart>
+        <measuredPart><%= data[:measuredPart] %></measuredPart>
         <dimensionSubGroupList>
-<% unless data[:height1].empty? %>
+<% unless data[:measuredDimensionHeight1].empty? %>
           <dimensionSubGroup>
             <dimension>height</dimension>
-            <measurementUnit><%= data[:height1].split(",")[1] %></measurementUnit>
-            <value><%= data[:height1].split(",")[0] %></value>
+            <measurementUnit><%= data[:measuredDimensionHeight1].split(",")[1] %></measurementUnit>
+            <value><%= data[:measuredDimensionHeight1].split(",")[0] %></value>
           </dimensionSubGroup>
 <% end %>
-<% unless data[:height2].empty? %>
+<% unless data[:measuredDimensionHeight2].empty? %>
           <dimensionSubGroup>
             <dimension>height</dimension>
-            <measurementUnit><%= data[:height2].split(",")[1] %></measurementUnit>
-            <value><%= data[:height2].split(",")[0] %></value>
+            <measurementUnit><%= data[:measuredDimensionHeight2].split(",")[1] %></measurementUnit>
+            <value><%= data[:measuredDimensionHeight2].split(",")[0] %></value>
           </dimensionSubGroup>
 <% end %>
-<% unless data[:width1].empty? %>
+<% unless data[:measuredDimensionWidth1].empty? %>
           <dimensionSubGroup>
             <dimension>width</dimension>
-            <measurementUnit><%= data[:width1].split(",")[1] %></measurementUnit>
-            <value><%= data[:width1].split(",")[0] %></value>
+            <measurementUnit><%= data[:measuredDimensionWidth1].split(",")[1] %></measurementUnit>
+            <value><%= data[:measuredDimensionWidth1].split(",")[0] %></value>
           </dimensionSubGroup>
 <% end %>
-<% unless data[:width2].empty? %>
+<% unless data[:measuredDimensionWidth2].empty? %>
           <dimensionSubGroup>
             <dimension>width</dimension>
-            <measurementUnit><%= data[:width2].split(",")[1] %></measurementUnit>
-            <value><%= data[:width2].split(",")[0] %></value>
+            <measurementUnit><%= data[:measuredDimensionWidth2].split(",")[1] %></measurementUnit>
+            <value><%= data[:measuredDimensionWidth2].split(",")[0] %></value>
           </dimensionSubGroup>
 <% end %>
-<% unless data[:length1].empty? %>
+<% unless data[:measuredDimensionLength1].empty? %>
           <dimensionSubGroup>
             <dimension>length</dimension>
-            <measurementUnit><%= data[:length1].split(",")[1] %></measurementUnit>
-            <value><%= data[:length1].split(",")[0] %></value>
+            <measurementUnit><%= data[:measuredDimensionLength1].split(",")[1] %></measurementUnit>
+            <value><%= data[:measuredDimensionLength1].split(",")[0] %></value>
           </dimensionSubGroup>
 <% end %>
-<% unless data[:length2].empty? %>
+<% unless data[:measuredDimensionLength2].empty? %>
           <dimensionSubGroup>
             <dimension>length</dimension>
-            <measurementUnit><%= data[:length2].split(",")[1] %></measurementUnit>
-            <value><%= data[:length2].split(",")[0] %></value>
+            <measurementUnit><%= data[:measuredDimensionLength2].split(",")[1] %></measurementUnit>
+            <value><%= data[:measuredDimensionLength2].split(",")[0] %></value>
           </dimensionSubGroup>
 <% end %>
-<% unless data[:volume1].empty? %>
+<% unless data[:measuredDimensionVolume1].empty? %>
           <dimensionSubGroup>
             <dimension>volume</dimension>
-            <measurementUnit><%= data[:volume1].split(",")[1] %></measurementUnit>
-            <value><%= data[:volume1].split(",")[0] %></value>
+            <measurementUnit><%= data[:measuredDimensionVolume1].split(",")[1] %></measurementUnit>
+            <value><%= data[:measuredDimensionVolume1].split(",")[0] %></value>
           </dimensionSubGroup>
 <% end %>
-<% unless data[:volume2].empty? %>
+<% unless data[:measuredDimensionVolume2].empty? %>
           <dimensionSubGroup>
             <dimension>volume</dimension>
-            <measurementUnit><%= data[:volume2].split(",")[1] %></measurementUnit>
-            <value><%= data[:volume2].split(",")[0] %></value>
+            <measurementUnit><%= data[:measuredDimensionVolume2].split(",")[1] %></measurementUnit>
+            <value><%= data[:measuredDimensionVolume2].split(",")[0] %></value>
           </dimensionSubGroup>
 <% end %>
         </dimensionSubGroupList>
       </measuredPartGroup>
     </measuredPartGroupList>
     <owners>
-<% unless data[:provenance].empty? %>
-<% if data[:provenance_type] =~ /^org/ %>
-      <owner>urn:cspace:<%= data[:domain] %>:orgauthorities:name(organization):item:name(<%= data[:provenance_id] %>)'<%= data[:provenance] %>'</owner>
-<% elsif data[:provenance_type] =~ /^per/ %>
-      <owner>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:provenance_id] %>)'<%= data[:provenance] %>'</owner>
+<% unless data[:owner].empty? %>
+<% if data[:ownerType] =~ /^org/ %>
+      <owner>urn:cspace:<%= data[:domain] %>:orgauthorities:name(organization):item:name(<%= data[:ownerId] %>)'<%= data[:owner] %>'</owner>
+<% elsif data[:ownerType] =~ /^per/ %>
+      <owner>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:ownerId] %>)'<%= data[:owner] %>'</owner>
 <% end %>
 <% end %>
     </owners>
-    <objectHistoryNote><%= data[:history] %></objectHistoryNote>
+    <objectHistoryNote><%= data[:objectHistoryNote] %></objectHistoryNote>
     <textualInscriptionGroupList>
       <textualInscriptionGroup>
-        <inscriptionContent><%= data[:inscription] %></inscriptionContent>
+        <inscriptionContent><%= data[:textualInscriptionContent] %></inscriptionContent>
       </textualInscriptionGroup>
     </textualInscriptionGroupList>
     <contentConcepts>
-<% unless data[:concept1_id].empty? or data[:concept1_name].empty? %>
-      <contentConcept>urn:cspace:<%= data[:domain] %>:conceptauthorities:name(concept):item:name(<%= data[:concept1_id] %>)'<%= data[:concept1_name] %>'</contentConcept>
+<% unless data[:contentConcept1Id].empty? or data[:contentConcept1].empty? %>
+      <contentConcept>urn:cspace:<%= data[:domain] %>:conceptauthorities:name(concept):item:name(<%= data[:contentConcept1Id] %>)'<%= data[:contentConcept1] %>'</contentConcept>
 <% end %>
-<% unless data[:concept2_id].empty? or data[:concept2_name].empty? %>
-      <contentConcept>urn:cspace:<%= data[:domain] %>:conceptauthorities:name(concept):item:name(<%= data[:concept2_id] %>)'<%= data[:concept2_name] %>'</contentConcept>
+<% unless data[:contentConcept2Id].empty? or data[:contentConcept2].empty? %>
+      <contentConcept>urn:cspace:<%= data[:domain] %>:conceptauthorities:name(concept):item:name(<%= data[:contentConcept2Id] %>)'<%= data[:contentConcept2] %>'</contentConcept>
 <% end %>
     </contentConcepts>
   </ns2:collectionobjects_common>
