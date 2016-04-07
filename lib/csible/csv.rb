@@ -81,8 +81,9 @@ module Csible
       def converters
         converters = []
         csv_nil_to_empty = -> (field) { field.nil? ? "" : field }
+        csv_strip        = -> (field) { field.strip }
         csv_xml_safe     = -> (field) { field.gsub(/&/, "&amp;") }
-        converters = [ csv_nil_to_empty, csv_xml_safe ]        
+        converters = [ csv_nil_to_empty, csv_strip, csv_xml_safe ]
         converters
       end
 
@@ -121,7 +122,7 @@ module Csible
         fields[:optional].each { |r| data[r.to_sym] = "" unless data.has_key? r.to_sym }
 
         fields[:merge].each do |from, to|
-          data[to] += ". #{data[from]}"
+          data[to] += ". #{data[from]}".gsub(/^(. )/, "").gsub("\n", ". ")
           data.delete from
         end
 
@@ -184,7 +185,7 @@ module Csible
     class PastPerfect < Processor
 
       def convert(type, key, value, map)
-        return nil, nil unless map[key][type][:type]
+        return nil, nil unless map.has_key?(key) and map[key][type][:type]
         return map[key][type][:type].to_sym, { map[key][type][:to].to_sym => value }
       end
 
@@ -208,7 +209,7 @@ module Csible
         hdrs = {}
         refs = Hash.new { |h,k| h[k] = {} }
         data.each do |k, v|
-          ref = map[k][:authority][:ref]
+          ref = map.has_key?(k) ? map[k][:authority][:ref] : nil
           if ref
             ref = ref.to_sym
             t, d = convert(:authority, k, v, map)
@@ -227,6 +228,7 @@ module Csible
             auth_data << d
           end
         end
+        # TODO: consolidate entries
         cspace_data.keys.each { |type| mapped_data[type].concat(cspace_data[type]) }
       end
 
