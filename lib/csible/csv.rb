@@ -205,7 +205,7 @@ module Csible
       end
 
 
-      def process_authorities(mapped_data, data, map, auth_data)
+      def process_authorities(auth_data, data, map)
         hdrs = {}
         refs = Hash.new { |h,k| h[k] = {} }
         data.each do |k, v|
@@ -219,17 +219,21 @@ module Csible
           end
         end
 
-        cspace_data = Hash.new { |h,k| h[k] = [] }
         data.each do |k,v|
           t, d = convert(:authority, k, v, map)
           unless t.nil?
             d = hdrs.merge(d.merge( refs[k] ) ) # if refs.has_key? k
-            cspace_data[t] << d unless auth_data.include? d
-            auth_data << d
+            if d.has_key?(:termDisplayName) and ! d[:termDisplayName].empty?
+              existing_auth = auth_data[t].find { |ea| ea[:termDisplayName] == d[:termDisplayName] }
+              if existing_auth
+                d = d.delete_if { |k, v| v.empty? }
+                existing_auth.merge d
+              else
+                auth_data[t] << d
+              end
+            end
           end
         end
-        # TODO: consolidate entries
-        cspace_data.keys.each { |type| mapped_data[type].concat(cspace_data[type]) }
       end
 
 
@@ -245,15 +249,15 @@ module Csible
       def process
         map         = get_map
         mapped_data = Hash.new { |h,k| h[k] = [] }
-        auth_data   = Set.new # used to prevent duplication of authority records
+        auth_data   = Hash.new { |h,k| h[k] = [] }
 
         run do |data|
           process_procedures mapped_data, data, map
-          process_authorities mapped_data, data, map, auth_data
+          process_authorities auth_data, data, map
         end
 
-        #ap mapped_data
         mapped_data.each { |type, data| Csible.write_csv "#{output}/#{type.to_s}.csv", data }
+        auth_data.each   { |type, data| Csible.write_csv "#{output}/#{type.to_s}.csv", data }
       end
 
     end
