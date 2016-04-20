@@ -9,6 +9,8 @@ objectNames,optional
 briefDescription,optional
 contentDescription,optional
 physicalDescription,optional
+assocPlace,optional
+assocPlaceType,optional
 comment,optional
 styles,optional
 colors,optional
@@ -27,7 +29,9 @@ objectProductionPerson2Id,generated
 objectProductionPerson2,optional
 objectProductionPeople,optional
 objectProductionPeopleRole,optional
+contentEventName,optional
 materials,optional
+dimensionSummary,optional
 measuredPart,optional
 measuredDimensionHeight1,optional
 measuredDimensionHeight2,optional
@@ -40,8 +44,10 @@ measuredDimensionVolume2,optional
 owner,optional
 ownerId,generated
 ownerType,optional
+collection,optional
 objectHistoryNote,optional
 textualInscriptionContent,optional
+textualInscriptionContentInterpretation,optional
 contentConcept1Id,generated
 contentConcept1,optional
 contentConcept2Id,generated

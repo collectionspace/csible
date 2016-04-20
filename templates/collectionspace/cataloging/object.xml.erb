@@ -35,6 +35,13 @@
     </briefDescriptions>
     <contentDescription><%= data[:contentDescription] %></contentDescription>
     <physicalDescription><%= data[:physicalDescription] %></physicalDescription>
+    <assocPlaceGroupList>
+      <assocPlaceGroup>
+        <assocPlace><%= data[:assocPlace] %></assocPlace>
+        <assocPlaceType><%= data[:assocPlaceType] %></assocPlaceType>
+        <assocPlaceNote/>
+      </assocPlaceGroup>
+    </assocPlaceGroupList>
     <comments>
       <comment><%= data[:comment] %></comment>
     </comments>
@@ -92,6 +99,12 @@
       </objectProductionPeopleGroup>
     </objectProductionPeopleGroupList>
     <ownershipExchangePriceCurrency>urn:cspace:<%= data[:domain] %>:vocabularies:name(currency):item:name(USD)'US Dollar'</ownershipExchangePriceCurrency>
+    <contentEventNameGroupList>
+      <contentEventNameGroup>
+        <contentEventNameType/>
+        <contentEventName><%= data[:contentEventName] %></contentEventName>
+      </contentEventNameGroup>
+    </contentEventNameGroupList>
     <materialGroupList>
 <% data[:materials].split(",").map(&:strip).each do |material| %>
       <materialGroup>
@@ -101,7 +114,7 @@
     </materialGroupList>
     <measuredPartGroupList>
       <measuredPartGroup>
-        <dimensionSummary/>
+        <dimensionSummary><%= data[:dimensionSummary] %></dimensionSummary>
         <measuredPart><%= data[:measuredPart] %></measuredPart>
         <dimensionSubGroupList>
 <% unless data[:measuredDimensionHeight1].empty? %>
@@ -172,10 +185,12 @@
 <% end %>
 <% end %>
     </owners>
+    <collection><%= data[:collection] %></collection>
     <objectHistoryNote><%= data[:objectHistoryNote] %></objectHistoryNote>
     <textualInscriptionGroupList>
       <textualInscriptionGroup>
         <inscriptionContent><%= data[:textualInscriptionContent] %></inscriptionContent>
+        <inscriptionContentInterpretation><%= data[:textualInscriptionContentInterpretation] %></inscriptionContentInterpretation>
       </textualInscriptionGroup>
     </textualInscriptionGroupList>
     <contentConcepts>

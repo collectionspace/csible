@@ -110,8 +110,7 @@ namespace :template do
         Csible::CSV.print_fields fields[:required], fields[:optional], fields[:generate].keys
       end
 
-      # rake template:cs:cataloging:process[templates/collectionspace/cataloging/objects.example.csv]
-      desc "Create cataloging XML records from csv"
+      # rake template:cs:cataloging:process[templates/collectionspace/cataloging/objects.example.csv]      desc "Create cataloging XML records from csv"
       task :process, [:csv, :output_dir, :filename_field] do |t, args|
         output_dir     = args[:output_dir] || output_dir
         filename_field = (args[:filename_field] || "objectNumber").to_sym
