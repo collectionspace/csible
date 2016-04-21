@@ -51,6 +51,33 @@ namespace :template do
       mapping_file    = "#{templates_path}/pastperfect/objects/objects.map.csv"
       fields          = Csible::CSV.get_config(config_file)
 
+      fields[:generate] = {
+        ownertype: {
+          from: :objectid,
+          required: false,
+          unique: false,
+          process: ->(value) { 'person' }
+        },
+        conditioncheckid: {
+          from: :objectid,
+          required: true,
+          unique: false,
+          process: ->(value) { value }
+        },
+        loaninid: {
+          from: :objectid,
+          required: true,
+          unique: false,
+          process: ->(value) { value }
+        },
+        valuationid: {
+          from: :objectid,
+          required: true,
+          unique: false,
+          process: ->(value) { value }
+        },
+      }
+
       # rake template:pp:objects:fields
       desc "Display fields for objects objects"
       task :fields do |t|

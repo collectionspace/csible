@@ -4,3 +4,7 @@ otherno,optional
 descrip_,optional
 objname,optional
 title,optional
+ownertype,generated
+loaninid,generated
+conditioncheckid,generated
+valuationid,generated
