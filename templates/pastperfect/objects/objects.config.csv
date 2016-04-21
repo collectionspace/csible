@@ -4,6 +4,11 @@ otherno,optional
 descrip_,optional
 objname,optional
 title,optional
+width,optional
+length,optional
+height,optional
+depth,optional
+diameter,optional
 ownertype,generated
 loaninid,generated
 conditioncheckid,generated

@@ -41,6 +41,10 @@ measuredDimensionLength1,optional
 measuredDimensionLength2,optional
 measuredDimensionVolume1,optional
 measuredDimensionVolume2,optional
+measuredDimensionDepth1,optional
+measuredDimensionDepth2,optional
+measuredDimensionDiameter1,optional
+measuredDimensionDiameter2,optional
 owner,optional
 ownerId,generated
 ownerType,optional

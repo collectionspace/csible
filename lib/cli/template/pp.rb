@@ -78,6 +78,14 @@ namespace :template do
         },
       }
 
+      fields[:transforms] = {
+        width: -> (value) { "#{value},centimeters" },
+        length: -> (value) { "#{value},centimeters" },
+        height: -> (value) { "#{value},centimeters" },
+        depth: -> (value) { "#{value},centimeters" },
+        diameter: -> (value) { "#{value},centimeters" },
+      }
+
       # rake template:pp:objects:fields
       desc "Display fields for objects objects"
       task :fields do |t|

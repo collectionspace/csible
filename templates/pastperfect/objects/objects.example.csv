@@ -1,2 +1,2 @@
-objectid,otherno,descrip_,objname,title
-1982.1.1,2000.354,"Hand painted",Painting,"Club Cookbook"
+objectid,otherno,descrip_,objname,title,width,length,height,depth,diameter
+1982.1.1,2000.354,"Hand painted",Painting,"Club Cookbook",1.0,2.0,3.0,4.0,5.0

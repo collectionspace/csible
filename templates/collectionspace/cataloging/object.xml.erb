@@ -173,6 +173,34 @@
             <value><%= data[:measuredDimensionVolume2].split(",")[0] %></value>
           </dimensionSubGroup>
 <% end %>
+<% unless data[:measuredDimensionDepth1].empty? %>
+          <dimensionSubGroup>
+            <dimension>depth</dimension>
+            <measurementUnit><%= data[:measuredDimensionDepth1].split(",")[1] %></measurementUnit>
+            <value><%= data[:measuredDimensionDepth1].split(",")[0] %></value>
+          </dimensionSubGroup>
+<% end %>
+<% unless data[:measuredDimensionDepth2].empty? %>
+          <dimensionSubGroup>
+            <dimension>depth</dimension>
+            <measurementUnit><%= data[:measuredDimensionDepth2].split(",")[1] %></measurementUnit>
+            <value><%= data[:measuredDimensionDepth2].split(",")[0] %></value>
+          </dimensionSubGroup>
+<% end %>
+<% unless data[:measuredDimensionDiameter1].empty? %>
+          <dimensionSubGroup>
+            <dimension>diameter</dimension>
+            <measurementUnit><%= data[:measuredDimensionDiameter1].split(",")[1] %></measurementUnit>
+            <value><%= data[:measuredDimensionDiameter1].split(",")[0] %></value>
+          </dimensionSubGroup>
+<% end %>
+<% unless data[:measuredDimensionDiameter2].empty? %>
+          <dimensionSubGroup>
+            <dimension>diameter</dimension>
+            <measurementUnit><%= data[:measuredDimensionDiameter2].split(",")[1] %></measurementUnit>
+            <value><%= data[:measuredDimensionDiameter2].split(",")[0] %></value>
+          </dimensionSubGroup>
+<% end %>
         </dimensionSubGroupList>
       </measuredPartGroup>
     </measuredPartGroupList>
