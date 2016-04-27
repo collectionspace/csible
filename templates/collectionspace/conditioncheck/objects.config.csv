@@ -1,3 +1,5 @@
 field,type
-id,required
-note,optional
+conditionCheckRefNumber,required
+conditionCheckNote,optional
+conditionCheckAssessmentDate,optional
+condition,optional

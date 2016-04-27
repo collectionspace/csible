@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document name="conditionchecks">
   <ns2:conditionchecks_common xmlns:ns2="http://collectionspace.org/services/conditioncheck" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <conditionCheckRefNumber><%= data[:id] %></conditionCheckRefNumber>
+    <conditionCheckRefNumber><%= data[:conditionCheckRefNumber] %></conditionCheckRefNumber>
+    <conditionCheckNote><%= data[:conditionCheckNote] %></conditionCheckNote>
+    <conditionCheckAssessmentDate><%= data[:conditionCheckAssessmentDate] %></conditionCheckAssessmentDate>
     <conditionCheckGroupList>
       <conditionCheckGroup>
-        <condition/>
-        <conditionNote><%= data[:note] %></conditionNote>
+        <condition><%= data[:condition] %></condition>
+        <conditionNote/>
         <conditionDate/>
       </conditionCheckGroup>
     </conditionCheckGroupList>

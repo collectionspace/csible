@@ -140,7 +140,7 @@ namespace :template do
       desc "Create conditioncheck XML records from csv"
       task :process, [:csv, :output_dir, :filename_field] do |t, args|
         output_dir     = args[:output_dir] || output_dir
-        filename_field = (args[:filename_field] || "id").to_sym
+        filename_field = (args[:filename_field] || "conditionCheckRefNumber").to_sym
         processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
         processor.process filename_field
       end

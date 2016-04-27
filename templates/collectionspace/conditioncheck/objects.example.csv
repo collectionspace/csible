@@ -1,3 +1,3 @@
-id,note
-123,good
-456,bad
+conditionCheckRefNumber,conditionCheckNote,conditionCheckAssessmentDate,condition
+123,good,2016-04-26T00:00:00.000Z,needsnowork
+456,bad,2016-04-26T00:00:00.000Z,needsnowork
