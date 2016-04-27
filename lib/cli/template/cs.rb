@@ -239,6 +239,28 @@ namespace :template do
       end
     end
 
+    namespace :loansin do
+      config_file     = "#{templates_path}/collectionspace/loansin/objects.config.csv"
+      template_file   = "#{templates_path}/collectionspace/loansin/object.xml.erb"
+      fields          = Csible::CSV.get_config(config_file)
+      fields[:domain] = domain
+
+      # rake template:cs:loansin:fields
+      desc "Display fields for loansin objects"
+      task :fields do |t|
+        Csible::CSV.print_fields fields[:required], fields[:optional], fields[:generate].keys
+      end
+
+      # rake template:cs:loansin:process[templates/collectionspace/loansin/objects.example.csv]
+      desc "Create loansin XML records from csv"
+      task :process, [:csv, :output_dir, :filename_field] do |t, args|
+        output_dir     = args[:output_dir] || output_dir
+        filename_field = (args[:filename_field] || "loanInNumber").to_sym
+        processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
+        processor.process filename_field
+      end
+    end
+
     namespace :loansout do
       config_file     = "#{templates_path}/collectionspace/loansout/objects.config.csv"
       template_file   = "#{templates_path}/collectionspace/loansout/object.xml.erb"

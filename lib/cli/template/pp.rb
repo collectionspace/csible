@@ -64,12 +64,6 @@ namespace :template do
           unique: false,
           process: ->(value) { value }
         },
-        loaninid: {
-          from: :objectid,
-          required: true,
-          unique: false,
-          process: ->(value) { value }
-        },
         valuationid: {
           from: :objectid,
           required: true,
