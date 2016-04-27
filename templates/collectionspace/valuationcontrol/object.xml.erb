@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document name="valuationcontrols">
   <ns2:valuationcontrols_common xmlns:ns2="http://collectionspace.org/services/valuationcontrol" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <valuationcontrolRefNumber><%= data[:id] %></valuationcontrolRefNumber>
-    <valueType><%= data[:type] %></valueType>
-<% unless data[:value].empty? or data[:currency].empty? or data[:currency_id].empty? %>
+    <valuationcontrolRefNumber><%= data[:valuationcontrolRefNumber] %></valuationcontrolRefNumber>
+    <valueType><%= data[:valueType] %></valueType>
+<% unless data[:valueAmount].empty? or data[:valueCurrency].empty? or data[:valueCurrencyId].empty? %>
     <valueAmountsList>
       <valueAmounts>
-        <valueCurrency>urn:cspace:<%= data[:domain] %>:vocabularies:name(currency):item:name(<%= data[:currency_id] %>)'<%= data[:currency] %>'</valueCurrency>
-        <valueAmount><%= data[:value] %></valueAmount>
+        <valueCurrency>urn:cspace:<%= data[:domain] %>:vocabularies:name(currency):item:name(<%= data[:valueCurrencyId] %>)'<%= data[:valueCurrency] %>'</valueCurrency>
+        <valueAmount><%= data[:valueAmount] %></valueAmount>
       </valueAmounts>
     </valueAmountsList>
 <% end %>
-    <valueNote><%= data[:note] %></valueNote>
+    <valueNote><%= data[:valueNote] %></valueNote>
+    <valueDate><%= data[:valueDate] %></valueDate>
+<% unless data[:valueSource].empty? %>
+<% if data[:valueSourceType] =~ /^org/ %>
+    <valueSource>urn:cspace:<%= data[:domain] %>:orgauthorities:name(organization):item:name(<%= data[:valueSourceId] %>)'<%= data[:valueSource] %>'</valueSource>
+<% elsif data[:valueSourceType] =~ /^per/ %>
+    <valueSource>urn:cspace:<%= data[:domain] %>:personauthorities:name(organization):item:name(<%= data[:valueSourceId] %>)'<%= data[:valueSource] %>'</valueSource>
+<% end %>
+<% end %>
   </ns2:valuationcontrols_common>
 </document>

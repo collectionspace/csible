@@ -1,7 +1,11 @@
 field,type
-id,required
-type,optional
-value,optional
-currency,optional
-currency_id,generated
-note,optional
+valuationcontrolRefNumber,required
+valueType,optional
+valueAmount,optional
+valueCurrency,optional
+valueCurrencyId,generated
+valueNote,optional
+valueDate,optional
+valueSource,optional
+valueSourceId,generated
+valueSourceType,optional

@@ -460,11 +460,17 @@ namespace :template do
       }
 
       fields[:generate] = {
-        currency_id: {
-          from: :currency,
+        valueCurrencyId: {
+          from: :valueCurrency,
           required: false,
           unique: false,
           process: :get_currency_code,
+        },
+        valueSourceId: {
+          from: :valueSource,
+          required: false,
+          unique: false,
+          process: :get_short_identifier,
         },
       }
 
@@ -478,7 +484,7 @@ namespace :template do
       desc "Create valuationcontrol XML records from csv"
       task :process, [:csv, :output_dir, :filename_field] do |t, args|
         output_dir     = args[:output_dir] || output_dir
-        filename_field = (args[:filename_field] || "id").to_sym
+        filename_field = (args[:filename_field] || "valuationcontrolRefNumber").to_sym
         processor = Csible::CSV::CollectionSpace.new(args[:csv], output_dir, template_file, fields)
         processor.process filename_field
       end

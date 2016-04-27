@@ -1,4 +1,4 @@
-id,type,value,currency,note
-678,Original Value,10000,US Dollar,"Appraised: 12000"
-789,Current Value,20000,US Dollar,
-987,Current Value,,US Dollar,
+valuationcontrolRefNumber,valueType,valueAmount,valueCurrency,valueNote,valueDate,valueSource,valueSourceType
+678,Original Value,10000,US Dollar,"Appraised: 12000",2016-04-27T00:00:00.000Z,University,organization
+789,Current Value,20000,US Dollar,,2016-04-27T00:00:00.000Z,Library,organization
+987,Current Value,,US Dollar,,2016-04-27T00:00:00.000Z,"Mr X",person

@@ -70,6 +70,12 @@ namespace :template do
           unique: false,
           process: ->(value) { value }
         },
+        appraisortype: {
+          from: :objectid,
+          required: false,
+          unique: false,
+          process: ->(value) { 'organization' }
+        },
       }
 
       fields[:transforms] = {
