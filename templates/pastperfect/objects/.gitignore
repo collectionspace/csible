@@ -3,3 +3,4 @@
 !*.erb
 !*.config.csv
 !*.example.csv
+!*.map.csv

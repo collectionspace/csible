@@ -52,29 +52,59 @@ namespace :template do
       fields          = Csible::CSV.get_config(config_file)
 
       fields[:generate] = {
+        appraisortype: {
+          from: :objectid,
+          required: false,
+          unique: false,
+          process: ->(value) { 'organization' }
+        },
         ownertype: {
           from: :objectid,
           required: false,
           unique: false,
           process: ->(value) { 'person' }
         },
+        # added to cataloging csv for easy relationship processing
+        acqid: {
+          from: :accessno,
+          required: false,
+          unique: false,
+          process: ->(value) { value.nil? ? "" : value }
+        },
+        # TODO: determine whether to use loanInNumber as is or generate and use note
+        liid: {
+          from: :loanInNumber,
+          required: false,
+          unique: false,
+          process: ->(value) { value.nil? ? "" : value }
+        },
+        # added to cataloging csv for easy relationship processing
+        ccid: {
+          from: :objectid,
+          required: true,
+          unique: false,
+          process: ->(value) { "CC#{value}" }
+        },
+        # for conditionchecks procedure csv (matches ccid)
         conditioncheckid: {
           from: :objectid,
           required: true,
           unique: false,
-          process: ->(value) { value }
+          process: ->(value) { "CC#{value}" }
         },
+        # added to cataloging csv for easy relationship processing
+        vcid: {
+          from: :objectid,
+          required: true,
+          unique: false,
+          process: ->(value) { "VC#{value}" }
+        },
+        # for valuationcontrol procedure csv (matches vcid)
         valuationid: {
           from: :objectid,
           required: true,
           unique: false,
-          process: ->(value) { value }
-        },
-        appraisortype: {
-          from: :objectid,
-          required: false,
-          unique: false,
-          process: ->(value) { 'organization' }
+          process: ->(value) { "VC#{value}" }
         },
       }
 
