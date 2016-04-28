@@ -6,7 +6,9 @@ descrip_,"Hand painted with California emblem depicting a bear walking on grass 
 objname,Painting,cataloging,,objectNames,,,objectName[s] -- can be multi-valued
 title,Bolinas Woman's Club Cookbook,cataloging,,title,,,
 owned,Ann Cook,cataloging,person,owner,termDisplayName,,
+signedname,G. Scott Miller,cataloging,,textualInscriptionContent,,,set inscriptionContentType=Signature
 mmark,W.H.,cataloging,,textualInscriptionContentInterpretation,,,Using Text Inscription
+signloc,on back,cataloging,,textualInscriptionContentPosition,,,"set inscriptionContentType=Signature; this is a controlled list, so some cleanup might be in order"
 collection,Historical Object Collection,cataloging,,collection,,,
 earlydate,1917,cataloging,,objectProductionDateEarliestSingleYear,,,dateEarliestSingleYear
 latedate,1920,cataloging,,objectProductionDateLatestYear,,,dateLatestSingleYear
@@ -21,20 +23,25 @@ diameter,58.42,cataloging,,measuredDimensionDiameter1,,,
 origin,Germany,cataloging,,objectProductionPlaces,,,objectProductionPlace[s] -- WILL BECOME PLACE AUTH REF FOR BOLINAS
 artist,Charles Howard Allen,cataloging,person,objectProductionPerson1,termDisplayName,,"assuming person, but some organizations"
 artist2,Tamae Agnoli,cataloging,person,objectProductionPerson2,termDisplayName,,objectProductionPerson is repeatable
-medium,"oil on canvas",cataloging,,physicalDescription,,,
+made,Native American,cataloging,,objectProductionPeople1,,,"This field is a mess.  In theory, it's for any creator, single or group, so objectProductionPerson, People, or Organization.  Luckily, when Bolinas used it for this, they seem to have focussed on People or Org. and left Person for the Artist field.  The other issue is that many/most of the object that use this field have a date in there.  Do we ask for cleanup, or map dates to objectProductionDate?"
+medium,acrylic on board,cataloging,,technique,,,
 material,"iron, wood",cataloging,,materials,,,"PP can have multiple values separated by comma, can we repeat the material group and insest each one in a new materialName? MC -- Yes."
 count,1,cataloging,,numberOfObjects,,,
 found,"found under Weston home on Lauff Ranch Road, original home of Gregorio Brio",cataloging,,assocPlace,,,Set assocPlaceType=found
+collector,Lydia Smith,cataloging,person,assocPerson,termDisplayName,,Set corresponding assocPersonType = collector; Bolinas also has couples as collectors (e.g. Fred and Mary Jones) not sure how to handle that.
 notes_,"Bradford Cottage (Brighton), Newhall house and Dodge house sitting just below Terrace Ave. Painting done from the hill of little mesa looking over Brighton Beach. Bradford cottage is now the house on the right of the ramp to the beach. the other two ho",cataloging,,comment,,,
+used,as a mirror for shaving,cataloging,,usageNote,,,
 ownertype,,cataloging,,ownerType,,,generated
 acqid,1982.1,cataloging,,acquisitionReferenceNumber,,,generated - for linking to acquisition record (accessno)
 liid,L1989.1,cataloging,,loanInNumber,,,generated - for linking to loansin record
 ccid,,cataloging,,conditionCheckRefNumber,,,generated - for linking
 vcid,,cataloging,,valuationcontrolRefNumber,,,generated - for linking
+loc,ART C,cataloging,,location,,,generated - for linking
+permloc,ART C,locationmovementinventory,storagelocation,normalLocation,termDisplayName,,
 loaninno,L1989.1,loansin,,loanInNumber,,,
 loandate,9/5/1989,loansin,,loanInDate,,,
 loandue,12/8/2015,loansin,,loanReturnDate,,,
-recfrom,Marin Museum of the American Indian,loansin,organization,loanInNote,termDisplayName,,"If no accessno, it's a loan and recfrom is lendersContact, else recfrom duplicates accession record"
+recfrom,Marin Museum of the American Indian,loansin,organization,loanInNote,termDisplayName,,"No org option, so note? If no accessno, it's a loan and recfrom is lendersContact, else recfrom duplicates accession record"
 conditioncheckid,,conditioncheck,,conditionCheckRefNumber,,,generated
 condexam,Marisa,conditioncheck,person,conditionChecker,termDisplayName,,
 conddate,3/29/2007,conditioncheck,,conditionDate,,,

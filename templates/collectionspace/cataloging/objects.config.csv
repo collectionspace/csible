@@ -11,9 +11,12 @@ contentDescription,optional
 physicalDescription,optional
 assocPlace,optional
 assocPlaceType,optional
+assocPerson,optional
+assocPersonType,optional
 comment,optional
 styles,optional
 colors,optional
+technique,optional
 recordStatus,optional
 objectProductionDateDisplayDate,optional
 objectProductionDateEarliestSingleYear,optional
@@ -52,7 +55,9 @@ collection,optional
 objectHistoryNote,optional
 textualInscriptionContent,optional
 textualInscriptionContentInterpretation,optional
+textualInscriptionContentPosition,optional
 contentConcept1Id,generated
 contentConcept1,optional
 contentConcept2Id,generated
 contentConcept2,optional
+usageNote,optional

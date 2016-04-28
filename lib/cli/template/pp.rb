@@ -106,6 +106,13 @@ namespace :template do
           unique: false,
           process: ->(value) { "VC#{value}" }
         },
+        # added to cataloging csv to reference storage locations (see permloc)
+        loc: {
+          from: :permloc,
+          required: false,
+          unique: false,
+          process: ->(value) { value }
+        }
       }
 
       fields[:transforms] = {

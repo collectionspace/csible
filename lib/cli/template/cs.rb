@@ -64,6 +64,12 @@ namespace :template do
       fields[:domain] = domain
 
       fields[:generate] = {
+        assocPersonId: {
+          from: :assocPerson,
+          required: false,
+          unique: false,
+          process: :get_short_identifier,
+        },
         contentConcept1Id: {
           from: :contentConcept1,
           required: false,

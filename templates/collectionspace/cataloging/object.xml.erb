@@ -42,6 +42,15 @@
         <assocPlaceNote/>
       </assocPlaceGroup>
     </assocPlaceGroupList>
+<% unless data[:assocPerson].empty? %>
+    <assocPersonGroupList>
+      <assocPersonGroup>
+        <assocPersonType><%= data[:assocPersonType] %></assocPersonType>
+        <assocPersonNote/>
+        <assocPerson>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:assocPersonId] %>)'<%= data[:assocPerson] %>'</assocPerson>
+      </assocPersonGroup>
+    </assocPersonGroupList>
+<% end %>
     <comments>
       <comment><%= data[:comment] %></comment>
     </comments>
@@ -55,6 +64,12 @@
       <color><%= color %></color>
 <% end %>
     </colors>
+    <techniqueGroupList>
+      <techniqueGroup>
+        <technique><%= data[:technique] %></technique>
+        <techniqueType/>
+      </techniqueGroup>
+    </techniqueGroupList>
     <contentLanguages>
       <contentLanguage>urn:cspace:<%= data[:domain] %>:vocabularies:name(languages):item:name(eng)'English'</contentLanguage>
     </contentLanguages>
@@ -219,6 +234,8 @@
       <textualInscriptionGroup>
         <inscriptionContent><%= data[:textualInscriptionContent] %></inscriptionContent>
         <inscriptionContentInterpretation><%= data[:textualInscriptionContentInterpretation] %></inscriptionContentInterpretation>
+        <inscriptionContentPosition><%= data[:textualInscriptionContentPosition] %></inscriptionContentPosition>
+        <inscriptionContentLanguage>urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(eng)'English'</inscriptionContentLanguage>
       </textualInscriptionGroup>
     </textualInscriptionGroupList>
     <contentConcepts>
@@ -229,5 +246,11 @@
       <contentConcept>urn:cspace:<%= data[:domain] %>:conceptauthorities:name(concept):item:name(<%= data[:contentConcept2Id] %>)'<%= data[:contentConcept2] %>'</contentConcept>
 <% end %>
     </contentConcepts>
+    <usageGroupList>
+      <usageGroup>
+        <usageNote><%= data[:usageNote] %></usageNote>
+        <usage></usage>
+      </usageGroup>
+    </usageGroupList>
   </ns2:collectionobjects_common>
 </document>
