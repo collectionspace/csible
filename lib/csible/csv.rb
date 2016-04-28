@@ -118,7 +118,7 @@ module Csible
         raise "SKIP FILTER #{data}" if skip
 
         # check required fields have value and pad optional fields to allow partial csv
-        fields[:required].each { |r| raise "HELL" unless data.has_key? r.to_sym or data[r.to_sym].empty? }
+        fields[:required].each { |r| raise "MISSING REQUIRED FIELD DATA #{r}" if not data.has_key? r.to_sym or data[r.to_sym].empty? }
         fields[:optional].each { |r| data[r.to_sym] = "" unless data.has_key? r.to_sym }
 
         fields[:merge].each do |from, to|
