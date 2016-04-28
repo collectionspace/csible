@@ -3,7 +3,7 @@ objectNumber,required
 numberValue,optional
 numberType,optional
 numberOfObjects,optional
-title,required
+title,optional
 editionNumber,optional
 objectNames,optional
 briefDescription,optional
