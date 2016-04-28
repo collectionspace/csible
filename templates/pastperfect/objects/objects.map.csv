@@ -21,6 +21,7 @@ diameter,58.42,cataloging,,measuredDimensionDiameter1,,,
 origin,Germany,cataloging,,objectProductionPlaces,,,objectProductionPlace[s] -- WILL BECOME PLACE AUTH REF FOR BOLINAS
 artist,Charles Howard Allen,cataloging,person,objectProductionPerson1,termDisplayName,,"assuming person, but some organizations"
 artist2,Tamae Agnoli,cataloging,person,objectProductionPerson2,termDisplayName,,objectProductionPerson is repeatable
+medium,"oil on canvas",cataloging,,physicalDescription,,,
 material,"iron, wood",cataloging,,materials,,,"PP can have multiple values separated by comma, can we repeat the material group and insest each one in a new materialName? MC -- Yes."
 count,1,cataloging,,numberOfObjects,,,
 found,"found under Weston home on Lauff Ranch Road, original home of Gregorio Brio",cataloging,,assocPlace,,,Set assocPlaceType=found
