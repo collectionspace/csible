@@ -7,9 +7,9 @@ namespace :template do
     templates_path = $config[:templates][:templates_path] ||= "templates"
 
     namespace :accessions do
-      config_file     = "#{templates_path}/pastperfect/accessions/accessions.config.csv"
+      config_file     = "#{templates_path}/pastperfect/accessions/accessions.map.csv"
       mapping_file    = "#{templates_path}/pastperfect/accessions/accessions.map.csv"
-      fields          = Csible::CSV.get_config(config_file)
+      fields          = Csible::CSV.get_config(config_file, { field_name: :ppfield, field_type: :type })
 
       fields[:generate] = {
         ownertype: {
@@ -47,9 +47,9 @@ namespace :template do
     end
 
     namespace :objects do
-      config_file     = "#{templates_path}/pastperfect/objects/objects.config.csv"
+      config_file     = "#{templates_path}/pastperfect/objects/objects.map.csv"
       mapping_file    = "#{templates_path}/pastperfect/objects/objects.map.csv"
-      fields          = Csible::CSV.get_config(config_file)
+      fields          = Csible::CSV.get_config(config_file, { field_name: :ppfield, field_type: :type })
 
       fields[:generate] = {
         appraisortype: {

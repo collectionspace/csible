@@ -1,54 +1,54 @@
-ppfield,ppexamplevalue,cspaceprocedure,cspaceauthority,cspaceprocedurefield,cspaceauthorityfield,cspaceauthorityref,notes
-objectid,1982.1.1,cataloging,,objectNumber,,,
-oldno,89.05,cataloging,,numberValue,,,oldno is for previous objectid
-otherno,2000.354,cataloging,,numberValue,,,otherno is for any alternative/previous identifier.  Based on number formats it looks like Bolinas may have oldno and otherno mixed
-descrip_,"Hand painted with California emblem depicting a bear walking on grass with the words ""CALIFORNIA REPUBLIC"" in brown underneath, a red bar frames the bottom edge, and a red star adorns the upper left corner",cataloging,,briefDescription,,,
-objname,Painting,cataloging,,objectNames,,,objectName[s] -- can be multi-valued
-title,Bolinas Woman's Club Cookbook,cataloging,,title,,,
-owned,Ann Cook,cataloging,person,owner,termDisplayName,,
-signedname,G. Scott Miller,cataloging,,textualInscriptionContent,,,set inscriptionContentType=Signature
-mmark,W.H.,cataloging,,textualInscriptionContentInterpretation,,,Using Text Inscription
-signloc,on back,cataloging,,textualInscriptionContentPosition,,,"set inscriptionContentType=Signature; this is a controlled list, so some cleanup might be in order"
-collection,Historical Object Collection,cataloging,,collection,,,
-earlydate,1917,cataloging,,objectProductionDateEarliestSingleYear,,,dateEarliestSingleYear
-latedate,1920,cataloging,,objectProductionDateLatestYear,,,dateLatestSingleYear
-event,"Centennial Celebration of the town of Ross, 1882-1982",cataloging,,contentEventName,,,
-provenanc_,Used as a flour barrel scoop,cataloging,,objectHistoryNote,,,
-dimnotes_,16 x 12,cataloging,,dimensionSummary,,,
-width,41.91,cataloging,,measuredDimensionWidth1,,,
-length,46.99,cataloging,,measuredDimensionLength1,,,
-height,50.8,cataloging,,measuredDimensionHeight1,,,
-depth,53.34,cataloging,,measuredDimensionDepth1,,,
-diameter,58.42,cataloging,,measuredDimensionDiameter1,,,
-origin,Germany,cataloging,,objectProductionPlaces,,,objectProductionPlace[s] -- WILL BECOME PLACE AUTH REF FOR BOLINAS
-artist,Charles Howard Allen,cataloging,person,objectProductionPerson1,termDisplayName,,"assuming person, but some organizations"
-artist2,Tamae Agnoli,cataloging,person,objectProductionPerson2,termDisplayName,,objectProductionPerson is repeatable
-made,Native American,cataloging,,objectProductionPeople1,,,"This field is a mess.  In theory, it's for any creator, single or group, so objectProductionPerson, People, or Organization.  Luckily, when Bolinas used it for this, they seem to have focussed on People or Org. and left Person for the Artist field.  The other issue is that many/most of the object that use this field have a date in there.  Do we ask for cleanup, or map dates to objectProductionDate?"
-medium,acrylic on board,cataloging,,technique,,,
-material,"iron, wood",cataloging,,materials,,,"PP can have multiple values separated by comma, can we repeat the material group and insest each one in a new materialName? MC -- Yes."
-count,1,cataloging,,numberOfObjects,,,
-found,"found under Weston home on Lauff Ranch Road, original home of Gregorio Brio",cataloging,,assocPlace,,,Set assocPlaceType=found
-collector,Lydia Smith,cataloging,person,assocPerson,termDisplayName,,Set corresponding assocPersonType = collector; Bolinas also has couples as collectors (e.g. Fred and Mary Jones) not sure how to handle that.
-notes_,"Bradford Cottage (Brighton), Newhall house and Dodge house sitting just below Terrace Ave. Painting done from the hill of little mesa looking over Brighton Beach. Bradford cottage is now the house on the right of the ramp to the beach. the other two ho",cataloging,,comment,,,
-used,as a mirror for shaving,cataloging,,usageNote,,,
-ownertype,,cataloging,,ownerType,,,generated
-acqid,1982.1,cataloging,,acquisitionReferenceNumber,,,generated - for linking to acquisition record (accessno)
-liid,L1989.1,cataloging,,loanInNumber,,,generated - for linking to loansin record
-ccid,,cataloging,,conditionCheckRefNumber,,,generated - for linking
-vcid,,cataloging,,valuationcontrolRefNumber,,,generated - for linking
-loc,ART C,cataloging,,location,,,generated - for linking
-permloc,ART C,locationmovementinventory,storagelocation,normalLocation,termDisplayName,,
-loaninno,L1989.1,loansin,,loanInNumber,,,
-loandate,9/5/1989,loansin,,loanInDate,,,
-loandue,12/8/2015,loansin,,loanReturnDate,,,
-recfrom,Marin Museum of the American Indian,loansin,organization,loanInNote,termDisplayName,,"No org option, so note? If no accessno, it's a loan and recfrom is lendersContact, else recfrom duplicates accession record"
-conditioncheckid,,conditioncheck,,conditionCheckRefNumber,,,generated
-condexam,Marisa,conditioncheck,person,conditionChecker,termDisplayName,,
-conddate,3/29/2007,conditioncheck,,conditionDate,,,
-condition,Fair,conditioncheck,,condition,,,
-condnotes_,has a ding in paper upper near top middle,conditioncheck,,conditionCheckNote,,,
-valuationid,,valuation,,valuationcontrolRefNumber,,,generated
-appnotes_,Valued at approx $3000 upon accession based on comparable auction sales,valuation,,valueNote,,,
-valuedate,1/1/1985,valuation,,valueDate,,,
-appraisor,Charles Campbell Gallery,valuation,organization,valueSource,termDisplayName,,
-appraisortype,,valuation,,valueSourceType,,,generated
+ppfield,ppexamplevalue,cspaceprocedure,cspaceauthority,cspaceprocedurefield,cspaceauthorityfield,cspaceauthorityref,type,notes
+objectid,1982.1.1,cataloging,,objectNumber,,,required,
+oldno,89.05,cataloging,,numberValue,,,optional,oldno is for previous objectid
+otherno,2000.354,cataloging,,numberValue,,,optional,otherno is for any alternative/previous identifier.  Based on number formats it looks like Bolinas may have oldno and otherno mixed
+descrip_,"Hand painted with California emblem depicting a bear walking on grass with the words ""CALIFORNIA REPUBLIC"" in brown underneath, a red bar frames the bottom edge, and a red star adorns the upper left corner",cataloging,,briefDescription,,,optional,
+objname,Painting,cataloging,,objectNames,,,optional,objectName[s] -- can be multi-valued
+title,Bolinas Woman's Club Cookbook,cataloging,,title,,,optional,
+owned,Ann Cook,cataloging,person,owner,termDisplayName,,optional,
+signedname,G. Scott Miller,cataloging,,textualInscriptionContent,,,optional,set inscriptionContentType=Signature
+mmark,W.H.,cataloging,,textualInscriptionContentInterpretation,,,optional,Using Text Inscription
+signloc,on back,cataloging,,textualInscriptionContentPosition,,,optional,"set inscriptionContentType=Signature; this is a controlled list, so some cleanup might be in order"
+collection,Historical Object Collection,cataloging,,collection,,,optional,
+earlydate,1917,cataloging,,objectProductionDateEarliestSingleYear,,,optional,dateEarliestSingleYear
+latedate,1920,cataloging,,objectProductionDateLatestYear,,,optional,dateLatestSingleYear
+event,"Centennial Celebration of the town of Ross, 1882-1982",cataloging,,contentEventName,,,optional,
+provenanc_,Used as a flour barrel scoop,cataloging,,objectHistoryNote,,,optional,
+dimnotes_,16 x 12,cataloging,,dimensionSummary,,,optional,
+width,41.91,cataloging,,measuredDimensionWidth1,,,optional,
+length,46.99,cataloging,,measuredDimensionLength1,,,optional,
+height,50.8,cataloging,,measuredDimensionHeight1,,,optional,
+depth,53.34,cataloging,,measuredDimensionDepth1,,,optional,
+diameter,58.42,cataloging,,measuredDimensionDiameter1,,,optional,
+origin,Germany,cataloging,,objectProductionPlaces,,,optional,objectProductionPlace[s] -- WILL BECOME PLACE AUTH REF FOR BOLINAS
+artist,Charles Howard Allen,cataloging,person,objectProductionPerson1,termDisplayName,,optional,"assuming person, but some organizations"
+artist2,Tamae Agnoli,cataloging,person,objectProductionPerson2,termDisplayName,,optional,objectProductionPerson is repeatable
+made,Native American,cataloging,,objectProductionPeople1,,,optional,"This field is a mess.  In theory, it's for any creator, single or group, so objectProductionPerson, People, or Organization.  Luckily, when Bolinas used it for this, they seem to have focussed on People or Org. and left Person for the Artist field.  The other issue is that many/most of the object that use this field have a date in there.  Do we ask for cleanup, or map dates to objectProductionDate?"
+medium,acrylic on board,cataloging,,technique,,,optional,
+material,"iron, wood",cataloging,,materials,,,optional,"PP can have multiple values separated by comma, can we repeat the material group and insest each one in a new materialName? MC -- Yes."
+count,1,cataloging,,numberOfObjects,,,optional,
+found,"found under Weston home on Lauff Ranch Road, original home of Gregorio Brio",cataloging,,assocPlace,,,optional,Set assocPlaceType=found
+collector,Lydia Smith,cataloging,person,assocPerson,termDisplayName,,optional,Set corresponding assocPersonType = collector; Bolinas also has couples as collectors (e.g. Fred and Mary Jones) not sure how to handle that.
+notes_,"Bradford Cottage (Brighton), Newhall house and Dodge house sitting just below Terrace Ave. Painting done from the hill of little mesa looking over Brighton Beach. Bradford cottage is now the house on the right of the ramp to the beach. the other two ho",cataloging,,comment,,,optional,
+used,as a mirror for shaving,cataloging,,usageNote,,,optional,
+ownertype,,cataloging,,ownerType,,,generated,generated
+acqid,1982.1,cataloging,,acquisitionReferenceNumber,,,generated,generated - for linking to acquisition record (accessno)
+liid,L1989.1,cataloging,,loanInNumber,,,generated,generated - for linking to loansin record
+ccid,,cataloging,,conditionCheckRefNumber,,,generated,generated - for linking
+vcid,,cataloging,,valuationcontrolRefNumber,,,generated,generated - for linking
+loc,ART C,cataloging,,location,,,generated,generated - for linking
+permloc,ART C,locationmovementinventory,storagelocation,normalLocation,termDisplayName,,optional,
+loaninno,L1989.1,loansin,,loanInNumber,,,optional,
+loandate,9/5/1989,loansin,,loanInDate,,,optional,
+loandue,12/8/2015,loansin,,loanReturnDate,,,optional,
+recfrom,Marin Museum of the American Indian,loansin,organization,loanInNote,termDisplayName,,optional,"No org option, so note? If no accessno, it's a loan and recfrom is lendersContact, else recfrom duplicates accession record"
+conditioncheckid,,conditioncheck,,conditionCheckRefNumber,,,generated,generated
+condexam,Marisa,conditioncheck,person,conditionChecker,termDisplayName,,optional,
+conddate,3/29/2007,conditioncheck,,conditionDate,,,optional,
+condition,Fair,conditioncheck,,condition,,,optional,
+condnotes_,has a ding in paper upper near top middle,conditioncheck,,conditionCheckNote,,,optional,
+valuationid,,valuation,,valuationcontrolRefNumber,,,generated,generated
+appnotes_,Valued at approx $3000 upon accession based on comparable auction sales,valuation,,valueNote,,,optional,
+valuedate,1/1/1985,valuation,,valueDate,,,optional,
+appraisor,Charles Campbell Gallery,valuation,organization,valueSource,termDisplayName,,optional,
+appraisortype,,valuation,,valueSourceType,,,generated,generated

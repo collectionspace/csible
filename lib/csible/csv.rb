@@ -2,7 +2,7 @@ module Csible
 
   module CSV
 
-    def self.get_config(config_file)
+    def self.get_config(config_file, config_fields = { field_name: :field, field_type: :type })
       raise "Invalid input file #{config_file}" unless File.file? config_file
       types = ["required", "optional", "generated"]
       fields = Hash.new { |hash, key| hash[key] = [] }
@@ -11,9 +11,9 @@ module Csible
           header_converters: ->(header) { header.to_sym },
         }) do |row|
           data = row.to_hash
-          raise "Type must be required or optional but was #{type}" unless types.include? data[:type]
-          fields[:required] << data[:field] if data[:type] == "required"
-          fields[:optional] << data[:field] if data[:type] == "optional"
+          raise "Type must be required or optional but was #{type}" unless types.include? data[ config_fields[:field_type] ]
+          fields[:required] << data[ config_fields[:field_name] ] if data[ config_fields[:field_type] ] == "required"
+          fields[:optional] << data[ config_fields[:field_name] ] if data[ config_fields[:field_type] ] == "optional"
       end
       raise "No required fields defined in #{config_file}" if fields[:required].empty?
       fields[:filter]     = {}
