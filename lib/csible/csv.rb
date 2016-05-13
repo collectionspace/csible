@@ -164,7 +164,7 @@ module Csible
 
     end
 
-    class CollectionSpace < Processor
+    class ToCollectionSpace < Processor
 
       def process(filename_field)
         run do |data|
@@ -182,7 +182,7 @@ module Csible
 
     end
 
-    class PastPerfect < Processor
+    class ToCSV < Processor
 
       def convert(type, key, value, map)
         return nil, nil unless map.has_key?(key) and map[key][type][:type]
@@ -192,14 +192,14 @@ module Csible
       def get_map
         map = {}
         get_map_from_csv do |data|
-          ppfield = data[:ppfield].to_sym
-          map[ppfield] = Hash.new { |h,k| h[k] = {} }
-          map[ppfield][:procedure][:type] = data.fetch(:cspaceprocedure, nil)
-          map[ppfield][:procedure][:to]   = data.fetch(:cspaceprocedurefield)
+          field = data[:field].to_sym
+          map[field] = Hash.new { |h,k| h[k] = {} }
+          map[field][:procedure][:type] = data.fetch(:cspaceprocedure, nil)
+          map[field][:procedure][:to]   = data.fetch(:cspaceprocedurefield)
 
-          map[ppfield][:authority][:type] = data.fetch(:cspaceauthority, nil)
-          map[ppfield][:authority][:to]   = data.fetch(:cspaceauthorityfield)
-          map[ppfield][:authority][:ref]  = data.fetch(:cspaceauthorityref)
+          map[field][:authority][:type] = data.fetch(:cspaceauthority, nil)
+          map[field][:authority][:to]   = data.fetch(:cspaceauthorityfield)
+          map[field][:authority][:ref]  = data.fetch(:cspaceauthorityref)
         end
         map
       end

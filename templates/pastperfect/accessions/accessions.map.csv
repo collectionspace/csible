@@ -1,4 +1,4 @@
-ppfield,ppexamplevalue,cspaceprocedure,cspaceauthority,cspaceprocedurefield,cspaceauthorityfield,cspaceauthorityref,type,notes
+field,examplevalue,cspaceprocedure,cspaceauthority,cspaceprocedurefield,cspaceauthorityfield,cspaceauthorityref,type,notes
 accessno,1982.1,acquisitions,,acquisitionReferenceNumber,,,required,
 accdate,11/11/2000,acquisitions,,accessionDateGroup,,,optional,
 accby,"Pusey, Sarah",acquisitions,person,acquisitionAuthorizer,termDisplayName,,optional,

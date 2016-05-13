@@ -9,7 +9,7 @@ namespace :template do
     namespace :accessions do
       config_file     = "#{templates_path}/pastperfect/accessions/accessions.map.csv"
       mapping_file    = "#{templates_path}/pastperfect/accessions/accessions.map.csv"
-      fields          = Csible::CSV.get_config(config_file, { field_name: :ppfield, field_type: :type })
+      fields          = Csible::CSV.get_config(config_file)
 
       fields[:generate] = {
         ownertype: {
@@ -41,7 +41,7 @@ namespace :template do
       desc "Create CollectionSpace accessions CSV from Past Perfect csv"
       task :process, [:csv, :output_dir] do |t, args|
         output_dir = args[:output_dir] || output_dir
-        processor = Csible::CSV::PastPerfect.new(args[:csv], output_dir, mapping_file, fields)
+        processor = Csible::CSV::ToCSV.new(args[:csv], output_dir, mapping_file, fields)
         processor.process
       end
     end
@@ -49,7 +49,7 @@ namespace :template do
     namespace :objects do
       config_file     = "#{templates_path}/pastperfect/objects/objects.map.csv"
       mapping_file    = "#{templates_path}/pastperfect/objects/objects.map.csv"
-      fields          = Csible::CSV.get_config(config_file, { field_name: :ppfield, field_type: :type })
+      fields          = Csible::CSV.get_config(config_file)
 
       fields[:generate] = {
         appraisortype: {
@@ -133,7 +133,7 @@ namespace :template do
       desc "Create CollectionSpace collectionobjects CSV from Past Perfect csv"
       task :process, [:csv, :output_dir] do |t, args|
         output_dir = args[:output_dir] || output_dir
-        processor = Csible::CSV::PastPerfect.new(args[:csv], output_dir, mapping_file, fields)
+        processor = Csible::CSV::ToCSV.new(args[:csv], output_dir, mapping_file, fields)
         processor.process
       end
     end

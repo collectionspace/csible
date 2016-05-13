@@ -1,4 +1,4 @@
-ppfield,ppexamplevalue,cspaceprocedure,cspaceauthority,cspaceprocedurefield,cspaceauthorityfield,cspaceauthorityref,type,notes
+field,examplevalue,cspaceprocedure,cspaceauthority,cspaceprocedurefield,cspaceauthorityfield,cspaceauthorityref,type,notes
 objectid,1982.1.1,cataloging,,objectNumber,,,required,
 oldno,89.05,cataloging,,numberValue,,,optional,oldno is for previous objectid
 otherno,2000.354,cataloging,,numberValue,,,optional,otherno is for any alternative/previous identifier.  Based on number formats it looks like Bolinas may have oldno and otherno mixed
