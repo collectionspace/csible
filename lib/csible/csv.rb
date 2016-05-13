@@ -16,10 +16,11 @@ module Csible
           fields[:optional] << data[ config_fields[:field_name] ] if data[ config_fields[:field_type] ] == "optional"
       end
       raise "No required fields defined in #{config_file}" if fields[:required].empty?
-      fields[:filter]     = {}
-      fields[:generate]   = {}
-      fields[:merge]      = {}
-      fields[:transforms] = {}
+      fields[:filter]        = {}
+      fields[:generate]      = {}
+      fields[:merge]         = {}
+      fields[:relationships] = {}
+      fields[:transforms]    = {}
       fields
     end
 
@@ -204,7 +205,6 @@ module Csible
         map
       end
 
-
       def process_authorities(auth_data, data, map)
         hdrs = {}
         refs = Hash.new { |h,k| h[k] = {} }
@@ -236,7 +236,6 @@ module Csible
         end
       end
 
-
       def process_procedures(mapped_data, data, map)
         cspace_data = Hash.new { |h,k| h[k] = {} }
         data.each do |k,v|
@@ -244,6 +243,29 @@ module Csible
           cspace_data[t] = cspace_data[t].merge d unless t.nil?
         end
         cspace_data.keys.each { |type| mapped_data[type] << cspace_data[type] }
+      end
+
+      def process_relationships(relationships_data, mapped_data)
+        fields[:relationships].each do |type, relationships|
+          procedure_records = mapped_data.fetch type, []
+          procedure_records.each do |procedure|
+            relationships.each do |relationship|
+              from = procedure[ relationship[:from_field].to_sym ]
+              to   = procedure[ relationship[:to_field].to_sym ]
+              unless from.empty? or to.empty?
+                # make the relationship
+                relationships_data << {
+                  from_type: relationship[:from_procedure],
+                  from_search: relationship[:from_field],
+                  from: from,
+                  to_type: relationship[:to_procedure],
+                  to_search: relationship[:to_field],
+                  to: to,
+                }
+              end
+            end
+          end
+        end
       end
 
       def process
@@ -258,6 +280,12 @@ module Csible
 
         mapped_data.each { |type, data| Csible.write_csv "#{output}/#{type.to_s}.csv", data }
         auth_data.each   { |type, data| Csible.write_csv "#{output}/#{type.to_s}.csv", data }
+
+        # TODO: process relationships
+        relationships_data = []
+        process_relationships relationships_data, mapped_data
+
+        Csible.write_csv "#{output}/relationships.csv", relationships_data
       end
 
     end

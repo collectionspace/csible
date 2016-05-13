@@ -115,6 +115,36 @@ namespace :template do
         }
       }
 
+      # TODO: also generate relationships CSV
+      fields[:relationships] = {
+        cataloging: [
+          {
+            from_procedure: "acquisitions",
+            from_field: "acquisitionReferenceNumber",
+            to_procedure: "collectionobjects",
+            to_field: "objectNumber",
+          },
+          {
+            from_procedure: "loansin",
+            from_field: "loanInNumber",
+            to_procedure: "collectionobjects",
+            to_field: "objectNumber",
+          },
+          {
+            from_procedure: "conditionchecks",
+            from_field: "conditionCheckRefNumber",
+            to_procedure: "collectionobjects",
+            to_field: "objectNumber",
+          },
+          {
+            from_procedure: "valuationcontrols",
+            from_field: "valuationcontrolRefNumber",
+            to_procedure: "collectionobjects",
+            to_field: "objectNumber",
+          }
+        ]
+      }
+
       fields[:transforms] = {
         width: -> (value) { "#{value},centimeters" },
         length: -> (value) { "#{value},centimeters" },
