@@ -10,6 +10,7 @@ telephoneNumberHome,optional
 telephoneNumberMobile,optional
 telephoneNumber,optional
 faxNumber,optional
+addressType,optional
 addressPlace1,optional
 addressPlace2,optional
 addressMunicipality,optional
