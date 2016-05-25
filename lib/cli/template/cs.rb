@@ -159,8 +159,8 @@ namespace :template do
       fields[:domain] = domain
 
       fields[:generate] = {
-        shortidentifier: {
-          from: :name,
+        shortIdentifier: {
+          from: :termDisplayName,
           required: true,
           unique: true,
           process: :get_short_identifier,
@@ -168,7 +168,7 @@ namespace :template do
       }
 
       fields[:transforms] = {
-        name: ->(value) { value.capitalize },
+        termDisplayName: ->(value) { value.capitalize },
       }
 
       # rake template:cs:concepts:fields
@@ -181,7 +181,7 @@ namespace :template do
       desc "Create concept authority item XML records from csv"
       task :process, [:csv, :output_dir, :filename_field] do |t, args|
         output_dir     = args[:output_dir] || output_dir
-        filename_field = (args[:filename_field] || "shortidentifier").to_sym
+        filename_field = (args[:filename_field] || "shortIdentifier").to_sym
         processor = Csible::CSV::ToCollectionSpace.new(args[:csv], output_dir, template_file, fields)
         processor.process filename_field
       end
@@ -364,7 +364,7 @@ namespace :template do
           unique: true,
           process: :get_short_identifier,
         },
-        first: {
+        foreName: {
           from: :termDisplayName,
           required: false,
           unique: false,
@@ -379,7 +379,7 @@ namespace :template do
             name
           },
         },
-        middle: {
+        middleName: {
           from: :termDisplayName,
           required: false,
           unique: false,
@@ -399,7 +399,7 @@ namespace :template do
             name
           },
         },
-        last: {
+        surName: {
           from: :termDisplayName,
           required: false,
           unique: false,
