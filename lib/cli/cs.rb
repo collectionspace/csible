@@ -163,6 +163,8 @@ namespace :cs do
     end
 
     # rake cs:relate:contacts[personauthorities/e3308f39-d3dc-46f8-a1f8/items,templates/persons/item.example.csv]
+    # TODO: loop names and get identifiers for name ... if name identifier found then generate contact XML
+    # template_file = "templates/relationships/contact.xml.erb" (check at least st. address = displayName)
   end
 
   namespace :get do
