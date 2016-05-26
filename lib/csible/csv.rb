@@ -73,6 +73,7 @@ module Csible
       # TODO: load authority item types from CSV
       def authority_itemtypes(type)
         types = {
+          "concepts"  => "ConceptItem",
           "locations" => "LocationItem",
         }
         types[type]

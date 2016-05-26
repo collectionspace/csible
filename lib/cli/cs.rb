@@ -44,7 +44,7 @@ namespace :cs do
       redis    = Redis.new # fail if redis unavailable
       csv      = args[:csv]
       raise "HELL" unless File.file? csv
-      template_file = "templates/relationships/relation.xml.erb"
+      template_file = "templates/collectionspace/relationships/relation.xml.erb"
       relationships = []
       get           = Csible::HTTP::Get.new($client, $log)
 
@@ -109,7 +109,7 @@ namespace :cs do
       csv  = args[:csv]
       raise "HELL" unless File.file? csv
 
-      template_file = "templates/relationships/hierarchy.xml.erb"
+      template_file = "templates/collectionspace/relationships/hierarchy.xml.erb"
       relationships = Hash.new { |hash, key| hash[key] = [] }
       identifiers   = Hash.new { |hash, key| hash[key] = {} }
       get           = Csible::HTTP::Get.new($client, $log)
@@ -119,7 +119,7 @@ namespace :cs do
       raise "Unknown itemtype for authority #{type}" unless processor.authority_itemtypes(type)
 
       CSV.foreach(csv, {
-          headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
+          headers: true, :header_converters => :symbol
         }) do |row|
         data = row.to_hash
         next if data[:to].empty? or data[:from].empty? # undefined relationship
@@ -141,7 +141,7 @@ namespace :cs do
             # wrap data for template
             data = {}
             data[:type]     = type
-            data[:itemtype] = authority_itemtypes(type)
+            data[:itemtype] = processor.authority_itemtypes(type)
             data[:csid]     = identifiers[broad]["csid"]
             data[:uri]      = identifiers[broad]["uri"]
 
@@ -153,7 +153,7 @@ namespace :cs do
             Csible.write_file(output_filename, result, $log)
 
             # make the introductions
-            Rake::Task["cs:put:file"].invoke(identifiers[item]["uri"], output_filename)
+            Rake::Task["cs:put:file"].invoke("#{identifiers[item]["uri"].gsub(/^\//, '')}", output_filename)
             Rake::Task["cs:put:file"].reenable
           end
         rescue Exception => ex
@@ -251,16 +251,15 @@ namespace :cs do
 
     # rake cs:put:file[locationauthorities/XYZ/items/ABC,examples/locations/1.xml]
     desc "PUT request by path with file of updated metadata"
-    task :file, [:path, :file, :format] do |t, args|
+    task :file, [:path, :file] do |t, args|
       path = args[:path]
       file = args[:file]
-      format = (args[:format] || 'json').to_sym
       raise "Invalid file" unless File.file? file
       payload = File.read(file)
       put     = Csible::HTTP::Put.new($client, $log)
       begin
         put.execute :path, path, payload
-        put.print format
+        File.unlink file
       rescue Exception => ex
         $log.error ex.message
       end
