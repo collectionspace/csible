@@ -18,7 +18,7 @@
       <addressGroup>
         <addressStateOrProvince><%= data[:addressStateOrProvince] %></addressStateOrProvince>
         <addressPostCode><%= data[:addressPostCode] %></addressPostCode>
-        <addressType/>
+        <addressType><%= data[:addressType] %></addressType>
         <addressCountry><%= data[:addressCountry] %></addressCountry>
         <addressPlace1><%= data[:addressPlace1] %></addressPlace1>
         <addressPlace2><%= data[:addressPlace2] %></addressPlace2>
@@ -40,7 +40,7 @@
 <% end %>
 <% unless data[:telephoneNumber].empty? %>
       <telephoneNumberGroup>
-        <telephoneNumberType>other</telephoneNumberType>
+        <telephoneNumberType>business</telephoneNumberType>
         <telephoneNumber><%= data[:telephoneNumber] %></telephoneNumber>
       </telephoneNumberGroup>
 <% end %>

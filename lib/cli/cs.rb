@@ -10,7 +10,8 @@ namespace :cs do
     redis = Redis.new # fail if redis unavailable
     csv   = args[:csv]
     CSV.foreach(csv, {
-        headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
+        headers: true,
+        header_converters: ->(header) { header.to_sym },
       }) do |row|
       key, value = row.to_hash.values
       raise "Invalid csv values #{key} #{value}" if key.empty? or value.empty?
@@ -36,7 +37,8 @@ namespace :cs do
   end
 
   namespace :relate do
-    output_dir = "tmp"
+    output_dir     = "tmp"
+    templates_path = $config[:templates][:templates_path] ||= "templates"
 
     # rake cs:relate:records[templates/relationships/relations.example.csv]
     desc "Create cataloging / procedure relationships using a csv file"
@@ -49,7 +51,8 @@ namespace :cs do
       get           = Csible::HTTP::Get.new($client, $log)
 
       CSV.foreach(csv, {
-          headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
+          headers: true,
+          header_converters: ->(header) { header.to_sym },
         }) do |row|
         data = row.to_hash
         relationships << data
@@ -119,7 +122,8 @@ namespace :cs do
       raise "Unknown itemtype for authority #{type}" unless processor.authority_itemtypes(type)
 
       CSV.foreach(csv, {
-          headers: true, :header_converters => :symbol
+          headers: true,
+          header_converters: ->(header) { header.to_sym },
         }) do |row|
         data = row.to_hash
         next if data[:to].empty? or data[:from].empty? # undefined relationship
@@ -163,8 +167,39 @@ namespace :cs do
     end
 
     # rake cs:relate:contacts[personauthorities/e3308f39-d3dc-46f8-a1f8/items,templates/persons/item.example.csv]
-    # TODO: loop names and get identifiers for name ... if name identifier found then generate contact XML
-    # template_file = "templates/relationships/contact.xml.erb" (check at least st. address = displayName)
+    desc "Create contact records for authorities from a csv file"
+    task :contacts, [:path, :csv, :identifier_field] do |t, args|
+      path             = args[:path]
+      csv              = args[:csv]
+      identifier_field = (args[:identifier_field] || 'termDisplayName').to_sym
+      raise "HELL" unless File.file? csv
+
+      config_file   = "#{templates_path}/collectionspace/relationships/contact.config.csv"
+      template_file = "#{templates_path}/collectionspace/relationships/contact.xml.erb"
+      fields        = Csible::CSV.get_config(config_file)
+
+      get           = Csible::HTTP::Get.new($client, $log)
+      processor     = Csible::CSV::Processor.new(csv, output_dir, template_file, fields) # for fields and helpers
+      processor.run do |data|
+        id_val   = data[identifier_field]
+        short_id = processor.get_short_identifier(id_val)
+        ids      = get.identifiers_for(path, short_id)
+        if ids
+          template = Csible.get_template template_file
+          result   = template.result(binding)
+
+          # cache result
+          output_filename = "#{output_dir}/#{ids["csid"]}-contact.xml"
+          Csible.write_file(output_filename, result, $log)
+
+          # add the contact
+          Rake::Task["cs:post:file"].invoke("#{ids["uri"].gsub(/^\//, '')}/contacts", output_filename)
+          Rake::Task["cs:post:file"].reenable
+        else
+          $log.warn "Unable to find record for #{short_id}"
+        end
+      end
+    end
   end
 
   namespace :get do
@@ -320,7 +355,8 @@ namespace :cs do
       redis           = Redis.new
       raise "HELL" unless File.file? csv
       CSV.foreach(csv, {
-          headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
+          headers: true,
+          header_converters: ->(header) { header.to_sym },
         }) do |row|
         data = row.to_hash
         uri  = redis.get( data[:id] )
@@ -347,7 +383,8 @@ namespace :cs do
       csv           = args[:csv]
       throttle      = args[:throttle] || 0.10
       CSV.foreach(csv, {
-          headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
+          headers: true,
+          header_converters: ->(header) { header.to_sym },
         }) do |row|
         data = row.to_hash
         output_filename = "#{output_dir}/#{data[:element]}-#{data[:uri].split("/")[-1]}.xml"
@@ -366,7 +403,8 @@ namespace :cs do
       template_file = args[:template] || "templates/updates/update.xml.erb"
       raise "HELL" unless File.file? csv and File.file? template_file
       CSV.foreach(csv, {
-          headers: true, :header_converters => :symbol, :converters => [:nil_to_empty]
+          headers: true,
+          header_converters: ->(header) { header.to_sym },
         }) do |row|
         data = row.to_hash
 
