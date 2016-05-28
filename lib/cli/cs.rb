@@ -25,6 +25,20 @@ namespace :cs do
     ap $config
   end
 
+  # rake cs:initialize[core]
+  desc "Initialize authorities for tenant"
+  task :initialize do |t, args|
+    tenant = args[:tenant] || 'core'
+    path   = "collectionspace/tenant/#{tenant}/authorities/initialise"
+    url    = $config[:services][:base_uri].gsub("cspace-services", path)
+    req    = Csible::HTTP::Request.new($client, $log)
+    begin
+      req.do_raw :get, url, {}
+    rescue Exception => ex
+      $log.error ex.message
+    end
+  end
+
   # rake cs:parse_xml["relation-list-item > uri"]
   desc "Parse xml for element value"
   task :parse_xml, [:element, :input, :output] do |t, args|

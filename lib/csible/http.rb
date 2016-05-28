@@ -50,6 +50,7 @@ module Csible
           raise "ERROR invalid or unsupported http method #{method.to_s}"
         end
         @result = CollectionSpace::Response.new result # wrap the response
+        log.info "#{method.to_s.upcase} #{@result.status_code.to_s} #{@result.status.inspect} #{resource}"
         @result
       end
 
