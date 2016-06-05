@@ -10,8 +10,11 @@
     <objectPurchasePriceCurrency>urn:cspace:<%= data[:domain] %>:vocabularies:name(currency):item:name(<%= data[:objectPurchasePriceCurrencyId] %>)'<%= data[:objectPurchasePriceCurrency] %>'</objectPurchasePriceCurrency>
 <% end %>
     <acquisitionSources>
-<% unless data[:acquisitionSource].empty? %>
-      <acquisitionSource>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:acquisitionSourceId] %>)'<%= data[:acquisitionSource] %>'</acquisitionSource>
+<% unless data[:acquisitionSource1].empty? %>
+      <acquisitionSource>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:acquisitionSource1Id] %>)'<%= data[:acquisitionSource1] %>'</acquisitionSource>
+<% end %>
+<% unless data[:acquisitionSource2].empty? %>
+      <acquisitionSource>urn:cspace:<%= data[:domain] %>:personauthorities:name(person):item:name(<%= data[:acquisitionSource2Id] %>)'<%= data[:acquisitionSource2] %>'</acquisitionSource>
 <% end %>
     </acquisitionSources>
     <acquisitionReason><%= data[:acquisitionReason] %></acquisitionReason>

@@ -1,7 +1,9 @@
 field,type
 acquisitionReferenceNumber,required
-acquisitionSource,optional
-acquisitionSourceId,generated
+acquisitionSource1,optional
+acquisitionSource1Id,generated
+acquisitionSource2,optional
+acquisitionSource2Id,generated
 acquisitionAuthorizer,optional
 acquisitionAuthorizerId,generated
 owner,optional

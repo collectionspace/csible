@@ -21,8 +21,14 @@ namespace :template do
           unique: false,
           process: :get_currency_code,
         },
-        acquisitionSourceId: {
-          from: :acquisitionSource,
+        acquisitionSource1Id: {
+          from: :acquisitionSource1,
+          required: false,
+          unique: false,
+          process: :get_short_identifier,
+        },
+        acquisitionSource2Id: {
+          from: :acquisitionSource2,
           required: false,
           unique: false,
           process: :get_short_identifier,
