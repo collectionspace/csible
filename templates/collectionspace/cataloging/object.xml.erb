@@ -92,6 +92,11 @@
         <objectProductionPlaceRole/>
       </objectProductionPlaceGroup>
 <% end %>
+<% unless data[:objectProductionPerson1Id].empty? or data[:objectProductionPerson1].empty? %>
+      <objectProductionPlaceGroup>
+        <objectProductionPlace>urn:cspace:<%= data[:domain] %>:placeauthorities:name(place):item:name(<%= data[:objectProductionPlace1Id] %>)'<%= data[:objectProductionPlace1] %>'</objectProductionPlace>
+      </objectProductionPlaceGroup>
+<% end %>
     </objectProductionPlaceGroupList>
     <objectProductionPersonGroupList>
 <% unless data[:objectProductionPerson1Id].empty? or data[:objectProductionPerson1].empty? %>
@@ -229,6 +234,7 @@
 <% end %>
     </owners>
     <collection><%= data[:collection] %></collection>
+    <distinguishingFeatures><%= data[:distinguishingFeatures] %></distinguishingFeatures>
     <objectHistoryNote><%= data[:objectHistoryNote] %></objectHistoryNote>
     <textualInscriptionGroupList>
       <textualInscriptionGroup>
@@ -252,5 +258,10 @@
         <usage></usage>
       </usageGroup>
     </usageGroupList>
+<% unless data[:taxonId].empty? or data[:taxon].empty? %>
+    <taxon>urn:cspace:<%= data[:domain] %>:taxonomyauthority:name(taxon):item:name(<%= data[:taxonId] %>)'<%= data[:taxon] %>'</taxon>
+<% end %>
+    <commonName><%= data[:commonName] %></commonName>
+    <nativeSpecies><%= data[:nativeSpecies] %></nativeSpecies>
   </ns2:collectionobjects_common>
 </document>

@@ -100,15 +100,28 @@ namespace :template do
           unique: false,
           process: :get_short_identifier,
         },
+        objectProductionPlace1Id: {
+          from: :objectProductionPlace1,
+          required: false,
+          unique: false,
+          process: :get_short_identifier,
+        },
         ownerId: {
           from: :owner,
           required: false,
           unique: false,
           process: :get_short_identifier,
         },
+        taxonId: {
+          from: :taxon,
+          required: false,
+          unique: false,
+          process: :get_short_identifier,
+        }
       }
 
       fields[:transforms] = {
+        collection:      ->(value) { value.downcase },
         contentConcept1: ->(value) { value.capitalize },
         contentConcept2: ->(value) { value.capitalize },
         objectProductionDatePeriod: ->(value) { value.capitalize },

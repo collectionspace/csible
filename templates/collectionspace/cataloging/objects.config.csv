@@ -24,6 +24,8 @@ objectProductionDateLatestYear,optional
 objectProductionDatePeriod,optional
 objectProductionDateNote,optional
 objectProductionPlaces,optional
+objectProductionPlace1Id,generated
+objectProductionPlace1,optional
 objectProductionPerson1Role,optional
 objectProductionPerson1Id,generated
 objectProductionPerson1,optional
@@ -52,6 +54,7 @@ owner,optional
 ownerId,generated
 ownerType,optional
 collection,optional
+distinguishingFeatures,optional
 objectHistoryNote,optional
 textualInscriptionContent,optional
 textualInscriptionContentInterpretation,optional
@@ -61,3 +64,6 @@ contentConcept1,optional
 contentConcept2Id,generated
 contentConcept2,optional
 usageNote,optional
+taxon,optional
+commonName,optional
+nativeSpecies,optional
