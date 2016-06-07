@@ -19,3 +19,6 @@ objectPurchasePriceCurrency,optional
 objectPurchasePriceCurrencyId,generated
 creditLine,optional
 accessionDateDisplayDate,optional
+accessionDateEarliestSingleMonth,optional
+accessionDateEarliestSingleDay,optional
+accessionDateEarliestSingleYear,optional
