@@ -257,7 +257,7 @@ namespace :cs do
       output     = args[:output] || "response.csv"
       get        = Csible::HTTP::Get.new($client, $log)
       results    = get.list path, params
-      File.truncate(output, 0)
+      File.open(output, "w")
       Csible.write_csv(output, results, $log) unless results.empty?
     end
 
