@@ -15,18 +15,18 @@ Create a `mymuseum` folder with a `.gitignore` file containing "*". Put site rel
 ##### PROCESS TEMPLATES
 
 # SEE mymuseum.sh
-rake template:concepts:process[mymuseum/mymuseum-concept.csv,mymuseum/concepts]
-rake template:locations:process[mymuseum/mymuseum-onsite.csv,mymuseum/onsite]
-rake template:locations:process[mymuseum/mymuseum-offsite.csv,mymuseum/offsite]
-rake template:organizations:process[mymuseum/mymuseum-org.csv,mymuseum/orgs]
-rake template:persons:process[mymuseum/mymuseum-person.csv,mymuseum/persons]
-rake template:cataloging:process[mymuseum/mymuseum-cat.csv,mymuseum/cat]
-rake template:acquisitions:process[mymuseum/mymuseum-acq.csv,mymuseum/acq]
-rake template:conditioncheck:process[mymuseum/mymuseum-cond.csv,mymuseum/cc]
-rake template:groups:process[mymuseum/mymuseum-grp.csv,mymuseum/grp]
-rake template:loansout:process[mymuseum/mymuseum-loans.csv,mymuseum/loans]
-rake template:media:process[mymuseum/mymuseum-media.csv,mymuseum/media]
-rake template:valuationcontrol:process[mymuseum/mymuseum-val.csv,mymuseum/vc]
+rake template:cs:concepts:process[mymuseum/mymuseum-concept.csv,mymuseum/concepts]
+rake template:cs:locations:process[mymuseum/mymuseum-onsite.csv,mymuseum/onsite]
+rake template:cs:locations:process[mymuseum/mymuseum-offsite.csv,mymuseum/offsite]
+rake template:cs:organizations:process[mymuseum/mymuseum-org.csv,mymuseum/orgs]
+rake template:cs:persons:process[mymuseum/mymuseum-person.csv,mymuseum/persons]
+rake template:cs:cataloging:process[mymuseum/mymuseum-cat.csv,mymuseum/cat]
+rake template:cs:acquisitions:process[mymuseum/mymuseum-acq.csv,mymuseum/acq]
+rake template:cs:conditioncheck:process[mymuseum/mymuseum-cond.csv,mymuseum/cc]
+rake template:cs:groups:process[mymuseum/mymuseum-grp.csv,mymuseum/grp]
+rake template:cs:loansout:process[mymuseum/mymuseum-loans.csv,mymuseum/loans]
+rake template:cs:media:process[mymuseum/mymuseum-media.csv,mymuseum/media]
+rake template:cs:valuationcontrol:process[mymuseum/mymuseum-val.csv,mymuseum/vc]
 
 ##### IMPORT AND RELATE AUTHORITIES
 
@@ -110,18 +110,18 @@ Wrapper script `mymuseum.sh`:
 ```bash
 #!/bin/bash
 
-rake template:concepts:process[mymuseum/mymuseum-concept.csv,mymuseum/concepts]
-rake template:locations:process[mymuseum/mymuseum-onsite.csv,mymuseum/onsite]
-rake template:locations:process[mymuseum/mymuseum-offsite.csv,mymuseum/offsite]
-rake template:organizations:process[mymuseum/mymuseum-org.csv,mymuseum/orgs]
-rake template:persons:process[mymuseum/mymuseum-person.csv,mymuseum/persons]
-rake template:cataloging:process[mymuseum/mymuseum-cat.csv,mymuseum/cat]
-rake template:acquisitions:process[mymuseum/mymuseum-acq.csv,mymuseum/acq]
-rake template:conditioncheck:process[mymuseum/mymuseum-cond.csv,mymuseum/cc]
-rake template:groups:process[mymuseum/mymuseum-grp.csv,mymuseum/grp]
-rake template:loansout:process[mymuseum/mymuseum-loans.csv,mymuseum/loans]
-rake template:media:process[mymuseum/mymuseum-media.csv,mymuseum/media]
-rake template:valuationcontrol:process[mymuseum/mymuseum-val.csv,mymuseum/vc]
+rake template:cs:concepts:process[mymuseum/mymuseum-concept.csv,mymuseum/concepts]
+rake template:cs:locations:process[mymuseum/mymuseum-onsite.csv,mymuseum/onsite]
+rake template:cs:locations:process[mymuseum/mymuseum-offsite.csv,mymuseum/offsite]
+rake template:cs:organizations:process[mymuseum/mymuseum-org.csv,mymuseum/orgs]
+rake template:cs:persons:process[mymuseum/mymuseum-person.csv,mymuseum/persons]
+rake template:cs:cataloging:process[mymuseum/mymuseum-cat.csv,mymuseum/cat]
+rake template:cs:acquisitions:process[mymuseum/mymuseum-acq.csv,mymuseum/acq]
+rake template:cs:conditioncheck:process[mymuseum/mymuseum-cond.csv,mymuseum/cc]
+rake template:cs:groups:process[mymuseum/mymuseum-grp.csv,mymuseum/grp]
+rake template:cs:loansout:process[mymuseum/mymuseum-loans.csv,mymuseum/loans]
+rake template:cs:media:process[mymuseum/mymuseum-media.csv,mymuseum/media]
+rake template:cs:valuationcontrol:process[mymuseum/mymuseum-val.csv,mymuseum/vc]
 ```
 
 Wrapper script `mycache.sh`:

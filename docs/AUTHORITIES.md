@@ -9,7 +9,7 @@ Creating authority (item) records and setting relationships:
 # get csids for concept authorities
 rake cs:get:list[conceptauthorities]
 # create import xml
-rake template:concepts:process[templates/concepts/watermill.csv]
+rake template:cs:concepts:process[templates/concepts/watermill.csv]
 # import it using csid from csv: `concept` authority
 rake cs:post:directory[conceptauthorities/02ad348f-828f-4834-a830/items,imports]
 
@@ -26,7 +26,7 @@ rake cs:delete:file[response.txt]
 rake cs:get:list[locationauthorities]
 
 # create import xml
-rake template:locations:process[templates/locations/onsite.csv]
+rake template:cs:locations:process[templates/locations/onsite.csv]
 # import it using csid from csv: `location` authority
 rake cs:post:directory[locationauthorities/38cc1b61-a597-4b12-b820/items,imports]
 # set relationships -- uses "from", "to" values from the same or a different file
@@ -35,7 +35,7 @@ rake cs:relate:authorities[locationauthorities/38cc1b61-a597-4b12-b820/items,loc
 rake clear:all
 
 # repeat as needed
-rake template:locations:process[templates/locations/offsite.csv]
+rake template:cs:locations:process[templates/locations/offsite.csv]
 rake cs:post:directory[locationauthorities/add50144-321a-4355-840b/items,imports] # `offsite_sla` authority
 rake cs:relate:authorities[locationauthorities/add50144-321a-4355-840b/items,locations,templates/locations/offsite.csv]
 
@@ -51,7 +51,7 @@ rake cs:delete:file[response.txt]
 # get csids for org authorities
 rake cs:get:list[orgauthorities]
 # create import xml
-rake template:organizations:process[templates/organizations/watermill.csv]
+rake template:cs:organizations:process[templates/organizations/watermill.csv]
 # import it using csid from csv: `organization` authority
 rake cs:post:directory[orgauthorities/f1dd741c-0c98-4033-9a1c/items,imports]
 ```
@@ -78,7 +78,7 @@ To parse names split on space characters:
 # get csids for person authorities
 rake cs:get:list[personauthorities]
 # create import xml
-rake template:persons:process[templates/persons/watermill.csv]
+rake template:cs:persons:process[templates/persons/watermill.csv]
 # import it using csid from csv: `person` authority
 rake cs:post:directory[personauthorities/92c6d196-d88e-4e0e-8dbb/items,imports]
 
