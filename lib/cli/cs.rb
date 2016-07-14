@@ -118,7 +118,7 @@ namespace :cs do
       end
     end
 
-    # rake cs:relate:authorities[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,templates/relationships/relationships.example.csv]
+    # rake cs:relate:authorities[/locationauthorities/38cc1b61-a597-4b12-b820/items,locations,templates/relationships/hierarchies.example.csv]
     desc "Set and PUT authority relationships using a csv file"
     task :authorities, [:path, :type, :csv] do |t, args|
       path = args[:path]
