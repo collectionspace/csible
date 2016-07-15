@@ -23,7 +23,6 @@ require_relative "lib/csible/utils"
 # cli tasks
 require_relative "lib/cli/cs"
 require_relative "lib/cli/template/cs"
-require_relative "lib/cli/template/pp"
 
 namespace :clear do
 
@@ -32,7 +31,6 @@ namespace :clear do
   task :all do |t|
     Rake::Task["clear:imports"].invoke
     Rake::Task["clear:tmp"].invoke
-    Rake::Task["clear:transforms"].invoke
   end
 
   desc "Remove XML files from imports"
@@ -45,13 +43,6 @@ namespace :clear do
   desc "Remove XML files from tmp"
   task :tmp do |t|
     Dir["tmp/*.xml"].each do |file|
-      Csible.clear_file file
-    end
-  end
-
-  desc "Remove CSV files from transforms"
-  task :transforms do |t|
-    Dir["transforms/*.csv"].each do |file|
       Csible.clear_file file
     end
   end

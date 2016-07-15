@@ -42,10 +42,8 @@ rake cs:config # dump api.json to terminal
 **Templates**
 
 ```bash
-# convert Past Perfect accession csv to CollectionSpace csv
-rake template:pp:accessions:process[templates/pastperfect/accessions/objects.example.csv]
 # convert CollectionSpace csv to XML
-rake template:cs:acquisitions:process[transforms/acquisitions.csv]
+rake template:cs:acquisitions:process[path/to/acquisitions.csv]
 ```
 
 **API**
