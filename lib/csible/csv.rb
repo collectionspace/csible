@@ -107,6 +107,10 @@ module Csible
         v
       end
 
+      def get_vocab_identifier(value)
+        value.downcase.gsub(/\W/, '_').squeeze('_').gsub(/_$/, '')
+      end
+
       def process_fields(data, generated_values)
         # use stop gap converters
         data.each { |key, value| converters.each { |c| data[key] = c.call(data[key]) } }
