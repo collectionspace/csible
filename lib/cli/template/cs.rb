@@ -240,7 +240,7 @@ namespace :template do
       fields[:domain] = domain
 
       fields[:generate] = {
-        shortidentifier: {
+        shortIdentifier: {
           from: :termname,
           required: true,
           unique: true,
@@ -258,7 +258,7 @@ namespace :template do
       desc "Create location authority item XML records from csv"
       task :process, [:csv, :output_dir, :filename_field] do |t, args|
         output_dir     = args[:output_dir] || output_dir
-        filename_field = (args[:filename_field] || "shortidentifier").to_sym
+        filename_field = (args[:filename_field] || "shortIdentifier").to_sym
         processor = Csible::CSV::ToCollectionSpace.new(args[:csv], output_dir, template_file, fields)
         processor.process filename_field
       end
@@ -514,5 +514,37 @@ namespace :template do
         processor.process filename_field
       end
     end
-  end
+
+    namespace :vocabulary do
+      config_file     = "#{templates_path}/collectionspace/vocabulary/items.config.csv"
+      template_file   = "#{templates_path}/collectionspace/vocabulary/item.xml.erb"
+      fields          = Csible::CSV.get_config(config_file)
+      fields[:domain] = domain
+
+      fields[:generate] = {
+        shortIdentifier: {
+          from: :displayName,
+          required: true,
+          unique: true,
+          process: :get_vocab_identifier,
+        }
+      }
+
+      # rake template:cs:vocabulary:fields
+      desc "Display fields for vocabulary items"
+      task :fields do |t|
+        Csible::CSV.print_fields fields[:required], fields[:optional], fields[:generate].keys
+      end
+
+      # rake template:cs:vocabulary:process[templates/collectionspace/vocabulary/items.example.csv]
+      desc "Create vocabulary item XML records from csv"
+      task :process, [:csv, :output_dir, :filename_field] do |t, args|
+        output_dir     = args[:output_dir] || output_dir
+        filename_field = (args[:filename_field] || "shortIdentifier").to_sym
+        processor = Csible::CSV::ToCollectionSpace.new(args[:csv], output_dir, template_file, fields)
+        processor.process filename_field
+      end
+    end
+
+  end # end cs namespace
 end
