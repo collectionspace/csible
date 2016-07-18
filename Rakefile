@@ -20,6 +20,12 @@ require_relative "lib/csible/csv"
 require_relative "lib/csible/http"
 require_relative "lib/csible/utils"
 
+# global config, client and logger
+$config = Csible.get_config('api.json')
+$client = Csible.get_client( $config[:services] )
+$log    = $config[:logging][:method] == 'file' ?
+  Logger.new(File.open('response.log', 'a+')) : Logger.new(STDOUT)
+
 # cli tasks
 require_relative "lib/cli/cs"
 require_relative "lib/cli/template/cs"
