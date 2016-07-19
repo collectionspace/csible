@@ -30,6 +30,8 @@ $log    = $config[:logging][:method] == 'file' ?
 require_relative "lib/cli/cs"
 require_relative "lib/cli/template/cs"
 
+task :default => "cs:config"
+
 namespace :clear do
 
   # rake clear:all

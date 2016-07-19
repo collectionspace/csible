@@ -1,5 +1,6 @@
-CSIBLE
-======
+# CSIBLE
+
+[![Build Status](https://travis-ci.org/collectionspace/csible.svg?branch=master)](https://travis-ci.org/collectionspace/csible)
 
 A set of Rake tasks to interact with the CollectionSpace backend REST API and generate CollectionSpace XML records.
 

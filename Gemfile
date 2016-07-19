@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem "activesupport"
+gem "activesupport", '~> 4.2'
 gem "awesome_print"
 gem "collectionspace-client"
 gem "json"
