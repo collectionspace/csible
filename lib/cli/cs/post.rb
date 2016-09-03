@@ -32,6 +32,19 @@ namespace :cs do
       end
     end
 
+    # rake cs:post:sync["vocabularies/urn:cspace:name(materialuse)"]
+    desc "POST sync request"
+    task :sync, [:path] do |t, args|
+      path = args[:path] =~ /\/sync$/ ? args[:path] : "#{args[:path]}/sync"
+      payload = "<sync>SYNC ME!</sync>" # csible client expects a payload
+      post    = Csible::HTTP::Post.new($client, $log)
+      begin
+        post.execute :path, path, payload
+      rescue Exception => ex
+        $log.error ex.message
+      end
+    end
+
   end
 
 end
