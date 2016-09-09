@@ -34,6 +34,7 @@ namespace :cs do
       type      = args[:type] || "url"
       raise "HELL" unless File.file? file
       File.readlines(file).each do |line|
+        line = line.chomp
         Rake::Task["cs:delete:#{type}"].invoke(line)
         Rake::Task["cs:delete:#{type}"].reenable
       end

@@ -34,7 +34,7 @@ module Csible
         @result = nil
       end
 
-      def do_raw(method = :get, resource, data)
+      def do_raw(method, resource, data = {})
         username = client.config.username
         password = client.config.password
         case method
