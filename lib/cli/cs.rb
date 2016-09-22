@@ -29,7 +29,7 @@ namespace :cs do
 
   # rake cs:initialize[core]
   desc "Initialize authorities for tenant"
-  task :initialize do |t, args|
+  task :initialize, [:tenant] do |t, args|
     tenant = args[:tenant] || 'core'
     path   = "collectionspace/tenant/#{tenant}/authorities/initialise"
     url    = $config[:services][:base_uri].gsub("cspace-services", path)
