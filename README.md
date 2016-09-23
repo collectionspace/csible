@@ -19,6 +19,9 @@ Installation
 ------------
 
 Clone this repository.
+```
+git clone https://github.com/collectionspace/csible.git
+```
 
 **Ruby**
 
