@@ -25,7 +25,7 @@ Clone this repository.
 Version 1.9.3+, `chruby` or `rbenv` is recommended, but for system Ruby and pre-reqs:
 
 ```
-sudo apt-get install libxslt-dev libxml2-dev ruby zlib1g-dev
+sudo apt-get install libxslt-dev libxml2-dev ruby-dev zlib1g-dev
 sudo gem install bundler nokogiri rake
 bundle install
 ```
