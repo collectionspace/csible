@@ -21,6 +21,8 @@ Installation
 Clone this repository.
 ```
 git clone https://github.com/collectionspace/csible.git
+cd csible
+cp api.json.example api.json
 ```
 
 **Ruby**
