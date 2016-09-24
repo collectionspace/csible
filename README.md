@@ -27,7 +27,22 @@ cp api.json.example api.json
 
 **Ruby**
 
-Version 1.9.3+, `chruby` or `rbenv` is recommended, but for system Ruby and pre-reqs:
+Ruby version 1.9.3+ is required to run csible commands.  Using `chruby` or `rbenv` to manage your Ruby environment is recommended.
+
+If you're not a Ruby developer and are planning to just run and use csible, you can install the required version of Ruby onto Ubuntu 14.04+ with these commands based on a PAA by brightbox.com -see https://www.brightbox.com/docs/ruby/ubuntu/
+
+```
+sudo apt-get install software-properties-common
+sudo apt-add-repository ppa:brightbox/ruby-ng
+sudo apt-get update
+sudo apt-get install ruby-switch
+sudo apt-get install ruby2.2
+sudo apt-get install ruby2.2-dev
+ruby-switch --list
+sudo ruby-switch --set ruby2.2
+```
+
+Finally use these commands to add the final csible pre-reqs:
 
 ```
 sudo apt-get install make libxslt-dev libxml2-dev ruby-dev zlib1g-dev
