@@ -1,0 +1,6 @@
+field,type
+type,required
+uri,optional
+csid,required
+element,required
+value,required

@@ -181,7 +181,7 @@ module Csible
           template = Csible.get_template config
           result   = template.result(binding).gsub(/\n+/,"\n") # binding adds variables from scope
 
-          output_filename = data[filename_field].gsub(/\W/, '')
+          output_filename = data[filename_field].gsub(/(\s|\/)/, '_')
           Csible.write_file("#{output}/#{output_filename}.xml", result)
         end
       end
