@@ -53,7 +53,7 @@ namespace :cs do
             xml      = get.execute(:path, "media/#{csid}").xml.to_s
 
             # puts uri
-            # puts csid
+            puts csid
             # puts xml
 
             put      = Csible::HTTP::Put.new($client, $log)
