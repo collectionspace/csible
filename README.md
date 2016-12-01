@@ -80,6 +80,7 @@ rake cs:get:list[media]
 
 # POST
 rake cs:post:directory[locationauthorities/38cc1b61-a597-4b12-b820/items,locations,1]
+rake cs:post:directory["vocabularies/urn:cspace:name(contentobjecttype)/items",imports]
 rake cs:post:file[locationauthorities/XYZ/items,examples/locations/1.xml]
 
 # DELETE
