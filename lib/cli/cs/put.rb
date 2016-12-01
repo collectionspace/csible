@@ -50,7 +50,7 @@ namespace :cs do
             filename = File.basename(uri.path).gsub(/-/, "*")
             get      = Csible::HTTP::Get.new($client, $log)
             csid     = get.csid_for "media", "title", filename, true
-            xml      = get.execute(:path, "media/#{csid}").xml
+            xml      = get.execute(:path, "media/#{csid}").xml.to_s
 
             # puts uri
             # puts csid
