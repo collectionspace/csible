@@ -34,18 +34,33 @@ module Csible
         @result = nil
       end
 
-      def do_raw(method, resource, data = {})
+      def do_raw(method, resource, data = {}, headers = {})
         username = client.config.username
         password = client.config.password
         case method
         when :get
-          @result = HTTParty.get resource, { basic_auth: { username: username, password: password }, query: data }
+          @result = HTTParty.get resource, {
+            basic_auth: { username: username, password: password },
+            headers: headers,
+            query: data,
+          }
         when :post
-          @result = HTTParty.post resource, { basic_auth: { username: username, password: password }, body: data }
+          @result = HTTParty.post resource, {
+            basic_auth: { username: username, password: password },
+            headers: headers,
+            body: data,
+          }
         when :put
-          @result = HTTParty.put resource, { basic_auth: { username: username, password: password }, body: data }
+          @result = HTTParty.put resource, {
+            basic_auth: { username: username, password: password },
+            headers: headers,
+            body: data,
+          }
         when :delete
-          @result = HTTParty.delete resource, { basic_auth: { username: username, password: password } }
+          @result = HTTParty.delete resource, {
+            basic_auth: { username: username, password: password },
+            headers: headers,
+          }
         else
           raise "ERROR invalid or unsupported http method #{method.to_s}"
         end
@@ -59,18 +74,20 @@ module Csible
     class Get < Request
 
       # collectionobjects, objectNumber, IN2016.8
-      def csid_for(type, attribute, value)
+      def csid_for(type, attribute, value, fuzzy = false)
+        value = value.gsub(/ /, "+")
+        expression = fuzzy ? "LIKE '%#{value}%'" : "LIKE '#{value}'"
         search_args = {
           path: type,
           type: "#{type}_common",
           field: attribute,
-          expression: "LIKE '#{value.gsub(/ /, "+")}'",
+          expression: expression,
         }
         query   = CollectionSpace::Search.new.from_hash search_args
         @result = client.search(query)
         check_status!(type)
         data    = @result.parsed["abstract_common_list"]
-        raise "Search result != 1 for #{type} #{attribute} #{value}" unless data['totalItems'].to_i == 1
+        raise "Search result != 1 for #{type} #{attribute} #{value} #{data}" unless data['totalItems'].to_i == 1
         data['list_item']['csid']
       end
 
