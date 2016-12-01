@@ -36,6 +36,37 @@ namespace :cs do
       end
     end
 
+    namespace :images do
+
+      # rake cs:put:images:fuzzy[images.txt]
+      # desc "PUT to create blobs for media from file of urls if image filename unambiguously matches record title"
+      task :fuzzy, [:file, :throttle] do |t, args|
+        file      = args[:file]
+        throttle  = args[:throttle] || 0.10
+        raise "Invalid input file" unless File.file? file
+        File.open(file).each_line do |line|
+          begin
+            uri      = URI.parse(line.chomp)
+            filename = File.basename(uri.path).gsub(/-/, "*")
+            get      = Csible::HTTP::Get.new($client, $log)
+            csid     = get.csid_for "media", "title", filename, true
+            xml      = get.execute(:path, "media/#{csid}").xml
+
+            # puts uri
+            # puts csid
+            # puts xml
+
+            put      = Csible::HTTP::Put.new($client, $log)
+            put.execute :path, "media/#{csid}?blobUri=#{uri}", xml
+            sleep throttle
+          rescue Exception => ex
+            $log.error ex.message
+          end
+        end
+      end
+
+    end
+
   end
 
 end
