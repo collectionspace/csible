@@ -7,5 +7,6 @@ response*
 *.csv
 *.sh
 *.swp
+*.txt
 *.xml
 custom_templates/
