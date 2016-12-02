@@ -75,7 +75,7 @@ module Csible
 
       # collectionobjects, objectNumber, IN2016.8
       def csid_for(type, attribute, value, fuzzy = false)
-        value = value.gsub(/ /, "+")
+        value = value.gsub(/ /, "%").gsub(/\*/, '%')
         expression = fuzzy ? "LIKE '%#{value}%'" : "LIKE '#{value}'"
         search_args = {
           path: type,
