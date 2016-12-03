@@ -130,12 +130,13 @@ namespace :cs do
       end
     end
 
-    # rake cs:relate:contacts[personauthorities/e3308f39-d3dc-46f8-a1f8/items,templates/persons/item.example.csv]
+    # rake cs:relate:contacts[personauthorities/6b61517c-1626-4a8d-99a7/items,bm_persons.csv,termDisplayName,true]
     desc "Create contact records for authorities from a csv file"
-    task :contacts, [:path, :csv, :identifier_field] do |t, args|
+    task :contacts, [:path, :csv, :identifier_field, :no_id] do |t, args|
       path             = args[:path]
       csv              = args[:csv]
       identifier_field = (args[:identifier_field] || 'termDisplayName').to_sym
+      no_id            = args[:no_id] ? true : false
       raise "HELL" unless File.file? csv
 
       config_file   = "#{templates_path}/collectionspace/relationships/contact.config.csv"
@@ -146,7 +147,7 @@ namespace :cs do
       processor     = Csible::CSV::Processor.new(csv, output_dir, template_file, fields) # for fields and helpers
       processor.run do |data|
         id_val   = data[identifier_field]
-        short_id = processor.get_short_identifier(id_val)
+        short_id = no_id ? id_val : processor.get_short_identifier(id_val)
         ids      = get.identifiers_for(path, short_id)
         if ids
           template = Csible.get_template template_file
