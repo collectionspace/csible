@@ -490,7 +490,7 @@ namespace :template do
       desc "Create batch XML records from csv"
       task :process, [:csv, :output_dir, :filename_field] do |t, args|
         output_dir     = args[:output_dir] || output_dir
-        filename_field = (args[:filename_field] || "filename").to_sym
+        filename_field = (args[:filename_field] || "name").to_sym
         processor = Csible::CSV::ToCollectionSpace.new(args[:csv], output_dir, template_file, fields)
         processor.process filename_field
       end

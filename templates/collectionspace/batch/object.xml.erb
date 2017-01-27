@@ -1,17 +1,16 @@
-<document name="report">
- <ns2:reports_common xmlns:ns2="http://collectionspace.org/services/report">
-   <forDocTypes>
+<document name="batch">
+ 	<ns2:batch_common xmlns:ns2="http://collectionspace.org/services/batch">
+ 		<forDocTypes>
 <% data[:forDocTypes].split(",").map(&:strip).each do |doc_type| %>
-    <forDocType><%= doc_type %></forDocType>
+			<forDocType><%= doc_type %></forDocType>
 <% end %>
-   </forDocTypes>
-   <name><%= data[:name] %></name>
-   <notes><%= data[:notes] %></notes>
-   <supportsSingleDoc><%= data[:supportsSingleDoc] %></supportsSingleDoc>
-   <supportsDocList><%= data[:supportsDocList] %></supportsDocList>
-   <supportsGroup><%= data[:supportsGroup] %></supportsGroup>
-   <supportsNoContext><%= data[:supportsNoContext] %></supportsNoContext>
-   <filename><%= data[:filename] %></filename>
-   <outputMIME><%= data[:outputMIME] %></outputMIME>
- </ns2:reports_common>
+		</forDocTypes>
+		<name><%= data[:name] %></name>
+ 		<notes><%= data[:notes] %></notes>
+		<supportsSingleDoc><%= data[:supportsSingleDoc] %></supportsSingleDoc>
+		<supportsDocList><%= data[:supportsDocList] %></supportsDocList>
+		<supportsGroup><%= data[:supportsGroup] %></supportsGroup>
+ 		<supportsNoContext><%= data[:supportsNoContext] %></supportsNoContext>
+ 		<className><%= data[:className] %></className>
+	</ns2:batch_common>
 </document>

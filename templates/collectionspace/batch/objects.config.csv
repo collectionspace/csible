@@ -6,5 +6,4 @@ supportsSingleDoc,required
 supportsDocList,required
 supportsGroup,required
 supportsNoContext,required
-filename,required
-outputMIME,required
+className,required

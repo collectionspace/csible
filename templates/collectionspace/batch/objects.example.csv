@@ -1,2 +1,2 @@
-forDocTypes,name,notes,supportsSingleDoc,supportsDocList,supportsGroup,supportsNoContext,filename,outputMIME
-Acquisition,Sample Acquisition Report,This is a sample Acquisition report.,true,false,false,true,acq_basic.jasper,application/pdf
+forDocTypes,name,notes,supportsSingleDoc,supportsDocList,supportsGroup,supportsNoContext,className
+CollectionObject,UpdateComputedLocation,Updates computed location of all cataloging records.,true,true,false,true,org.collectionspace.services.batch.nuxeo.UpdateObjectLocationBatchJob

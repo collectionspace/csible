@@ -1,2 +1,2 @@
-mode,docType,singleCSID,groupCSID,listCSIDs,key,value
-nocontext,CollectionObject,all,,,,
+mode,recordUpdates,docType,singleCSID,groupCSID,listCSIDs,key,value
+nocontext,false,CollectionObject,all,,,,
