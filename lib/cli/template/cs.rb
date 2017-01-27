@@ -474,6 +474,50 @@ namespace :template do
       end
     end
 
+    namespace :batch do
+      config_file     = "#{templates_path}/collectionspace/batch/objects.config.csv"
+      template_file   = "#{templates_path}/collectionspace/batch/object.xml.erb"
+      fields          = Csible::CSV.get_config(config_file)
+      fields[:domain] = domain
+
+      # rake template:cs:batch:objects:fields
+      desc "Display fields for batch objects"
+      task :fields do |t|
+        Csible::CSV.print_fields fields[:required], fields[:optional], fields[:generate].keys
+      end
+
+      # rake template:cs:batch:objects:process[templates/collectionspace/batch/objects.example.csv]
+      desc "Create batch XML records from csv"
+      task :process, [:csv, :output_dir, :filename_field] do |t, args|
+        output_dir     = args[:output_dir] || output_dir
+        filename_field = (args[:filename_field] || "filename").to_sym
+        processor = Csible::CSV::ToCollectionSpace.new(args[:csv], output_dir, template_file, fields)
+        processor.process filename_field
+      end
+    end
+
+    namespace :batch_invoke do
+      config_file     = "#{templates_path}/collectionspace/batch_invoke/objects.config.csv"
+      template_file   = "#{templates_path}/collectionspace/batch_invoke/object.xml.erb"
+      fields          = Csible::CSV.get_config(config_file)
+      fields[:domain] = domain
+
+      # rake template:cs:batch_invoke:objects:fields
+      desc "Display fields for batch_invoke objects"
+      task :fields do |t|
+        Csible::CSV.print_fields fields[:required], fields[:optional], fields[:generate].keys
+      end
+
+      # rake template:cs:batch_invoke:objects:process[templates/collectionspace/batch_invoke/objects.example.csv]
+      desc "Create batch_invoke XML records from csv"
+      task :process, [:csv, :output_dir, :filename_field] do |t, args|
+        output_dir     = args[:output_dir] || output_dir
+        filename_field = (args[:filename_field] || "singleCSID").to_sym
+        processor = Csible::CSV::ToCollectionSpace.new(args[:csv], output_dir, template_file, fields)
+        processor.process filename_field
+      end
+    end
+
     namespace :valuationcontrol do
       config_file     = "#{templates_path}/collectionspace/valuationcontrol/objects.config.csv"
       template_file   = "#{templates_path}/collectionspace/valuationcontrol/object.xml.erb"

@@ -1,0 +1,5 @@
+*
+!.gitignore
+!*.erb
+!*.config.csv
+!*.example.csv

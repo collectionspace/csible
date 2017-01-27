@@ -1,0 +1,8 @@
+field,type
+mode,required
+docType,required
+singleCSID,optional
+groupCSID,optional
+listCSIDs,optional
+key,optional
+value,optional
