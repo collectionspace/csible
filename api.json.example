@@ -3,7 +3,7 @@
     "method": "file"
   },
   "services": {
-    "base_uri": "http://core.collectionspace.org/cspace-services",
+    "base_uri": "https://core.collectionspace.org/cspace-services",
     "username": "admin@core.collectionspace.org",
     "password": "Administrator",
     "verify_ssl": false
