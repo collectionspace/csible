@@ -1,16 +1,27 @@
-Relations
-=========
+# Relations
+
+To create relationship records between two object / procedure records:
 
 ```bash
 # make sure the tmp directory is empty
-rake clear:tmp
+bundle exec rake clear:tmp
 
-# generate templates (this will query the services layer for `csid` values)
-# and save the results in the `tmp` directory
-rake cs:relate:records[templates/relationships/relations.example.csv]
+# pre-populate redis (optional but faster!)
+docker run -p 6379:6379 --name redis -d redis
+# get id, csid pairs for each record type to be related
+bundle exec rake cs:get:list[collectionobjects]
+mv response.csv collectionobjects.csv
+bundle exec rake cs:get:list[media]
+mv response.csv media.csv
+
+bundle exec rake cs:cache[collectionobjects.csv,objectNumber,csid]
+bundle exec rake cs:cache[media.csv,identificationNumber,csid]
+
+# generate relationship records and save the results in the `tmp` directory
+bundle exec rake cs:relate:records[templates/relationships/$relations.csv]
 
 # import the relationships
-rake cs:post:directory[relations,tmp]
+bundle exec rake cs:post:directory[relations,tmp]
 ```
 
 **Finding relationships**

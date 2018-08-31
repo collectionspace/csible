@@ -6,18 +6,25 @@ require_relative "cs/relate"
 require_relative "cs/update"
 
 namespace :cs do
-  # rake cs:cache[response.csv]
+  # rake cs:cache[collectionobjects.csv,objectNumber,csid]
+  # rake cs:cache[media.csv,identificationNumber,csid]
   desc "Add key value pairs to redis from csv"
-  task :cache, [:csv] do |t, args|
-    redis = Redis.new # fail if redis unavailable
-    csv   = args[:csv]
+  task :cache, [:csv, :key_column, :value_column] do |t, args|
+    redis        = Redis.new # fail if redis unavailable
+    csv          = args[:csv]
+    key_column   = args[:key_column]
+    value_column = args[:value_column]
+
     CSV.foreach(csv, {
         headers: true,
-        header_converters: ->(header) { header.to_sym },
       }) do |row|
-      key, value = row.to_hash.values
-      raise "Invalid csv values #{key} #{value}" if key.empty? or value.empty?
-      redis.set(key, value)
+      data = row.to_hash
+      key  = data[key_column]
+      val  = data[value_column]
+      unless key and val
+        raise "Invalid csv: data not found for #{key_column}, #{value_column}"
+      end
+      redis.set(key, val)
     end
   end
 
