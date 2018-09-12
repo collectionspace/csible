@@ -44,7 +44,7 @@ namespace :cs do
           result    = template.result(binding)
 
           # cache result and filename
-          filename        = "#{data[:from]}_#{data[:to]}".gsub(/ /, '')
+          filename        = "#{data[:from]}_#{data[:to]}".gsub(/ /, '').gsub('/','')
           output_filename = "#{output_dir}/#{filename}-1.xml"
           Csible.write_file(output_filename, result, $log)
 
