@@ -241,7 +241,7 @@ namespace :template do
 
       fields[:generate] = {
         shortIdentifier: {
-          from: :termname,
+          from: :termdisplayname,
           required: true,
           unique: true,
           process: :get_short_identifier,
