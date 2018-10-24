@@ -1,6 +1,7 @@
 field,type
 shortidentifier,generated
-termname,required
+termdisplayname,required
+termname,optional
 locationtype,optional
 address,optional
 accessnote,optional
