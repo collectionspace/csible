@@ -39,10 +39,17 @@ namespace :cs do
       path       = args[:path]
       params     = Csible::HTTP.convert_params(args[:params]  || '')
       output     = args[:output] || "response.csv"
+      message    = "List output for #{path} was written to #{output}"
       get        = Csible::HTTP::Get.new($client, $log)
       results    = get.list path, params
-      File.open(output, "w")
-      Csible.write_csv(output, results, $log) unless results.empty?
+      if results.any?
+        File.open(output, "w")
+        Csible.write_csv(output, results, $log)
+      else
+        message = "No records found for #{path}"
+      end
+      $log.info message
+      puts message
     end
 
   end
