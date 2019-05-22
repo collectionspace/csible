@@ -121,7 +121,7 @@ module Csible
 
       def list(path, params = {})
         list = []
-        client.all(path, params) do |record|
+        client.all(path, params).each do |record|
           list << record
           log.info "LIST [#{record["uri"]}]"
         end
