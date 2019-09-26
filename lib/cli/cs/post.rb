@@ -32,14 +32,15 @@ namespace :cs do
       end
     end
 
-    # rake cs:post:sync["vocabularies/urn:cspace:name(materialuse)"]
+    # rake cs:post:sync["vocabularies/urn:cspace:name(materialuse)","impTimout=3600&forceSync=true"]
     desc "POST sync request"
-    task :sync, [:path] do |t, args|
-      path = args[:path] =~ /\/sync$/ ? args[:path] : "#{args[:path]}/sync"
+    task :sync, [:path, :params] do |t, args|
+      path    = args[:path] =~ /\/sync$/ ? args[:path] : "#{args[:path]}/sync"
       payload = "<sync>SYNC ME!</sync>" # csible client expects a payload
+      params  = Csible::HTTP.convert_params(args[:params]  || '')
       post    = Csible::HTTP::Post.new($client, $log)
       begin
-        post.execute :path, path, payload
+        post.execute :path, path, payload, params
       rescue Exception => ex
         $log.error ex.message
       end

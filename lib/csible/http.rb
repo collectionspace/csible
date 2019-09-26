@@ -132,10 +132,10 @@ module Csible
 
     class Post < Request
 
-      def execute(type, resource, payload)
+      def execute(type, resource, payload, params = {})
         raise "Payload error" unless payload
         if type == :path
-          @result = client.post resource, payload
+          @result = client.post resource, payload, query: params
         elsif type == :url
           @result = do_raw :post, resource, payload
         else
