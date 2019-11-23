@@ -1,7 +1,4 @@
 {
-  "logging": {
-    "method": "file"
-  },
   "services": {
     "base_uri": "https://core.collectionspace.org/cspace-services",
     "username": "admin@core.collectionspace.org",

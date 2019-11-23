@@ -1,6 +1,13 @@
 module Csible
+  def self.append_csv(filename, data)
+    ::CSV.open(filename, 'a') do |csv|
+      csv << data
+    end
+  end
 
   def self.clear_file(file, log = Logger.new(STDOUT))
+    return unless File.file? file
+
     File.unlink file
     log.info "Deleted: #{file}"
   end
@@ -10,17 +17,17 @@ module Csible
   end
 
   def self.get_config(path)
-    JSON.parse( IO.read(path), symbolize_names: true )
+    JSON.parse(IO.read(path), symbolize_names: true)
   end
 
   def self.get_element_values(file, element)
     response = Nokogiri::XML.parse(File.open(file))
     values   = response.css(element).map(&:text)
     values
-  end  
+  end
 
   def self.get_template(template_file)
-    ERB.new( File.read(template_file) )
+    ERB.new(File.read(template_file))
   end
 
   def self.write_csv(filename, data, log = Logger.new(STDOUT))
@@ -32,8 +39,7 @@ module Csible
   end
 
   def self.write_file(filename, data, log = Logger.new(STDOUT))
-    File.open(filename, 'w') {|f| f.write(data) }
+    File.open(filename, 'w') { |f| f.write(data) }
     log.info "Created #{filename}"
   end
-
 end
