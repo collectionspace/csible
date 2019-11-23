@@ -73,7 +73,6 @@ rake template:cs:acquisitions:process[path/to/acquisitions.csv]
 # GET
 rake cs:get:path[media]
 rake cs:get:path[locationauthorities/38cc1b61-a597-4b12-b820/items,kw=EwoodPark702918,xml] # xml output
-rake cs:get:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities]
 
 # GET items list
 rake cs:get:list[media]
@@ -86,7 +85,6 @@ rake cs:post:sync["materialauthorities/urn:cspace:name(material_shared)","impTim
 
 # DELETE
 rake cs:delete:path[locationauthorities/38cc1b61-a597-4b12-b820/items/a22a97ec-57fc-4b86-a366]
-rake cs:delete:url[https://cspace.lyrasistechnology.org/cspace-services/locationauthorities/38cc1b61-a597-4b12-b820/items/a22a97ec-57fc-4b86-a366]
 rake cs:delete:file[deletes.txt] # assumes file of urls
 rake cs:delete:file[deletes.txt,path] # file of paths
 ```
