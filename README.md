@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/collectionspace/csible.svg?branch=master)](https://travis-ci.org/collectionspace/csible)
 
+**This project is deprecated. See the [Converter Tool](https://github.com/collectionspace/cspace-converter) for import / migration support.**
+
 A set of Rake tasks to interact with the CollectionSpace backend REST API and generate CollectionSpace XML records.
 
 Configuration file
